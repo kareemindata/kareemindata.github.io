@@ -129,8 +129,8 @@ header {
 
 
 .machine-learning {
-  width: 20px;
-  height: 20px;
+  width: 2px;
+  height: 2px;
   display: block;
   margin: 0 auto;
 }
@@ -222,5 +222,10 @@ header {
     .project-card .project-image img {
         width: 60px; /* Adjust the size as needed for mobile */
         height: 60px; /* Adjust the size as needed for mobile */
+        margin: 0 auto; /* Center horizontally */
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
+    
 }
