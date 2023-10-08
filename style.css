@@ -1,5 +1,6 @@
 /* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 /* Reset default browser styles */
 body, h1, h2, h3, h4, p {
     margin: 0;
@@ -119,9 +120,28 @@ header {
 
 /* Set a consistent size for all icons and images */
 .card .icon,
-.project-card .project-image img {
+.project-card .project-image img,
+.card .icon i,
+.card .icon img {
     width: 100px; /* Adjust the size as needed */
     height: 100px; /* Adjust the size as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto; /* Center horizontally */
+}
+
+/* Set a larger size for all images */
+.card img,
+.project-card img {
+    max-width: 100%; /* Make the images responsive */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* Increase the size of machine-learning.png */
+.card .icon img[src$="machine-learning.png"] {
+    width: 150px; /* Adjust the size as needed */
+    height: 150px; /* Adjust the size as needed */
 }
 
 /* Footer styling */
@@ -183,23 +203,11 @@ header {
 
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
-    .main {
-        padding: 50px 0; /* Adjust the padding for the main section on mobile */
-    }
-
-    .main-btn {
-        display: block;
-        margin: 20px auto; /* Center the button horizontally and add margin for spacing */
-    }
-
-    /* Adjust the margins for cards on mobile */
-    .cards .card {
-        margin: 10px;
-    }
-
     /* Adjust the size of icons and images on mobile */
     .card .icon,
-    .project-card .project-image img {
+    .project-card .project-image img,
+    .card .icon i,
+    .card .icon img {
         width: 60px; /* Adjust the size as needed for mobile */
         height: 60px; /* Adjust the size as needed for mobile */
     }
