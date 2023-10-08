@@ -118,14 +118,26 @@ header {
 }
 
 /* Set a consistent size for all icons */
-.card .icon,
-.project-card .project-image img {
+.card .icon {
     width: 100px; /* Adjust the size as needed */
     height: 100px; /* Adjust the size as needed */
     margin: 0 auto; /* Center horizontally */
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+
+.machine-learning {
+  width: 100px;
+  height: 100px;
+  display: block;
+  margin: 0 auto;
+}
+
+.project-card .project-image img {
+  width: 200px;
+  height: 200px;
 }
 
 /* Footer styling */
