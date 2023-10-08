@@ -1,152 +1,177 @@
+/* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-* {
-    font-family: 'Poppins', sans-serif;
+/* Reset default browser styles */
+body, h1, h2, h3, h4, p {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    scroll-behavior: smooth; 
 }
 
+/* Set font family and background for the body */
 body {
-    background-color: #f0f0f0;
+    font-family: 'Poppins', sans-serif;
+    background-image: url("https://images.unsplash.com/photo-1463171379579-3fdfb86d6285?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    color: #fff; /* Set text color to white */
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-a {
-    text-decoration: none;
-    color: #3a6cf4;
-}
-
-a:hover {
-    color: #601cfc;
-}
-
-/* Header Styles */
+/* Header styling */
 header {
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
     padding: 20px 0;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
 }
 
 .logo {
+    font-size: 24px;
     font-weight: 700;
-    font-size: 1.8em;
-}
-
-.navigation {
-    margin-top: 10px;
+    text-decoration: none;
+    color: #fff;
+    margin-right: 20px;
 }
 
 .navigation a {
-    margin-left: 20px;
-    font-weight: 500;
-    font-size: 1.1em;
+    text-decoration: none;
+    color: #fff;
+    margin: 0 15px;
+    font-size: 18px;
 }
 
-/* Main Section Styles */
+.navigation a:hover {
+    text-decoration: underline;
+}
+
+/* Main section styling */
 .main {
     text-align: center;
     padding: 100px 0;
-    background: url('your-background-image.jpg') no-repeat center center;
-    background-size: cover;
 }
 
-.main h1 {
-    font-size: 2.5em;
+.main h2 span {
+    color: #ffcc00; /* Yellow color for your name */
+}
+
+.main h3 {
+    font-size: 24px;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.main h4 {
+    font-size: 18px;
+    font-weight: 300;
+    margin-top: 20px;
+}
+
+.main-btn {
+    display: inline-block;
+    padding: 15px 30px;
+    margin-top: 30px;
+    background-color: #ffcc00;
+    color: #000;
+    font-size: 18px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.main-btn:hover {
+    background-color: #333;
     color: #fff;
-    margin-bottom: 10px;
 }
 
-.main h2 {
-    font-size: 1.5em;
-    color: #fff;
+/* Section titles */
+.title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 30px;
 }
 
-.main p {
-    font-size: 1.1em;
-    color: #fff;
-    margin-top: 10px;
+/* Cards styling */
+.cards {
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+    padding: 50px 0;
 }
 
-/* About Section Styles */
-.about {
-    background-color: #f9f9f9;
-    padding: 80px 0;
+.card {
+    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px;
+    text-align: center;
 }
 
-.about h2 {
-    font-size: 2em;
-    margin-bottom: 20px;
+.card h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 10px 0;
 }
 
-.about p {
-    font-size: 1.1em;
-    color: #444;
+.card p {
+    font-size: 18px;
+    font-weight: 300;
 }
 
-/* Education Section Styles */
-.education {
-    padding: 80px 0;
-}
-
-.education h2 {
-    font-size: 2em;
-    margin-bottom: 20px;
-}
-
-.education-item h3 {
-    font-size: 1.5em;
-    margin-top: 10px;
-}
-
-.education-item p {
-    font-size: 1.1em;
-    margin-top: 10px;
-    color: #444;
-}
-
-/* Experience Section Styles */
-.experience {
-    background-color: #f9f9f9;
-    padding: 80px 0;
-}
-
-.experience h2 {
-    font-size: 2em;
-    margin-bottom: 20px;
-}
-
-.experience-item h3 {
-    font-size: 1.5em;
-    margin-top: 10px;
-}
-
-.experience-item p {
-    font-size: 1.1em;
-    margin-top: 10px;
-    color: #444;
-}
-
-/* Footer Styles */
+/* Footer styling */
 .footer {
-    background-color: #f0f0f0;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
     padding: 20px 0;
     text-align: center;
 }
 
-.footer p {
-    font-size: 1.1em;
-    color: #444;
+.footer-title {
+    font-size: 18px;
+    font-weight: 400;
+    color: #fff;
+}
+
+.footer-title span {
+    font-weight: 700;
 }
 
 .social-icons a {
-    font-size: 1.5em;
-    margin: 0 10px;
-    color: #3a6cf4;
+    font-size: 24px;
+    color: #fff;
+    margin: 0 15px;
+    text-decoration: none;
 }
+
+/* Contact section */
+.contact {
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+    padding: 50px 0;
+}
+
+.contact .title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.contact .card {
+    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px;
+    text-align: center;
+}
+
+.contact .card h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 10px 0;
+}
+
+.contact .card p {
+    font-size: 18px;
+    font-weight: 300;
+}
+
+/* Add more styles as needed */
