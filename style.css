@@ -129,15 +129,19 @@ header {
 
 
 .machine-learning {
-  width: 100px;
-  height: 100px;
+  width: 20px;
+  height: 20px;
   display: block;
   margin: 0 auto;
 }
 
 .project-card .project-image img {
-  width: 200px;
-  height: 200px;
+  width: 500px;
+  height: 500px;
+  margin: 0 auto; /* Center horizontally */
+  display: flex;
+  justify-content: center;
+  align-items: center;  
 }
 
 /* Footer styling */
