@@ -18,7 +18,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Add additional JavaScript functionality for your sections and elements here
+    // Add animations to elements as they come into view
+    const animatedElements = document.querySelectorAll('.animate-on-scroll');
+    window.addEventListener('scroll', checkElementsInView);
+
+    function checkElementsInView() {
+        animatedElements.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+            if (elementTop < window.innerHeight - 100) {
+                element.classList.add('animate');
+            }
+        });
+    }
 
     // Example: Toggle a class on button click
     const toggleButton = document.querySelector('.toggle-button');
@@ -34,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
         contactForm.addEventListener('submit', function (e) {
             e.preventDefault();
             // Handle form submission logic here
+            // You can use Fetch API or other methods to send form data to a server
         });
     }
 
