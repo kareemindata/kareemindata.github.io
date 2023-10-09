@@ -104,19 +104,18 @@ header {
     background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
     padding: 50px 0;
     display: flex;
-    flex-wrap: wrap; /* Allows cards to wrap to the next line */
-    justify-content: center; /* Center the cards horizontally */
-    gap: 20px; /* Add spacing between cards */
+    flex-direction: column;
+    align-items: center;
 }
 
 .card {
     background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
     padding: 20px;
     border-radius: 10px;
+    margin: 20px;
+    text-align: center;
     max-width: 400px; /* Set a max width for the card */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a shadow for depth */
-    margin: 20px; /* Add margin to separate cards */
-    text-align: center;
 }
 
 .card h3 {
