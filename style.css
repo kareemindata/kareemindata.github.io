@@ -143,10 +143,12 @@ header {
 /* Project card layout improvements */
 .project-card {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     margin: 20px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+    padding: 600px 0;
     border-radius: 10px;
-    padding: 20px;
 }
 
 .project-card .project-image img {
@@ -156,13 +158,6 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-/* Center and add space between project cards */
-.project-cards {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
 }
 
 /* Footer styling */
