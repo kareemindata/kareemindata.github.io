@@ -192,49 +192,6 @@ header {
     font-weight: 300;
 }
 
-/* Dark mode styles */
-body.dark-mode {
-    background-color: #121212; /* Dark background color */
-    color: #fff; /* Light text color */
-}
-
-/* Make the projects section display as two columns */
-.projects {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px; /* Adjust the gap as needed */
-}
-
-.project-card {
-    /* Adjust the card styles as needed for the two-column layout */
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    height: 100%;
-}
-
-.project-card img {
-    /* Adjust the image styles for the two-column layout */
-    width: 100%;
-    max-height: 300px; /* Adjust the max height as needed */
-    object-fit: cover;
-}
-
-/* Toggle button for dark mode */
-.toggle-button {
-    background-color: #ffcc00;
-    color: #000;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 600;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
-
 /* Add more styles as needed */
 
 /* Mobile Responsive Styles */
@@ -255,7 +212,7 @@ body.dark-mode {
 
     /* Adjust the size of icons and images on mobile */
     .card .icon,
-    .project-card img {
+    .project-card .project-image img {
         width: 60px; /* Adjust the size as needed for mobile */
         height: 60px; /* Adjust the size as needed for mobile */
         margin: 0 auto; /* Center horizontally */
