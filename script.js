@@ -46,6 +46,9 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             // Handle form submission logic here
             // You can use Fetch API or other methods to send form data to a server
+
+            // For demonstration purposes, you can show a success message
+            alert('Form submitted successfully!');
         });
     }
 
