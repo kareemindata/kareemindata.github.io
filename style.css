@@ -26,7 +26,6 @@ header {
     position: fixed;
     width: 100%;
     top: 0;
-    z-index: 1000; /* Ensure header is above other elements */
 }
 
 .logo {
@@ -96,14 +95,11 @@ header {
 
 /* Cards styling */
 .cards {
-    display: flex; /* Display cards side by side */
-    justify-content: space-between; /* Space between cards */
     background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
     padding: 50px 0;
 }
 
-.cards .card {
-    width: calc(50% - 20px); /* 50% width for each card with spacing */
+.card {
     background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
     padding: 20px;
     border-radius: 10px;
@@ -111,19 +107,19 @@ header {
     text-align: center;
 }
 
-.cards .card h3 {
+.card h3 {
     font-size: 24px;
     font-weight: 600;
     margin: 10px 0;
 }
 
-.cards .card p {
+.card p {
     font-size: 18px;
     font-weight: 300;
 }
 
 /* Set a consistent size for all icons */
-.cards .card .icon, .machine-learning {
+.card .icon, .machine-learning {
     width: 100px; /* Adjust the size as needed */
     height: 100px; /* Adjust the size as needed */
     margin: 0 auto; /* Center horizontally */
@@ -133,8 +129,8 @@ header {
 }
 
 .project-card .project-image img {
-    max-width: 100%;
-    height: auto;
+    width: 500px;
+    height: 500px;
     margin: 0 auto; /* Center horizontally */
     display: flex;
     justify-content: center;
@@ -167,14 +163,17 @@ header {
 
 /* Contact section */
 .contact {
-    display: flex; /* Display contact cards side by side */
-    justify-content: space-between; /* Space between contact cards */
     background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
     padding: 50px 0;
 }
 
+.contact .title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
 .contact .card {
-    width: calc(50% - 20px); /* 50% width for each contact card with spacing */
     background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
     padding: 20px;
     border-radius: 10px;
@@ -208,12 +207,11 @@ header {
 
     /* Adjust the margins for cards on mobile */
     .cards .card {
-        width: 100%; /* Full width for cards on mobile */
-        margin: 10px 0;
+        margin: 10px;
     }
 
     /* Adjust the size of icons and images on mobile */
-    .cards .card .icon,
+    .card .icon,
     .project-card .project-image img {
         width: 60px; /* Adjust the size as needed for mobile */
         height: 60px; /* Adjust the size as needed for mobile */
@@ -223,11 +221,13 @@ header {
         align-items: center;
     }
 
-    .contact {
-        flex-direction: column; /* Stack contact cards vertically on mobile */
+    /* Rearrange sections for mobile layout */
+    .flex-container {
+        display: flex;
+        flex-direction: column;
     }
 
-    .contact .card {
-        width: 100%; /* Full width for contact cards on mobile */
+    .cards {
+        margin-top: 20px;
     }
 }
