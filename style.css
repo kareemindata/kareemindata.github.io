@@ -118,9 +118,8 @@ header {
     font-weight: 300;
 }
 
-/* Set a consistent size for all icons and images */
-.card .icon,
-.machine-learning {
+/* Set a consistent size for all icons */
+.card .icon, .machine-learning {
     width: 100px; /* Adjust the size as needed */
     height: 100px; /* Adjust the size as needed */
     margin: 0 auto; /* Center horizontally */
@@ -130,8 +129,8 @@ header {
 }
 
 .project-card .project-image img {
-    width: 500px; /* Adjust the size as needed */
-    height: 500px; /* Adjust the size as needed */
+    width: 500px;
+    height: 500px;
     margin: 0 auto; /* Center horizontally */
     display: flex;
     justify-content: center;
