@@ -103,6 +103,9 @@ header {
 .cards {
     background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
     padding: 50px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .card {
@@ -129,6 +132,7 @@ header {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
+    justify-content: center;
 }
 
 /* Style icons in cards */
@@ -182,6 +186,9 @@ header {
 .contact {
     background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
     padding: 50px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .contact .title {
