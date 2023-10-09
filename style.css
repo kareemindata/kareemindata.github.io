@@ -49,8 +49,13 @@ header {
 
 /* Main section styling */
 .main {
+    background-image: url('your-background-image.jpg'); /* Add your background image URL */
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    padding: 200px 0;
     text-align: center;
-    padding: 100px 0;
 }
 
 .main h2 span {
@@ -91,6 +96,7 @@ header {
     font-size: 32px;
     font-weight: 700;
     margin-bottom: 30px;
+    text-align: center;                                  
 }
 
 /* Cards styling */
@@ -118,14 +124,25 @@ header {
     font-weight: 300;
 }
 
-/* Set a consistent size for all icons */
-.card .icon, .machine-learning {
-    width: 100px; /* Adjust the size as needed */
-    height: 100px; /* Adjust the size as needed */
-    margin: 0 auto; /* Center horizontally */
+/* Use CSS Grid for organized layout in Education section */
+.cards .content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* Style icons in cards */
+.card .icon {
+    font-size: 48px;
+}
+
+/* Project card layout improvements */
+.project-card {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
 }
 
 .project-card .project-image img {
@@ -161,7 +178,7 @@ header {
     text-decoration: none;
 }
 
-/* Contact section */
+/* Contact section styling */
 .contact {
     background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
     padding: 50px 0;
@@ -173,26 +190,10 @@ header {
     margin-bottom: 30px;
 }
 
-.contact .card {
-    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
-    padding: 20px;
-    border-radius: 10px;
-    margin: 20px;
-    text-align: center;
+/* Style contact icons */
+.contact .card .icon {
+    font-size: 48px;
 }
-
-.contact .card h3 {
-    font-size: 24px;
-    font-weight: 600;
-    margin: 10px 0;
-}
-
-.contact .card p {
-    font-size: 18px;
-    font-weight: 300;
-}
-
-/* Add more styles as needed */
 
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
