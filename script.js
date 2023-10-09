@@ -39,15 +39,6 @@ document.addEventListener('DOMContentLoaded', function () {
         toggleElement.classList.toggle('active');
     });
 
-    // Add blue light effect to the button on click
-    const mainBtn = document.querySelector('.main-btn');
-    mainBtn.addEventListener('click', function () {
-        mainBtn.classList.add('blue-light'); // Add the CSS class for the blue light effect
-        setTimeout(function () {
-            mainBtn.classList.remove('blue-light'); // Remove the class after a delay
-        }, 300); // Adjust the delay duration (in milliseconds) as needed
-    });
-
     // Example: Form submission handling
     const contactForm = document.querySelector('#contact-form');
     if (contactForm) {
@@ -58,5 +49,31 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Dark Mode Toggle
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const body = document.body;
+    
+    darkModeToggle.addEventListener('click', function () {
+        body.classList.toggle('dark-mode');
+    });
+
+        // Rest of the JavaScript code remains the same
+
+    // Example: Handling Form Submission
+    const contactForm = document.querySelector('#contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData = new FormData(contactForm);
+            // You can now handle form data, for example, by sending it to a server using the Fetch API.
+            // Replace the following lines with your specific form submission logic:
+            console.log('Form submitted with the following data:');
+            for (let [name, value] of formData) {
+                console.log(`${name}: ${value}`);
+            }
+        });
+    }
+
     // Add more JavaScript functionality as needed for your specific requirements
 });
+
