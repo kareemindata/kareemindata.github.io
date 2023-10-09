@@ -119,7 +119,8 @@ header {
 }
 
 /* Set a consistent size for all icons */
-.card .icon, .machine-learning {
+.card .icon,
+.machine-learning {
     width: 100px; /* Adjust the size as needed */
     height: 100px; /* Adjust the size as needed */
     margin: 0 auto; /* Center horizontally */
