@@ -95,11 +95,14 @@ header {
 
 /* Cards styling */
 .cards {
+    display: flex; /* Display cards side by side */
+    justify-content: space-between; /* Space between cards */
     background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
     padding: 50px 0;
 }
 
-.card {
+.cards .card {
+    width: calc(50% - 40px); /* 50% width for each card with spacing */
     background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
     padding: 20px;
     border-radius: 10px;
@@ -107,20 +110,19 @@ header {
     text-align: center;
 }
 
-.card h3 {
+.cards .card h3 {
     font-size: 24px;
     font-weight: 600;
     margin: 10px 0;
 }
 
-.card p {
+.cards .card p {
     font-size: 18px;
     font-weight: 300;
 }
 
 /* Set a consistent size for all icons */
-.card .icon,
-.machine-learning {
+.cards .card .icon {
     width: 100px; /* Adjust the size as needed */
     height: 100px; /* Adjust the size as needed */
     margin: 0 auto; /* Center horizontally */
@@ -164,17 +166,14 @@ header {
 
 /* Contact section */
 .contact {
+    display: flex; /* Display contact cards side by side */
+    justify-content: space-between; /* Space between contact cards */
     background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
     padding: 50px 0;
 }
 
-.contact .title {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 30px;
-}
-
 .contact .card {
+    width: calc(50% - 40px); /* 50% width for each contact card with spacing */
     background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
     padding: 20px;
     border-radius: 10px;
@@ -208,11 +207,12 @@ header {
 
     /* Adjust the margins for cards on mobile */
     .cards .card {
-        margin: 10px;
+        width: 100%; /* Full width for cards on mobile */
+        margin: 10px 0;
     }
 
     /* Adjust the size of icons and images on mobile */
-    .card .icon,
+    .cards .card .icon,
     .project-card .project-image img {
         width: 60px; /* Adjust the size as needed for mobile */
         height: 60px; /* Adjust the size as needed for mobile */
@@ -220,5 +220,13 @@ header {
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    .contact {
+        flex-direction: column; /* Stack contact cards vertically on mobile */
+    }
+
+    .contact .card {
+        width: 100%; /* Full width for contact cards on mobile */
     }
 }
