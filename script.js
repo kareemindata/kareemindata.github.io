@@ -39,6 +39,15 @@ document.addEventListener('DOMContentLoaded', function () {
         toggleElement.classList.toggle('active');
     });
 
+    // Add blue light effect to the button on click
+    const mainBtn = document.querySelector('.main-btn');
+    mainBtn.addEventListener('click', function () {
+        mainBtn.classList.add('blue-light'); // Add the CSS class for the blue light effect
+        setTimeout(function () {
+            mainBtn.classList.remove('blue-light'); // Remove the class after a delay
+        }, 300); // Adjust the delay duration (in milliseconds) as needed
+    });
+
     // Example: Form submission handling
     const contactForm = document.querySelector('#contact-form');
     if (contactForm) {
@@ -46,9 +55,6 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             // Handle form submission logic here
             // You can use Fetch API or other methods to send form data to a server
-
-            // For demonstration purposes, you can show a success message
-            alert('Form submitted successfully!');
         });
     }
 
