@@ -26,6 +26,7 @@ header {
     position: fixed;
     width: 100%;
     top: 0;
+    z-index: 1;
 }
 
 .logo {
@@ -51,6 +52,8 @@ header {
 .main {
     text-align: center;
     padding: 100px 0;
+    position: relative;
+    z-index: 2;
 }
 
 .main h2 span {
@@ -192,8 +195,6 @@ header {
     font-weight: 300;
 }
 
-/* Add more styles as needed */
-
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
     .main {
@@ -221,13 +222,20 @@ header {
         align-items: center;
     }
 
-    /* Rearrange sections for mobile layout */
-    .flex-container {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .cards {
-        margin-top: 20px;
-    }
+    /* Additional mobile responsive styles can be added here */
 }
+
+/* Flex Container for Horizontal Sections */
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* Style for sections inside the flex container */
+.cards {
+    flex: 0 0 calc(50% - 40px); /* 50% width with a little space in between */
+    margin-bottom: 20px;
+}
+
+/* Add more styles as needed */
