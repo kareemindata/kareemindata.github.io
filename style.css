@@ -49,7 +49,7 @@ header {
 
 /* Main section styling */
 .main {
-    background-image: url('your-background-image.jpg'); /* Add your background image URL */
+    background-image: url('your-background-image.jpg');
     background-attachment: fixed;
     background-size: cover;
     background-position: center;
@@ -59,7 +59,7 @@ header {
 }
 
 .main h2 span {
-    color: #ffcc00; /* Yellow color for your name */
+    color: #ffcc00;
 }
 
 .main h3 {
@@ -96,7 +96,7 @@ header {
     font-size: 32px;
     font-weight: 700;
     margin-bottom: 30px;
-    text-align: center;                                  
+    text-align: center; /* Center-align section titles */
 }
 
 /* Cards styling */
@@ -124,36 +124,18 @@ header {
     font-weight: 300;
 }
 
-/* Use CSS Grid for organized layout in Education section */
+/* Center-align all cards and ensure spacing in projects section */
 .cards .content {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    justify-content: center; /* Center-align the cards horizontally */
-    align-items: center; /* Center-align the cards vertically */
-}
-
-/* Style icons in cards */
-.card .icon {
-    font-size: 48px;
-}
-
-/* Project card layout improvements */
-.project-card {
     display: flex;
-    margin: 20px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    padding: 20px;
-}
-
-.project-card .project-image img {
-    width: 500px;
-    height: 500px;
-    margin: 0 auto; /* Center horizontally */
-    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    gap: 20px; /* Adjust the gap as needed for spacing between cards */
+}
+
+/* Ensure spacing between cards in projects section */
+#projects .content {
+    justify-content: space-between;
 }
 
 /* Footer styling */
@@ -180,10 +162,11 @@ header {
     text-decoration: none;
 }
 
-/* Contact section styling */
+/* Contact section */
 .contact {
     background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
     padding: 50px 0;
+    text-align: center; /* Center-align the contact section */
 }
 
 .contact .title {
@@ -192,14 +175,26 @@ header {
     margin-bottom: 30px;
 }
 
-/* Style contact icons */
-.contact .card .icon {
-    font-size: 48px;
+.contact .card {
+    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px;
+    text-align: center;
 }
 
-#projects .content {
-    gap: 30px; /* Adjust the gap as needed for spacing between cards */
+.contact .card h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 10px 0;
 }
+
+.contact .card p {
+    font-size: 18px;
+    font-weight: 300;
+}
+
+/* Add more styles as needed */
 
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
