@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Live Model Demos — Kareem Waly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#060a13;--card:#131b2e;--border:#1e293b;--accent:#1e6fff;--text:#e0e6f0;--text2:#8892a8;--muted:#4a5568}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+a{color:var(--accent);text-decoration:none}
+.top-bar{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:1px solid var(--border)}
+.top-bar h1{font-size:1.1rem;font-weight:600}
+.top-bar a{font-size:.85rem;display:inline-flex;align-items:center;gap:.4rem;color:var(--text2)}
+.top-bar a:hover{color:var(--text)}
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--border);padding:0 2rem;overflow-x:auto}
+.tab{padding:.9rem 1.5rem;font-size:.875rem;font-weight:500;color:var(--text2);cursor:pointer;border-bottom:2px solid transparent;transition:.2s;white-space:nowrap}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.panel{display:none;padding:1.5rem 2rem}
+.panel.active{display:block}
+.model-info{display:flex;gap:1.5rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.info-chip{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:.5rem 1rem;font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--text2)}
+.info-chip strong{color:var(--accent)}
+.space-frame{width:100%;height:700px;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--card)}
+.space-frame iframe{width:100%;height:100%;border:none}
+.note{font-size:.8rem;color:var(--muted);margin-top:.8rem;text-align:center}
+@media(max-width:600px){.model-info{flex-direction:column}.space-frame{height:500px}.tab{padding:.7rem 1rem;font-size:.8rem}}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <h1><i class="fas fa-brain"></i> &nbsp;Live Model Demos</h1>
+  <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="show(0)">CMU-MOSI Sentiment</div>
+  <div class="tab" onclick="show(1)">MELD Emotion</div>
+  <div class="tab" onclick="show(2)">Arabic Sentiment</div>
+</div>
+
+<div class="panel active" id="p0">
+  <div class="model-info">
+    <div class="info-chip"><strong>71.49M</strong> params</div>
+    <div class="info-chip">Acc <strong>80.06%</strong></div>
+    <div class="info-chip">F1 <strong>0.8012</strong></div>
+    <div class="info-chip">Text: DeBERTa · Audio: Whisper · Visual: ViT</div>
+  </div>
+  <div class="space-frame">
+    <iframe src="https://kareem-khaled-mosi-sentiment.hf.space" loading="lazy" title="CMU-MOSI Sentiment Demo"></iframe>
+  </div>
+  <p class="note">Upload a video for real-time 3-class sentiment prediction with intensity scoring.</p>
+</div>
+
+<div class="panel" id="p1">
+  <div class="model-info">
+    <div class="info-chip"><strong>1.99M</strong> params</div>
+    <div class="info-chip">Emotion <strong>62.87%</strong></div>
+    <div class="info-chip">Sentiment <strong>68.93%</strong></div>
+    <div class="info-chip">Audio: MFCC · Text: BERT · Visual: CNN</div>
+  </div>
+  <div class="space-frame">
+    <iframe src="https://kareem-khaled-meld-emotion.hf.space" loading="lazy" title="MELD Emotion Demo"></iframe>
+  </div>
+  <p class="note">Upload a video for 7-emotion classification + 3-class sentiment analysis.</p>
+</div>
+
+<div class="panel" id="p2">
+  <div class="model-info">
+    <div class="info-chip"><strong>Arabic</strong> BERT + MFCC + PCA Video</div>
+    <div class="info-chip">Acc <strong>39.68%</strong></div>
+    <div class="info-chip">288 train samples</div>
+  </div>
+  <div class="space-frame">
+    <iframe src="https://kareem-khaled-arabic-sentiment.hf.space" loading="lazy" title="Arabic Sentiment Demo"></iframe>
+  </div>
+  <p class="note">Keyword-based simulation — model weights pending retraining.</p>
+</div>
+
+<script>
+function show(i){
+  document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('active',j===i));
+  document.querySelectorAll('.panel').forEach((p,j)=>p.classList.toggle('active',j===i));
+}
+</script>
+</body>
+</html>
