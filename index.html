@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kareem Waly — ML Engineer & AI Researcher</title>
-<meta name="description" content="Machine Learning Engineer & Published AI Researcher. GNNs, Multimodal AI, RAG Pipelines. Seeking PhD positions.">
+<title>Kareem Waly — ML Engineer & AI Researcher · PhD-friendly</title>
+<meta name="description" content="Machine Learning Engineer & Published AI Researcher (IEEE). GNNs, Multimodal AI, RAG. Open to PhD positions and applied AI collaborations.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
@@ -15,6 +15,7 @@
   --bg:#060a13;--bg2:#0c1220;--card:#131b2e;--border:#1e293b;
   --accent:#1e6fff;--accent2:#3b82f6;--accent-glow:rgba(30,111,255,.15);
   --text:#e0e6f0;--text2:#8892a8;--muted:#4a5568;
+  --green:#10b981;
   --font-body:'DM Sans',sans-serif;--font-mono:'JetBrains Mono',monospace;--font-serif:'Playfair Display',serif;
   --radius:12px;--transition:.3s cubic-bezier(.4,0,.2,1);
 }
@@ -30,20 +31,16 @@ a:hover{color:#60a5fa}
 .nav.scrolled{background:rgba(6,10,19,.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
 .nav-logo{font-family:var(--font-mono);font-weight:600;font-size:1.1rem;color:var(--text);letter-spacing:-.5px}
 .nav-logo span{color:var(--accent)}
-.nav-links{display:flex;gap:1.8rem;align-items:center}
-.nav-links a{color:var(--text2);font-size:.875rem;font-weight:500;transition:color var(--transition)}
+.nav-links{display:flex;gap:1.6rem;align-items:center;flex-wrap:wrap}
+.nav-links a{color:var(--text2);font-size:.85rem;font-weight:500;transition:color var(--transition)}
 .nav-links a:hover{color:var(--text)}
 .nav-links a.btn-resume{background:var(--accent);color:#fff;padding:.45rem 1.1rem;border-radius:6px;font-size:.8rem}
 .nav-links a.btn-resume:hover{background:var(--accent2)}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001}
 .hamburger span{width:24px;height:2px;background:var(--text);transition:var(--transition)}
-.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
-.hamburger.active span:nth-child(2){opacity:0}
-.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
 
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:8rem 2rem 4rem;z-index:1}
 .hero-bg{position:absolute;inset:0;background:url('background.jfif') center/cover no-repeat;opacity:.12;z-index:-1}
-.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,var(--bg) 0%,transparent 30%,transparent 70%,var(--bg) 100%)}
 .hero-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:4rem;width:100%}
 .hero-text{flex:1}
 .hero-photo{flex-shrink:0}
@@ -64,13 +61,6 @@ a:hover{color:#60a5fa}
 .btn-outline{background:transparent;border:1px solid var(--border);color:var(--text2)}
 .btn-outline:hover{border-color:var(--accent);color:var(--text);transform:translateY(-2px)}
 
-.stats{position:relative;z-index:1;padding:0 2rem}
-.stats-inner{max-width:900px;margin:-2rem auto 0;display:grid;grid-template-columns:repeat(4,1fr);background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
-.stat{text-align:center;padding:1.8rem 1rem;border-right:1px solid var(--border)}
-.stat:last-child{border-right:none}
-.stat-number{font-family:var(--font-mono);font-size:2.2rem;font-weight:700;color:var(--accent);margin-bottom:.2rem}
-.stat-label{font-size:.78rem;color:var(--text2);text-transform:uppercase;letter-spacing:1.5px}
-
 section{position:relative;z-index:1;padding:5rem 2rem}
 .section-inner{max-width:1100px;margin:0 auto}
 .section-title{font-family:var(--font-serif);font-size:2rem;font-weight:700;margin-bottom:.4rem}
@@ -86,44 +76,6 @@ section{position:relative;z-index:1;padding:5rem 2rem}
 .about-highlight h4{font-size:.88rem;font-weight:600;margin-bottom:.15rem}
 .about-highlight p{font-size:.8rem;color:var(--text2)}
 
-.timeline{position:relative;padding-left:2rem}
-.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--accent),var(--border))}
-.timeline-item{position:relative;margin-bottom:2.5rem;padding-left:1.5rem}
-.timeline-item::before{content:'';position:absolute;left:-2rem;top:.5rem;width:12px;height:12px;border-radius:50%;background:var(--accent);border:3px solid var(--bg);z-index:1;margin-left:-5px}
-.timeline-item h3{font-size:1.05rem;font-weight:600;margin-bottom:.15rem}
-.timeline-item .meta{font-size:.8rem;color:var(--accent2);font-family:var(--font-mono);margin-bottom:.4rem}
-.timeline-item p{color:var(--text2);font-size:.9rem;line-height:1.7}
-
-.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.2rem}
-.service-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.6rem;transition:var(--transition)}
-.service-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 30px rgba(30,111,255,.08)}
-.service-card .svc-icon{width:48px;height:48px;border-radius:10px;background:var(--accent-glow);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1.2rem;margin-bottom:1rem}
-.service-card h3{font-size:1rem;font-weight:600;margin-bottom:.4rem}
-.service-card p{font-size:.84rem;color:var(--text2);line-height:1.7}
-
-.collab-form{max-width:600px;margin:2.5rem auto 0;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem}
-.collab-form h3{font-size:1.1rem;font-weight:600;margin-bottom:.3rem;text-align:center}
-.collab-form .form-sub{font-size:.82rem;color:var(--text2);text-align:center;margin-bottom:1.5rem}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:.8rem}
-.form-group{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.8rem}
-.form-group label{font-size:.78rem;color:var(--text2);font-weight:500}
-.form-group input,.form-group select,.form-group textarea{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.65rem .9rem;color:var(--text);font-family:var(--font-body);font-size:.85rem;transition:var(--transition);outline:none}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent)}
-.form-group textarea{resize:vertical;min-height:90px}
-.form-submit{width:100%;padding:.75rem;background:var(--accent);color:#fff;border:none;border-radius:8px;font-family:var(--font-body);font-size:.9rem;font-weight:600;cursor:pointer;transition:var(--transition);margin-top:.5rem}
-.form-submit:hover{background:var(--accent2);transform:translateY(-1px)}
-.form-msg{text-align:center;font-size:.85rem;color:#34d399;margin-top:.8rem;display:none}
-
-.topics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem}
-.topic-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.3rem;transition:var(--transition);display:flex;align-items:flex-start;gap:.8rem}
-.topic-card:hover{border-color:var(--accent)}
-.topic-card i{color:var(--accent);font-size:1rem;margin-top:.2rem;flex-shrink:0}
-.topic-card h4{font-size:.9rem;font-weight:600;margin-bottom:.15rem}
-.topic-card p{font-size:.78rem;color:var(--text2)}
-
-.filter-bar{display:flex;gap:.5rem;margin-bottom:2rem;flex-wrap:wrap}
-.filter-btn{background:var(--card);border:1px solid var(--border);color:var(--text2);padding:.4rem 1rem;border-radius:6px;font-size:.8rem;cursor:pointer;transition:var(--transition);font-family:var(--font-body)}
-.filter-btn.active,.filter-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
 .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem}
 .project-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.6rem;transition:var(--transition);position:relative;overflow:hidden}
 .project-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 12px 40px rgba(30,111,255,.1)}
@@ -139,13 +91,36 @@ section{position:relative;z-index:1;padding:5rem 2rem}
 .project-tags span{font-size:.7rem;color:var(--muted);border:1px solid var(--border);padding:.15rem .5rem;border-radius:4px}
 .project-links{display:flex;gap:.6rem}
 .project-links a{font-size:.8rem;font-weight:600;display:inline-flex;align-items:center;gap:.3rem}
+.filter-bar{display:flex;gap:.5rem;margin-bottom:2rem;flex-wrap:wrap}
+.filter-btn{background:var(--card);border:1px solid var(--border);color:var(--text2);padding:.4rem 1rem;border-radius:6px;font-size:.8rem;cursor:pointer;transition:var(--transition);font-family:var(--font-body)}
+.filter-btn.active,.filter-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
 
 .pub-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem;position:relative}
 .pub-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);border-radius:3px 0 0 3px}
 .pub-card h3{font-size:1rem;font-weight:600;margin-bottom:.4rem;line-height:1.5}
 .pub-card .authors{font-size:.85rem;color:var(--text2);margin-bottom:.3rem}
 .pub-card .authors strong{color:var(--accent2)}
-.pub-card .venue{font-size:.8rem;color:var(--muted);font-style:italic}
+.pub-card .venue{font-size:.8rem;color:var(--muted);font-style:italic;margin-bottom:.8rem}
+.pub-card .pub-contrib{font-size:.82rem;color:var(--text2);margin-bottom:.6rem}
+.pub-links{display:flex;gap:.8rem;flex-wrap:wrap}
+.pub-links a{font-size:.78rem;font-weight:600}
+
+.timeline{position:relative;padding-left:2rem}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--accent),var(--border))}
+.timeline-item{position:relative;margin-bottom:2.2rem;padding-left:1.5rem}
+.timeline-item::before{content:'';position:absolute;left:-2rem;top:.5rem;width:12px;height:12px;border-radius:50%;background:var(--accent);border:3px solid var(--bg);z-index:1;margin-left:-5px}
+.timeline-item h3{font-size:1.05rem;font-weight:600;margin-bottom:.15rem}
+.timeline-item .meta{font-size:.8rem;color:var(--accent2);font-family:var(--font-mono);margin-bottom:.4rem}
+.timeline-item p{color:var(--text2);font-size:.88rem;line-height:1.7}
+.timeline-item ul{margin-left:1rem;color:var(--text2);font-size:.85rem;margin-top:.3rem}
+.timeline-item ul li{margin-bottom:.25rem}
+
+.topics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
+.topic-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.3rem;transition:var(--transition);display:flex;align-items:flex-start;gap:.8rem}
+.topic-card:hover{border-color:var(--accent)}
+.topic-card i{color:var(--accent);font-size:1rem;margin-top:.2rem;flex-shrink:0}
+.topic-card h4{font-size:.9rem;font-weight:600;margin-bottom:.15rem}
+.topic-card p{font-size:.78rem;color:var(--text2)}
 
 .edu-grid{display:grid;gap:1.2rem}
 .edu-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;display:flex;gap:1rem;align-items:flex-start}
@@ -153,47 +128,79 @@ section{position:relative;z-index:1;padding:5rem 2rem}
 .edu-card h3{font-size:1rem;font-weight:600;margin-bottom:.1rem}
 .edu-card .meta{font-size:.8rem;color:var(--accent2);font-family:var(--font-mono);margin-bottom:.3rem}
 .edu-card p{font-size:.85rem;color:var(--text2)}
+.edu-card .research-value{margin-top:.4rem;font-size:.82rem;color:var(--accent2);font-style:italic}
 
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.2rem}
-.skill-group{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem}
-.skill-group h3{font-size:.8rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:.8rem;font-family:var(--font-mono)}
-.skill-tags{display:flex;flex-wrap:wrap;gap:.4rem}
-.skill-tags span{font-size:.82rem;color:var(--text2);background:rgba(30,111,255,.06);border:1px solid var(--border);padding:.3rem .7rem;border-radius:6px;transition:var(--transition)}
-.skill-tags span:hover{border-color:var(--accent);color:var(--text)}
-
-.community-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem}
-.community-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;text-align:center;transition:var(--transition)}
-.community-card:hover{border-color:var(--accent);transform:translateY(-2px)}
-.community-card .icon{font-size:1.6rem;color:var(--accent);margin-bottom:.6rem}
-.community-card h3{font-size:.95rem;font-weight:600;margin-bottom:.2rem}
-.community-card p{font-size:.82rem;color:var(--text2)}
-.community-card a{font-size:.78rem;display:inline-block;margin-top:.4rem}
-
-.ambassador-feature{margin-top:2rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;display:flex;gap:2rem;align-items:center}
-.ambassador-feature img{width:200px;height:auto;border-radius:var(--radius);border:2px solid var(--border);flex-shrink:0}
-.ambassador-feature h3{font-size:1.1rem;font-weight:600;margin-bottom:.3rem}
-.ambassador-feature p{font-size:.88rem;color:var(--text2);line-height:1.7;margin-bottom:.5rem}
-
-.calendly-section{text-align:center}
-.calendly-section .cal-frame{max-width:700px;margin:0 auto;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)}
-.calendly-section iframe{width:100%;height:660px;border:none}
-
-.contact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;max-width:700px}
-.contact-link{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;display:flex;align-items:center;gap:.8rem;transition:var(--transition)}
+/* CONTACT with embedded Book-a-Call */
+.contact-intro{max-width:720px;margin-bottom:2rem;color:var(--text2);font-size:.95rem}
+.contact-actions{display:flex;gap:.7rem;flex-wrap:wrap;margin-bottom:2rem}
+.contact-actions a, .contact-actions button{padding:.7rem 1.25rem;border-radius:8px;font-size:.85rem;font-weight:600;display:inline-flex;align-items:center;gap:.5rem;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--text2);transition:var(--transition)}
+.contact-actions a:hover, .contact-actions button:hover{border-color:var(--accent);color:var(--text);transform:translateY(-1px)}
+.contact-actions a.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.contact-actions a.primary:hover{background:var(--accent2);color:#fff}
+.intent-chips{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem}
+.chip-intent{padding:.4rem .9rem;border-radius:20px;font-size:.78rem;background:rgba(30,111,255,.08);border:1px solid var(--border);color:var(--text2);cursor:pointer;transition:var(--transition)}
+.chip-intent:hover{border-color:var(--accent);color:var(--text)}
+.chip-intent.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;max-width:900px}
+.contact-link{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem;display:flex;align-items:center;gap:.7rem;transition:var(--transition)}
 .contact-link:hover{border-color:var(--accent);transform:translateY(-2px)}
-.contact-link i{font-size:1.2rem;color:var(--accent)}
-.contact-link .label{font-size:.75rem;color:var(--muted);display:block}
-.contact-link .value{font-size:.88rem;color:var(--text)}
+.contact-link i{font-size:1.15rem;color:var(--accent)}
+.contact-link .label{font-size:.72rem;color:var(--muted);display:block}
+.contact-link .value{font-size:.85rem;color:var(--text)}
+
+/* MODAL for Book-a-Call */
+.modal-back{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);z-index:2000;display:none;align-items:center;justify-content:center;padding:2rem}
+.modal-back.open{display:flex}
+.modal-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);width:100%;max-width:760px;max-height:90vh;overflow:auto;padding:1.6rem;position:relative}
+.modal-box .close{position:absolute;top:.8rem;right:1rem;background:transparent;border:none;color:var(--text2);font-size:1.4rem;cursor:pointer}
+.modal-box .close:hover{color:var(--text)}
+.modal-box h3{font-family:var(--font-serif);font-size:1.4rem;margin-bottom:.3rem}
+.modal-box .meeting-types{display:flex;gap:.6rem;flex-wrap:wrap;margin:1rem 0 1.2rem}
+.meeting-type{padding:.6rem 1rem;border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:.85rem;color:var(--text2);transition:var(--transition)}
+.meeting-type:hover, .meeting-type.active{border-color:var(--accent);color:var(--text);background:rgba(30,111,255,.08)}
+.cal-frame{border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)}
+.cal-frame iframe{width:100%;height:620px;border:none;display:block}
+
+/* WAYS I COLLABORATE */
+.ways-intro{color:var(--text2);font-size:.95rem;max-width:900px;margin-bottom:2rem;line-height:1.8}
+.ways-track{margin-bottom:2rem}
+.ways-track h3{font-size:1.1rem;font-weight:600;margin-bottom:.3rem;color:var(--accent2)}
+.ways-track .track-sub{font-size:.82rem;color:var(--muted);margin-bottom:1.2rem;text-transform:uppercase;letter-spacing:1px;font-family:var(--font-mono)}
+.ways-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
+.way-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.3rem;transition:var(--transition)}
+.way-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.way-card .svc-icon{width:44px;height:44px;border-radius:10px;background:var(--accent-glow);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1rem;margin-bottom:.8rem}
+.way-card h4{font-size:.95rem;font-weight:600;margin-bottom:.3rem}
+.way-card p{font-size:.82rem;color:var(--text2);line-height:1.7}
+.ways-cta{margin-top:2rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.6rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.ways-cta .cta-text{flex:1;min-width:260px}
+.ways-cta h4{font-size:1rem;font-weight:600;margin-bottom:.2rem}
+.ways-cta p{font-size:.85rem;color:var(--text2)}
+.ways-cta .btn-primary{white-space:nowrap}
+
+/* COMMUNITY / SKILLS (condensed) */
+.community-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem}
+.community-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;text-align:center;transition:var(--transition)}
+.community-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.community-card .icon{font-size:1.5rem;color:var(--accent);margin-bottom:.5rem}
+.community-card h3{font-size:.9rem;font-weight:600;margin-bottom:.2rem}
+.community-card p{font-size:.78rem;color:var(--text2)}
+.community-card a{font-size:.74rem;display:inline-block;margin-top:.3rem}
+
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
+.skill-group{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem}
+.skill-group h3{font-size:.78rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:.6rem;font-family:var(--font-mono)}
+.skill-tags{display:flex;flex-wrap:wrap;gap:.35rem}
+.skill-tags span{font-size:.78rem;color:var(--text2);background:rgba(30,111,255,.06);border:1px solid var(--border);padding:.25rem .6rem;border-radius:6px}
 
 footer{border-top:1px solid var(--border);padding:2rem;text-align:center;position:relative;z-index:1}
 .footer-socials{display:flex;justify-content:center;gap:1.2rem;margin-bottom:.8rem}
-.footer-socials a{color:var(--muted);font-size:1.1rem;transition:color var(--transition)}
+.footer-socials a{color:var(--muted);font-size:1.1rem}
 .footer-socials a:hover{color:var(--accent)}
 footer p{font-size:.8rem;color:var(--muted)}
 
 .back-top{position:fixed;bottom:2rem;right:2rem;width:42px;height:42px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;visibility:hidden;transition:var(--transition);z-index:999;border:none;font-size:.9rem}
 .back-top.visible{opacity:1;visibility:visible}
-.back-top:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(30,111,255,.4)}
 
 .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
@@ -207,15 +214,8 @@ footer p{font-size:.8rem;color:var(--muted)}
   .hero-desc{margin:0 auto 1.8rem}
   .hero-btns{justify-content:center}
   .hero-photo img{width:200px;height:200px}
-  .stats-inner{grid-template-columns:repeat(2,1fr)}
-  .stat:nth-child(2){border-right:none}
-  .stat{border-bottom:1px solid var(--border)}
-  .projects-grid,.services-grid{grid-template-columns:1fr}
-  .filter-bar{justify-content:center}
+  .projects-grid,.ways-grid{grid-template-columns:1fr}
   .about-content{grid-template-columns:1fr}
-  .form-row{grid-template-columns:1fr}
-  .ambassador-feature{flex-direction:column;text-align:center}
-  .ambassador-feature img{width:160px}
 }
 </style>
 </head>
@@ -223,42 +223,42 @@ footer p{font-size:.8rem;color:var(--muted)}
 
 <canvas id="particles"></canvas>
 
-<!-- NAV -->
+<!-- NAV — reordered to match new section flow, Resume split into Research CV / Industry Resume -->
 <nav class="nav" id="nav">
   <a href="#" class="nav-logo">&lt;<span>KW</span>/&gt;</a>
   <div class="nav-links" id="navLinks">
     <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#experience">Experience</a>
     <a href="#projects">Projects</a>
-    <a href="#research-topics">Research</a>
     <a href="#publications">Publications</a>
+    <a href="#experience">Experience</a>
+    <a href="#research-topics">Research</a>
     <a href="#education">Education</a>
-    <a href="#schedule">Schedule</a>
     <a href="#contact">Contact</a>
-    <a href="https://drive.google.com/file/d/1yOIAwfwk95HORWcmOXpTHrhC_Iea2TRY/view" target="_blank" class="btn-resume"><i class="fas fa-file-alt"></i> Resume</a>
+    <a href="#ways">Ways I Collaborate</a>
+    <a href="/files/Kareem_Waly_Research_CV_2026.pdf" target="_blank" onclick="trackCV('view','research')" class="btn-resume"><i class="fas fa-file-alt"></i> Research CV</a>
   </div>
   <div class="hamburger" id="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open');this.classList.toggle('active')">
     <span></span><span></span><span></span>
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- 1. HERO -->
 <section class="hero" id="hero">
   <div class="hero-bg"></div>
   <div class="hero-inner">
     <div class="hero-text">
-      <div class="badge-phd"><span class="pulse"></span> Open to PhD Positions</div>
+      <div class="badge-phd"><span class="pulse"></span> Open to PhD Positions · Fall 2026</div>
       <h1 class="hero-name">Kareem Waly</h1>
       <p class="hero-role">Machine Learning Engineer &amp; Published AI Researcher (IEEE)</p>
       <div class="typed-wrap"><span id="typed"></span><span class="typed-cursor">|</span></div>
-      <p class="hero-desc">Building at the intersection of research and real-world impact — from Graph Neural Networks for drug discovery to multimodal sentiment systems for Arabic and English. Co-founder of AI-Talents. Technical Program Chair, IndabaX Egypt 2026.</p>
+      <p class="hero-desc">I work at the intersection of rigorous research and production ML — from Graph Neural Networks for drug discovery to multimodal sentiment systems. Published at IEEE ASET 2025. Co-founder of AI-Talents (33 mentees). Technical Program Chair, IndabaX Egypt 2026.</p>
       <div class="hero-btns">
         <a href="#projects" class="btn btn-primary"><i class="fas fa-rocket"></i> View Projects</a>
-        <a href="https://github.com/kareemindata" target="_blank" class="btn btn-outline"><i class="fab fa-github"></i> GitHub</a>
-        <a href="https://scholar.google.com/citations?user=3dlL87IAAAAJ" target="_blank" class="btn btn-outline"><i class="fas fa-graduation-cap"></i> Scholar</a>
-        <a href="#schedule" class="btn btn-outline"><i class="fas fa-calendar"></i> Book a Call</a>
+        <a href="/files/Kareem_Waly_Research_CV_2026.pdf" target="_blank" onclick="trackCV('view','research')" class="btn btn-outline"><i class="fas fa-eye"></i> View Research CV</a>
+        <a href="/files/Kareem_Waly_Research_CV_2026.pdf" download onclick="trackCV('download','research')" class="btn btn-outline"><i class="fas fa-download"></i> Download CV</a>
+        <button class="btn btn-outline" onclick="openBookModal()"><i class="fas fa-calendar"></i> Book a Call</button>
       </div>
+      <div style="margin-top:.9rem;font-size:.78rem;color:var(--muted)">For consulting, research discussion, or PhD opportunities</div>
     </div>
     <div class="hero-photo">
       <img src="photo.jpg" alt="Kareem Waly" loading="lazy">
@@ -266,28 +266,17 @@ footer p{font-size:.8rem;color:var(--muted)}
   </div>
 </section>
 
-<!-- STATS -->
-<div class="stats reveal">
-  <div class="stats-inner">
-    <div class="stat"><div class="stat-number" data-target="6">0</div><div class="stat-label">Research Projects</div></div>
-    <div class="stat"><div class="stat-number" data-target="1">0</div><div class="stat-label">IEEE Publication</div></div>
-    <div class="stat"><div class="stat-number" data-target="33">0</div><div class="stat-label">Students Mentored</div></div>
-    <div class="stat"><div class="stat-number" data-target="80" data-suffix="%">0</div><div class="stat-label">Best Model Acc</div></div>
-  </div>
-</div>
-
-<!-- ABOUT -->
+<!-- 2. ABOUT / RESEARCH IDENTITY -->
 <section id="about">
   <div class="section-inner reveal">
     <h2 class="section-title">About Me</h2>
-    <p class="section-sub">Research-driven engineer, impact-focused builder.</p>
+    <p class="section-sub">Research-first, impact-driven, cross-cultural.</p>
     <div class="about-content">
       <div class="about-text">
-        <p>Machine Learning Engineer and published AI researcher, my work is driven by a core mission: <strong>to bridge the gap between complex research and real-world impact</strong>. My journey began as an Android developer, honing my skills on freelancing projects — including a Recommendation System app integrating Android, APIs, and ML models — which sparked my pursuit of a master's degree in AI and Data Science.</p>
-        <p>I hold a <strong>Master's in Data Science &amp; AI from the University of Ottawa</strong> (A+ grade, full DEBI scholarship) and a <strong>B.Sc. in Computer Science from Helwan University</strong> (2nd in class). With over 2 years of experience, I specialize in machine learning, deep learning, and generative AI — focusing on NLP, computer vision, and blockchain applications.</p>
-        <p>My practical experience spans deploying production-level systems at AIM Technologies, architecting multimodal systems for sentiment analysis, building biometric security systems for fingerprint verification, and currently developing an advanced AI agent for customer support. This hands-on work is complemented by a strong research foundation — my work on "Predicting Drug-Drug Interactions Using Graph Neural Networks" was accepted and presented at the prestigious <strong>IEEE ASET 2025</strong> conference.</p>
-        <p>I am also a lifelong learner, having participated in the <strong>Deep Dive into Blockchain Summer School at UZH</strong>, exploring NFTs, Smart Contracts, and the Metaverse — bridging AI and blockchain for innovation in secure data sharing and decentralized systems.</p>
-        <p style="color:var(--accent);font-weight:600;font-style:italic;margin-top:.5rem">My ultimate goal is to pursue a PhD where I can contribute to cutting-edge advancements in machine learning.</p>
+        <p>I am a Machine Learning Engineer and published AI researcher whose work is driven by one idea: <strong>bridge rigorous research with real-world impact</strong>. My trajectory moved from Android and freelancing, through a Master's at the University of Ottawa, into production ML and IEEE-level research.</p>
+        <p>I hold an <strong>M.Eng in Data Science &amp; AI from the University of Ottawa</strong> (A+, full DEBI scholarship) and a <strong>B.Sc. in Computer Science &amp; Math from Helwan University</strong> (2nd in class). Over 2+ years I have specialized in deep learning, NLP, multimodal AI and generative systems, with production deployment experience.</p>
+        <p>My research on <strong>Predicting Drug-Drug Interactions using Graph Neural Networks</strong> was accepted and presented at <strong>IEEE ASET 2025</strong>. I also completed the <strong>Deep Dive into Blockchain Summer School at UZH</strong>, expanding my perspective on secure, decentralized systems.</p>
+        <p style="color:var(--accent);font-weight:600;font-style:italic;margin-top:.5rem">I am actively seeking a PhD position where I can contribute to healthcare AI, multimodal learning, GNNs, or trustworthy ML.</p>
       </div>
       <div class="about-highlights">
         <div class="about-highlight">
@@ -296,173 +285,26 @@ footer p{font-size:.8rem;color:var(--muted)}
         </div>
         <div class="about-highlight">
           <i class="fas fa-cogs"></i>
-          <div><h4>Full ML Lifecycle</h4><p>Data preprocessing to model deployment and monitoring. Spoken Language ID system with 90%+ accuracy in production.</p></div>
+          <div><h4>Full ML Lifecycle</h4><p>Preprocessing to deployment and monitoring. Spoken Language ID system with 90%+ accuracy in production.</p></div>
         </div>
         <div class="about-highlight">
           <i class="fas fa-users"></i>
-          <div><h4>Educator &amp; Leader</h4><p>Co-founded AI-Talents, mentoring 33 students across MENA. Technical Program Chair at IndabaX Egypt.</p></div>
+          <div><h4>Educator &amp; Leader</h4><p>Co-founded AI-Talents (33 mentees). Technical Program Chair at IndabaX Egypt 2026.</p></div>
         </div>
         <div class="about-highlight">
           <i class="fas fa-globe"></i>
-          <div><h4>Cross-Cultural Collaborator</h4><p>Worked across Egypt, Canada, Germany, Switzerland, and UAE — adaptable, open-minded, detail-oriented.</p></div>
+          <div><h4>Cross-Cultural Collaborator</h4><p>Egypt, Canada, Germany, Switzerland, UAE. Adaptable, open-minded, detail-oriented.</p></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SERVICES -->
-<section id="services" style="background:var(--bg2)">
+<!-- 3. FEATURED PROJECTS (moved up — strongest proof early) -->
+<section id="projects" style="background:var(--bg2)">
   <div class="section-inner reveal">
-    <h2 class="section-title">Services</h2>
-    <p class="section-sub">How I can help you build, research, and scale.</p>
-    <div class="services-grid">
-      <div class="service-card">
-        <div class="svc-icon"><i class="fas fa-brain"></i></div>
-        <h3>Machine Learning Engineering</h3>
-        <p>End-to-end ML solutions — from data pipelines and model training to production deployment and monitoring. Specializing in deep learning, NLP, and GNNs with a focus on scalable, reliable systems.</p>
-      </div>
-      <div class="service-card">
-        <div class="svc-icon"><i class="fas fa-eye"></i></div>
-        <h3>Computer Vision</h3>
-        <p>Image classification, object detection, facial analysis, and multimodal visual understanding. Experience with biometric verification systems and video-based sentiment analysis pipelines.</p>
-      </div>
-      <div class="service-card">
-        <div class="svc-icon"><i class="fas fa-microscope"></i></div>
-        <h3>AI Research &amp; Consulting</h3>
-        <p>Translating cutting-edge research into actionable solutions. Literature reviews, experiment design, model architecture development, and paper writing — from ideation to IEEE-level publication.</p>
-      </div>
-      <div class="service-card">
-        <div class="svc-icon"><i class="fas fa-chart-line"></i></div>
-        <h3>Data Analysis</h3>
-        <p>Exploratory data analysis, statistical modeling, and insight generation from complex datasets. Building dashboards, automated reports, and data quality frameworks for informed decision-making.</p>
-      </div>
-      <div class="service-card">
-        <div class="svc-icon"><i class="fas fa-chalkboard-teacher"></i></div>
-        <h3>AI Training &amp; Workshops</h3>
-        <p>Curriculum design and hands-on training for teams and students. Proven track record mentoring 33+ learners through AI-Talents — from fundamentals to advanced deep learning and deployment.</p>
-      </div>
-      <div class="service-card">
-        <div class="svc-icon"><i class="fas fa-robot"></i></div>
-        <h3>AI Agents &amp; RAG Systems</h3>
-        <p>Building intelligent retrieval-augmented generation pipelines and autonomous AI agents. Hybrid dense-sparse retrieval, tool-using agents, and LLM-powered automation for real-world workflows.</p>
-      </div>
-    </div>
-
-    <!-- COLLABORATION FORM -->
-    <div class="collab-form" id="collab-form">
-      <h3>Let's Collaborate</h3>
-      <p class="form-sub">Interested in working together? Fill in the details and I'll get back to you.</p>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Your Name</label>
-          <input type="text" id="formName" placeholder="Full name">
-        </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" id="formEmail" placeholder="you@example.com">
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Service Interested In</label>
-        <select id="formService">
-          <option value="">Select a service...</option>
-          <option>Machine Learning Engineering</option>
-          <option>Computer Vision</option>
-          <option>AI Research & Consulting</option>
-          <option>Data Analysis</option>
-          <option>AI Training & Workshops</option>
-          <option>AI Agents & RAG Systems</option>
-          <option>Other</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Tell me about your project</label>
-        <textarea id="formMsg" placeholder="Brief description of what you need help with..."></textarea>
-      </div>
-      <button class="form-submit" onclick="submitForm()">Send Message <i class="fas fa-paper-plane"></i></button>
-      <p class="form-msg" id="formSuccess">Thanks! I'll get back to you soon.</p>
-    </div>
-  </div>
-</section>
-
-<!-- EXPERIENCE -->
-<section id="experience">
-  <div class="section-inner reveal">
-    <h2 class="section-title">Experience</h2>
-    <p class="section-sub">Where research meets impact.</p>
-    <div class="timeline">
-      <div class="timeline-item">
-        <h3>Technical Program Chair — IndabaX Egypt</h3>
-        <div class="meta">2025 – Present</div>
-        <p>Lead the technical program for Egypt's largest AI/ML community conference. Curate the workshop track, recruit speakers and mentors, and shape the scientific direction.</p>
-      </div>
-      <div class="timeline-item">
-        <h3>Co-Founder &amp; AI Researcher — AI-Talents EdTech</h3>
-        <div class="meta">Oct 2023 – Present</div>
-        <p>Co-founded a mindset-first EdTech startup training the next generation of AI engineers across the MENA region. Architected the <a href="https://ai-talents-curriculum.netlify.app/" target="_blank">full curriculum</a>. Mentoring 33 students.</p>
-      </div>
-      <div class="timeline-item">
-        <h3>Machine Learning Engineer — AIM Technologies</h3>
-        <div class="meta">Aug 2022 – Feb 2023</div>
-        <p>Built production Spoken Language Identification system with 90%+ accuracy. Managed full ML lifecycle from preprocessing to deployment.</p>
-      </div>
-      <div class="timeline-item">
-        <h3>Data Scientist Intern — Hertie School Data Science Lab</h3>
-        <div class="meta">Aug – Sep 2023</div>
-        <p>Researched GANs for synthetic data generation. Contributed to ML pipeline design alongside senior researchers.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- RESEARCH TOPICS -->
-<section id="research-topics" style="background:var(--bg2)">
-  <div class="section-inner reveal">
-    <h2 class="section-title">Research Interests</h2>
-    <p class="section-sub">Here are some topics that I am particularly interested in.</p>
-    <div class="topics-grid">
-      <div class="topic-card">
-        <i class="fas fa-project-diagram"></i>
-        <div><h4>Graph Neural Networks</h4><p>Drug discovery, molecular property prediction, relational reasoning over structured data.</p></div>
-      </div>
-      <div class="topic-card">
-        <i class="fas fa-layer-group"></i>
-        <div><h4>Multimodal AI</h4><p>Fusion of text, audio, and visual signals for sentiment analysis, emotion recognition, and cross-lingual understanding.</p></div>
-      </div>
-      <div class="topic-card">
-        <i class="fas fa-search"></i>
-        <div><h4>Retrieval-Augmented Generation</h4><p>Hybrid dense-sparse retrieval, knowledge-grounded generation, and scalable RAG pipelines for enterprise use.</p></div>
-      </div>
-      <div class="topic-card">
-        <i class="fas fa-robot"></i>
-        <div><h4>AI Agents &amp; Tool Use</h4><p>Autonomous agents with planning, memory, and tool-calling capabilities for complex real-world tasks.</p></div>
-      </div>
-      <div class="topic-card">
-        <i class="fas fa-language"></i>
-        <div><h4>Arabic NLP</h4><p>Low-resource language processing, cross-modal Arabic sentiment analysis, and dialect-aware models.</p></div>
-      </div>
-      <div class="topic-card">
-        <i class="fas fa-gamepad"></i>
-        <div><h4>Reinforcement Learning</h4><p>Q-Learning for dynamic resource allocation, anomaly-aware RL policies, and multi-agent systems.</p></div>
-      </div>
-      <div class="topic-card">
-        <i class="fas fa-shield-alt"></i>
-        <div><h4>Anomaly Detection</h4><p>LSTM autoencoders and generative methods for intrusion detection and system health monitoring.</p></div>
-      </div>
-      <div class="topic-card">
-        <i class="fas fa-cubes"></i>
-        <div><h4>Blockchain &amp; AI</h4><p>Decentralized systems, smart contracts, and the intersection of AI with secure data sharing and NFTs.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects">
-  <div class="section-inner reveal">
-    <h2 class="section-title">Projects</h2>
-    <p class="section-sub">Research-driven, production-ready.</p>
+    <h2 class="section-title">Featured Projects</h2>
+    <p class="section-sub">Four strongest — research-driven, production-ready.</p>
     <div class="filter-bar">
       <button class="filter-btn active" data-filter="all">All</button>
       <button class="filter-btn" data-filter="ml">Machine Learning</button>
@@ -473,7 +315,7 @@ footer p{font-size:.8rem;color:var(--muted)}
       <div class="project-card" data-cat="multimodal">
         <span class="badge badge-demo">Live Demo</span>
         <h3>Multimodal Sentiment Analysis</h3>
-        <p>Three-modality fusion (text, audio, video) for sentiment and emotion recognition across English and Arabic. Upload a video for real-time multimodal inference.</p>
+        <p>Three-modality fusion (text, audio, video) for sentiment &amp; emotion recognition across English and Arabic. Real-time multimodal inference on video input.</p>
         <div class="project-stats"><span>80.06% acc</span><span>7 emotions</span><span>71.49M params</span></div>
         <div class="project-tags"><span>PyTorch</span><span>Transformers</span><span>DeBERTa</span><span>Arabic BERT</span></div>
         <div class="project-links">
@@ -483,8 +325,8 @@ footer p{font-size:.8rem;color:var(--muted)}
       </div>
       <div class="project-card" data-cat="ml">
         <span class="badge badge-ieee">IEEE Published</span>
-        <h3>GNN Drug-Drug Interaction</h3>
-        <p>Graph Neural Networks for predicting drug-drug interactions, enabling safer prescriptions. Published at IEEE ASET 2025.</p>
+        <h3>GNN · Drug-Drug Interaction</h3>
+        <p>Graph Neural Networks for predicting drug-drug interactions — safer prescriptions. Published and presented at IEEE ASET 2025.</p>
         <div class="project-stats"><span>IEEE Xplore</span><span>ASET 2025</span></div>
         <div class="project-tags"><span>GNNs</span><span>DrugBank</span><span>PyTorch Geometric</span></div>
         <div class="project-links">
@@ -494,7 +336,7 @@ footer p{font-size:.8rem;color:var(--muted)}
       <div class="project-card" data-cat="nlp">
         <span class="badge badge-github">GitHub</span>
         <h3>Hybrid RAG Pipeline</h3>
-        <p>Five-stage hybrid dense-sparse retrieval for log analysis. BM25 + BGE + SBERT with Qwen2.5-7B for report generation.</p>
+        <p>Five-stage hybrid dense-sparse retrieval for log analysis. BM25 + BGE + SBERT, Qwen2.5-7B for report generation.</p>
         <div class="project-stats"><span>+18% MAP</span><span>2M log lines</span></div>
         <div class="project-tags"><span>RAG</span><span>BM25</span><span>SBERT</span><span>Qwen2.5</span></div>
         <div class="project-links">
@@ -515,136 +357,140 @@ footer p{font-size:.8rem;color:var(--muted)}
   </div>
 </section>
 
-<!-- PUBLICATIONS -->
-<section id="publications" style="background:var(--bg2)">
+<!-- 4. PUBLICATIONS -->
+<section id="publications">
   <div class="section-inner reveal">
     <h2 class="section-title">Publications</h2>
     <p class="section-sub">Peer-reviewed research.</p>
     <div class="pub-card">
       <h3>Predicting Drug-Drug Interactions Using Graph Neural Networks: Towards Safer and Intelligent Prescriptions</h3>
-      <p class="authors">Elsersy M., <strong>Waly K.</strong>, and Sherif A.</p>
-      <p class="venue">Proceedings of the 7th HCT ASET Conference, Abu Dhabi, UAE, 2025. IEEE Xplore.</p>
+      <p class="authors">Elsersy M., <strong>Waly K.</strong>, Sherif A.</p>
+      <p class="venue">Proceedings of the 7th HCT ASET Conference · Abu Dhabi, UAE · 2025 · IEEE Xplore</p>
+      <p class="pub-contrib"><strong>My contribution:</strong> GNN architecture design, DrugBank data pipeline, benchmarking vs. baselines, co-authored writing.</p>
+      <div class="pub-links">
+        <a href="https://scholar.google.com/citations?user=3dlL87IAAAAJ" target="_blank"><i class="fas fa-graduation-cap"></i> Google Scholar</a>
+        <a href="#" target="_blank"><i class="fas fa-external-link-alt"></i> IEEE Xplore</a>
+        <a href="https://github.com/kareemindata" target="_blank"><i class="fab fa-github"></i> Code</a>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- EDUCATION -->
-<section id="education">
+<!-- 5. EXPERIENCE — impact-focused -->
+<section id="experience" style="background:var(--bg2)">
+  <div class="section-inner reveal">
+    <h2 class="section-title">Experience</h2>
+    <p class="section-sub">Where research meets impact.</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <h3>Technical Program Chair — IndabaX Egypt</h3>
+        <div class="meta">2025 – Present</div>
+        <p>Lead the technical program for Egypt's largest AI/ML community conference. Curate the workshop track, recruit speakers and mentors, and shape the scientific direction.</p>
+      </div>
+      <div class="timeline-item">
+        <h3>Co-Founder &amp; AI Researcher — AI-Talents EdTech</h3>
+        <div class="meta">Oct 2023 – Present</div>
+        <p>Co-founded a mindset-first EdTech startup training the next generation of AI engineers across MENA. Architected the <a href="https://ai-talents-curriculum.netlify.app/" target="_blank">full curriculum</a>. 33 active mentees.</p>
+      </div>
+      <div class="timeline-item">
+        <h3>Machine Learning Engineer — AIM Technologies</h3>
+        <div class="meta">Aug 2022 – Feb 2023</div>
+        <p>Shipped production Spoken Language Identification with 90%+ accuracy — full ML lifecycle from preprocessing through deployment and monitoring.</p>
+      </div>
+      <div class="timeline-item">
+        <h3>Data Scientist Intern — Hertie School Data Science Lab</h3>
+        <div class="meta">Aug – Sep 2023</div>
+        <p>Researched GANs for synthetic data generation. Contributed to ML pipeline design alongside senior researchers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. RESEARCH INTERESTS — condensed to strongest 5 themes -->
+<section id="research-topics">
+  <div class="section-inner reveal">
+    <h2 class="section-title">Research Interests</h2>
+    <p class="section-sub">Where I want to go deeper in a PhD.</p>
+    <div class="topics-grid">
+      <div class="topic-card">
+        <i class="fas fa-heartbeat"></i>
+        <div><h4>Healthcare AI</h4><p>ML for drug discovery, clinical decision support, and Arabic medical NLP. Published IEEE work in drug-drug interactions.</p></div>
+      </div>
+      <div class="topic-card">
+        <i class="fas fa-project-diagram"></i>
+        <div><h4>Graph Neural Networks</h4><p>Molecular property prediction, relational reasoning, dynamic graphs, scalability of GNNs on real-world datasets.</p></div>
+      </div>
+      <div class="topic-card">
+        <i class="fas fa-layer-group"></i>
+        <div><h4>Multimodal AI</h4><p>Fusion of text, audio, and visual signals. Cross-lingual Arabic / English sentiment and emotion recognition.</p></div>
+      </div>
+      <div class="topic-card">
+        <i class="fas fa-search"></i>
+        <div><h4>Retrieval-Augmented Generation</h4><p>Hybrid dense-sparse retrieval, knowledge-grounded generation, evaluation of RAG under distribution shift.</p></div>
+      </div>
+      <div class="topic-card">
+        <i class="fas fa-shield-alt"></i>
+        <div><h4>Trustworthy ML</h4><p>Robustness, anomaly detection, interpretability — so ML systems can be deployed in healthcare and critical settings with confidence.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. EDUCATION — each item shows research-identity value -->
+<section id="education" style="background:var(--bg2)">
   <div class="section-inner reveal">
     <h2 class="section-title">Education</h2>
-    <p class="section-sub">Global learning, local impact.</p>
+    <p class="section-sub">Global learning, intentional trajectory.</p>
     <div class="edu-grid">
       <div class="edu-card">
         <div class="edu-icon"><i class="fas fa-university"></i></div>
         <div>
           <h3>M.Eng Data Science &amp; AI — University of Ottawa</h3>
           <div class="meta">Canada · Jan 2022 – Jun 2023 · A+</div>
-          <p>Full DEBI scholarship, Ministry of ICT. Capstone: Spoken Language ID system, 90%+ accuracy.</p>
-        </div>
-      </div>
-      <div class="edu-card">
-        <div class="edu-icon"><i class="fas fa-link"></i></div>
-        <div>
-          <h3>Summer School Blockchain — University of Zurich</h3>
-          <div class="meta">Switzerland · Jul – Aug 2023</div>
-          <p>No. 1 in Europe for Blockchain education (CoinDesk).</p>
+          <p>Full DEBI scholarship (Ministry of ICT + Uni. of Ottawa). Capstone: production Spoken Language ID with 90%+ accuracy.</p>
+          <p class="research-value">→ Built my strongest foundation in ML, deployment, and real-world language systems.</p>
         </div>
       </div>
       <div class="edu-card">
         <div class="edu-icon"><i class="fas fa-laptop-code"></i></div>
         <div>
-          <h3>B.Sc. CS &amp; Math — Helwan University</h3>
+          <h3>B.Sc. Computer Science &amp; Math — Helwan University</h3>
           <div class="meta">Cairo · 2016 – 2020 · 2nd in Class</div>
+          <p>Double major in CS + Mathematics.</p>
+          <p class="research-value">→ Mathematical and computational foundation behind my current work in ML, multimodal AI, graph learning, and system design.</p>
+        </div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon"><i class="fas fa-link"></i></div>
+        <div>
+          <h3>Summer School · Deep Dive into Blockchain — University of Zurich</h3>
+          <div class="meta">Switzerland · Jul – Aug 2023</div>
+          <p>Ranked #1 in Europe for Blockchain education (CoinDesk).</p>
+          <p class="research-value">→ Interdisciplinary training in decentralized systems — expands my perspective on secure, scalable, cross-domain AI applications.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SKILLS -->
-<section id="skills" style="background:var(--bg2)">
-  <div class="section-inner reveal">
-    <h2 class="section-title">Skills</h2>
-    <p class="section-sub">Research to production.</p>
-    <div class="skills-grid">
-      <div class="skill-group">
-        <h3>Research</h3>
-        <div class="skill-tags"><span>RAG</span><span>GNNs</span><span>Generative AI</span><span>AI Agents</span><span>Multimodal AI</span><span>RL</span><span>Anomaly Detection</span></div>
-      </div>
-      <div class="skill-group">
-        <h3>Languages &amp; Frameworks</h3>
-        <div class="skill-tags"><span>Python</span><span>PyTorch</span><span>TensorFlow</span><span>Hugging Face</span><span>FastAPI</span><span>Scikit-learn</span><span>SQL</span></div>
-      </div>
-      <div class="skill-group">
-        <h3>Tools &amp; Infrastructure</h3>
-        <div class="skill-tags"><span>Git</span><span>Docker</span><span>AWS SageMaker</span><span>MLOps</span><span>Vector DBs</span><span>Gradio</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- COMMUNITY -->
-<section>
-  <div class="section-inner reveal">
-    <h2 class="section-title">Community &amp; Volunteering</h2>
-    <p class="section-sub">Growing the ecosystem.</p>
-    <div class="community-grid">
-      <div class="community-card">
-        <div class="icon"><i class="fas fa-globe-africa"></i></div>
-        <h3>IndabaX Egypt 2026</h3>
-        <p>Technical Program Chair</p>
-      </div>
-      <div class="community-card">
-        <div class="icon"><i class="fas fa-chalkboard-teacher"></i></div>
-        <h3>AI-Talents EdTech</h3>
-        <p>Co-Founder · 33 students</p>
-        <a href="https://ai-talents-curriculum.netlify.app/" target="_blank"><i class="fas fa-book"></i> View Curriculum</a>
-      </div>
-      <div class="community-card">
-        <div class="icon"><i class="fas fa-award"></i></div>
-        <h3>IEEE ASET 2025</h3>
-        <p>Published Author &amp; Presenter</p>
-      </div>
-      <div class="community-card">
-        <div class="icon"><i class="fas fa-link"></i></div>
-        <h3>DDiB 2025 Ambassador</h3>
-        <p>Deep Dive into Blockchain — UZH</p>
-        <a href="https://www.blockchain.uzh.ch/deep-dive-into-blockchain-2025-ambassadors/" target="_blank"><i class="fas fa-external-link-alt"></i> View Ambassadors</a>
-      </div>
-      <div class="community-card">
-        <div class="icon"><i class="fas fa-users"></i></div>
-        <h3>Data Science Conf MENA 2024</h3>
-        <p>Attendee</p>
-      </div>
-    </div>
-
-    <div class="ambassador-feature">
-      <img src="uzh_ambassador.png" alt="Kareem Waly — DDiB 2025 Ambassador at UZH Blockchain Center" loading="lazy">
-      <div>
-        <h3>Ambassador — Deep Dive into Blockchain 2025</h3>
-        <p>Selected as an official ambassador for the University of Zurich's Deep Dive into Blockchain 2025 program. Representing the intersection of AI and blockchain innovation, promoting the program across the MENA region and supporting the next cohort of blockchain researchers and developers.</p>
-        <a href="https://www.blockchain.uzh.ch/deep-dive-into-blockchain-2025-ambassadors/" target="_blank" class="btn btn-outline" style="padding:.5rem 1rem;font-size:.8rem"><i class="fas fa-external-link-alt"></i> UZH Ambassador List</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CALENDLY -->
-<section id="schedule" class="calendly-section" style="background:var(--bg2)">
-  <div class="section-inner reveal">
-    <h2 class="section-title">Book a Meeting</h2>
-    <p class="section-sub">Interested in collaborating on research, discussing PhD opportunities, or exploring how AI can solve your problem? Pick a time that works for you.</p>
-    <div class="cal-frame">
-      <iframe src="https://calendly.com/karimkhaled350/kareem-s-meeting?hide_gdpr_banner=1&background_color=0c1220&text_color=e0e6f0&primary_color=1e6fff" loading="lazy" title="Schedule a meeting"></iframe>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
+<!-- 8. CONTACT (Book-a-Call is a button here, no standalone Schedule section) -->
 <section id="contact">
   <div class="section-inner reveal">
     <h2 class="section-title">Get in Touch</h2>
-    <p class="section-sub">Let's connect.</p>
+    <p class="section-sub">Research, PhD, or applied AI — I'd be glad to connect.</p>
+    <p class="contact-intro">Whether you want to discuss a PhD opportunity, propose a research collaboration, or scope an applied AI engagement — I'd be glad to connect. For consulting, research discussion, or PhD opportunities, email me directly or book a short call.</p>
+    <div class="contact-actions">
+      <a href="mailto:kwaly008@uottawa.ca" class="primary"><i class="fas fa-envelope"></i> Email Me</a>
+      <a href="/files/Kareem_Waly_Research_CV_2026.pdf" target="_blank" onclick="trackCV('view','research')"><i class="fas fa-eye"></i> View Research CV</a>
+      <a href="/files/Kareem_Waly_Research_CV_2026.pdf" download onclick="trackCV('download','research')"><i class="fas fa-download"></i> Download Research CV</a>
+      <a href="/files/Kareem_Waly_Industry_Resume_2026.pdf" target="_blank" onclick="trackCV('view','industry')"><i class="fas fa-eye"></i> View Industry Resume</a>
+      <a href="/files/Kareem_Waly_Industry_Resume_2026.pdf" download onclick="trackCV('download','industry')"><i class="fas fa-download"></i> Download Industry Resume</a>
+      <button onclick="openBookModal()"><i class="fas fa-calendar"></i> Book a Call</button>
+    </div>
+    <div class="intent-chips">
+      <div class="chip-intent" onclick="openBookModal('research')">🎓 Research / PhD discussion</div>
+      <div class="chip-intent" onclick="openBookModal('consulting')">💼 Freelance / consulting inquiry</div>
+    </div>
     <div class="contact-grid">
       <a href="mailto:kwaly008@uottawa.ca" class="contact-link"><i class="fas fa-envelope"></i><div><span class="label">Email</span><span class="value">kwaly008@uottawa.ca</span></div></a>
       <a href="https://linkedin.com/in/kareemindata" target="_blank" class="contact-link"><i class="fab fa-linkedin"></i><div><span class="label">LinkedIn</span><span class="value">kareemindata</span></div></a>
@@ -654,19 +500,156 @@ footer p{font-size:.8rem;color:var(--muted)}
   </div>
 </section>
 
+<!-- 9. WAYS I COLLABORATE (renamed from Services; split into Research & Applied) -->
+<section id="ways" style="background:var(--bg2)">
+  <div class="section-inner reveal">
+    <h2 class="section-title">Ways I Collaborate</h2>
+    <p class="section-sub">Research collaboration, PhD discussion, consulting — same person, different tracks.</p>
+    <p class="ways-intro">I work with both research teams and applied clients. My work sits between rigorous experimentation and production-ready AI systems — so I can contribute to research-oriented collaboration, consulting engagements, or full ML system development.</p>
+
+    <div class="ways-track">
+      <h3>For Research &amp; Academia</h3>
+      <div class="track-sub">Labs · PhD programs · Joint research</div>
+      <div class="ways-grid">
+        <div class="way-card">
+          <div class="svc-icon"><i class="fas fa-microscope"></i></div>
+          <h4>Research Collaboration</h4>
+          <p>Literature reviews, experiment design, baseline development, benchmarking, and model prototyping across multimodal AI, GNNs, RAG, and trustworthy ML.</p>
+        </div>
+        <div class="way-card">
+          <div class="svc-icon"><i class="fas fa-graduation-cap"></i></div>
+          <h4>PhD / Research Discussion</h4>
+          <p>Open to PhD opportunities, research assistantships, and interdisciplinary collaborations where machine learning can contribute to meaningful scientific or societal impact.</p>
+        </div>
+        <div class="way-card">
+          <div class="svc-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+          <h4>Technical Mentoring &amp; Workshops</h4>
+          <p>Hands-on curriculum design, technical workshops, and mentoring for students, teams, and early-career AI practitioners.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ways-track">
+      <h3>For Applied AI &amp; Consulting</h3>
+      <div class="track-sub">Companies · Teams · Product</div>
+      <div class="ways-grid">
+        <div class="way-card">
+          <div class="svc-icon"><i class="fas fa-brain"></i></div>
+          <h4>ML Engineering</h4>
+          <p>Production-minded ML systems — from preprocessing and model training to deployment, monitoring, and iteration.</p>
+        </div>
+        <div class="way-card">
+          <div class="svc-icon"><i class="fas fa-robot"></i></div>
+          <h4>AI Agents &amp; RAG Systems</h4>
+          <p>Retrieval-augmented generation, tool-calling agents, and LLM-powered workflow automation for support, analytics, and internal knowledge systems.</p>
+        </div>
+        <div class="way-card">
+          <div class="svc-icon"><i class="fas fa-chart-line"></i></div>
+          <h4>Data Science &amp; Applied Research</h4>
+          <p>Exploratory analysis, modeling, reporting, and research-to-product translation for organizations that need both technical depth and practical delivery.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ways-cta">
+      <div class="cta-text">
+        <h4>Looking for a research collaborator or an applied AI partner?</h4>
+        <p>Email me directly or book a short call — choose Research / PhD or Consulting as the meeting type.</p>
+      </div>
+      <a href="mailto:kwaly008@uottawa.ca" class="btn btn-primary"><i class="fas fa-envelope"></i> Email Me</a>
+      <button class="btn btn-outline" onclick="openBookModal()"><i class="fas fa-calendar"></i> Book a Call</button>
+    </div>
+  </div>
+</section>
+
+<!-- 10. COMMUNITY & VOLUNTEERING (moved below core proof) -->
+<section id="community">
+  <div class="section-inner reveal">
+    <h2 class="section-title">Community &amp; Volunteering</h2>
+    <p class="section-sub">Growing the AI ecosystem in MENA and beyond.</p>
+    <div class="community-grid">
+      <div class="community-card">
+        <div class="icon"><i class="fas fa-globe-africa"></i></div>
+        <h3>IndabaX Egypt 2026</h3>
+        <p>Technical Program Chair</p>
+      </div>
+      <div class="community-card">
+        <div class="icon"><i class="fas fa-chalkboard-teacher"></i></div>
+        <h3>AI-Talents EdTech</h3>
+        <p>Co-Founder · 33 mentees</p>
+        <a href="https://ai-talents-curriculum.netlify.app/" target="_blank"><i class="fas fa-book"></i> Curriculum</a>
+      </div>
+      <div class="community-card">
+        <div class="icon"><i class="fas fa-award"></i></div>
+        <h3>IEEE ASET 2025</h3>
+        <p>Published Author &amp; Presenter</p>
+      </div>
+      <div class="community-card">
+        <div class="icon"><i class="fas fa-link"></i></div>
+        <h3>DDiB 2025 · UZH</h3>
+        <p>Ambassador — Blockchain program</p>
+        <a href="https://www.blockchain.uzh.ch/deep-dive-into-blockchain-2025-ambassadors/" target="_blank"><i class="fas fa-external-link-alt"></i> Ambassadors</a>
+      </div>
+      <div class="community-card">
+        <div class="icon"><i class="fas fa-users"></i></div>
+        <h3>Data Science Conf MENA 2024</h3>
+        <p>Attendee</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11. SKILLS (condensed, lower emphasis) -->
+<section id="skills" style="background:var(--bg2)">
+  <div class="section-inner reveal">
+    <h2 class="section-title">Skills</h2>
+    <p class="section-sub">Research to production.</p>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h3>Research</h3>
+        <div class="skill-tags"><span>GNNs</span><span>Multimodal AI</span><span>RAG</span><span>AI Agents</span><span>Gen AI</span><span>RL</span><span>Anomaly Detection</span></div>
+      </div>
+      <div class="skill-group">
+        <h3>Languages &amp; Frameworks</h3>
+        <div class="skill-tags"><span>Python</span><span>PyTorch</span><span>TensorFlow</span><span>Hugging Face</span><span>FastAPI</span><span>Scikit-learn</span><span>SQL</span></div>
+      </div>
+      <div class="skill-group">
+        <h3>Infrastructure</h3>
+        <div class="skill-tags"><span>Git</span><span>Docker</span><span>AWS SageMaker</span><span>MLOps</span><span>Vector DBs</span><span>Gradio</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="footer-socials">
     <a href="https://linkedin.com/in/kareemindata" target="_blank"><i class="fab fa-linkedin"></i></a>
     <a href="https://github.com/kareemindata" target="_blank"><i class="fab fa-github"></i></a>
     <a href="https://scholar.google.com/citations?user=3dlL87IAAAAJ" target="_blank"><i class="fas fa-graduation-cap"></i></a>
-    <a href="#" target="_blank"><i class="fab fa-x-twitter"></i></a>
   </div>
-  <p>&copy; 2026 Kareem Waly. Built with purpose.</p>
+  <p>&copy; 2026 Kareem Waly · Built with purpose.</p>
 </footer>
 
 <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-arrow-up"></i></button>
 
+<!-- Book a Call modal -->
+<div class="modal-back" id="bookModal" onclick="if(event.target===this)closeBookModal()">
+  <div class="modal-box">
+    <button class="close" onclick="closeBookModal()">&times;</button>
+    <h3>Book a Call</h3>
+    <p class="section-sub" style="margin-bottom:.6rem">Pick a meeting type, then choose a time on the calendar below.</p>
+    <div class="meeting-types">
+      <div class="meeting-type active" data-type="research">🎓 Research / PhD discussion</div>
+      <div class="meeting-type" data-type="consulting">💼 Freelance / consulting inquiry</div>
+    </div>
+    <div class="cal-frame">
+      <iframe src="https://calendly.com/karimkhaled350/kareem-s-meeting?hide_gdpr_banner=1&background_color=0c1220&text_color=e0e6f0&primary_color=1e6fff" loading="lazy" title="Schedule"></iframe>
+    </div>
+  </div>
+</div>
+
 <script>
+/* particles */
 (function(){
   const c=document.getElementById('particles'),ctx=c.getContext('2d');
   let w,h,dots=[];
@@ -689,8 +672,9 @@ footer p{font-size:.8rem;color:var(--muted)}
   draw();
 })();
 
+/* typed */
 (function(){
-  const words=["GNNs & Drug Discovery","Multimodal AI Systems","RAG Pipelines","AI Agents","Arabic NLP","Reinforcement Learning"];
+  const words=["GNNs & Drug Discovery","Multimodal AI","RAG Pipelines","AI Agents","Arabic NLP","Trustworthy ML"];
   let wi=0,ci=0,del=false;
   const el=document.getElementById('typed');
   function type(){
@@ -702,32 +686,21 @@ footer p{font-size:.8rem;color:var(--muted)}
   type();
 })();
 
+/* nav & reveal */
 window.addEventListener('scroll',()=>{
   document.getElementById('nav').classList.toggle('scrolled',scrollY>60);
   document.getElementById('backTop').classList.toggle('visible',scrollY>400);
 });
-
 document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>{
   document.getElementById('navLinks').classList.remove('open');
   document.getElementById('hamburger').classList.remove('active');
 }));
-
-function animateCounters(){
-  document.querySelectorAll('.stat-number').forEach(el=>{
-    const target=+el.dataset.target,suffix=el.dataset.suffix||'';
-    let current=0;const step=Math.max(1,Math.floor(target/40));
-    const timer=setInterval(()=>{current+=step;if(current>=target){current=target;clearInterval(timer)}el.textContent=current+suffix},30);
-  });
-}
-
-let counterDone=false;
 const observer=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){e.target.classList.add('visible');if(e.target.classList.contains('stats')&&!counterDone){counterDone=true;animateCounters()}}
-  });
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
 },{threshold:.15});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 
+/* project filter */
 document.querySelectorAll('.filter-btn').forEach(btn=>{
   btn.addEventListener('click',()=>{
     document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
@@ -737,17 +710,42 @@ document.querySelectorAll('.filter-btn').forEach(btn=>{
   });
 });
 
-function submitForm(){
-  const name=document.getElementById('formName').value.trim();
-  const email=document.getElementById('formEmail').value.trim();
-  const service=document.getElementById('formService').value;
-  const msg=document.getElementById('formMsg').value.trim();
-  if(!name||!email){alert('Please fill in your name and email.');return}
-  const subject=encodeURIComponent('Collaboration Inquiry: '+service);
-  const body=encodeURIComponent('Hi Kareem,\n\nName: '+name+'\nEmail: '+email+'\nService: '+service+'\n\n'+msg+'\n');
-  window.open('mailto:kwaly008@uottawa.ca?subject='+subject+'&body='+body);
-  document.getElementById('formSuccess').style.display='block';
-  setTimeout(()=>{document.getElementById('formSuccess').style.display='none'},4000);
+/* Book a Call modal */
+function openBookModal(type){
+  document.getElementById('bookModal').classList.add('open');
+  if(type){
+    document.querySelectorAll('.meeting-type').forEach(m=>{
+      m.classList.toggle('active',m.dataset.type===type);
+    });
+    trackEvent('book_call_click',{type});
+  }
+}
+function closeBookModal(){document.getElementById('bookModal').classList.remove('open')}
+document.querySelectorAll('.meeting-type').forEach(m=>{
+  m.addEventListener('click',()=>{
+    document.querySelectorAll('.meeting-type').forEach(x=>x.classList.remove('active'));
+    m.classList.add('active');
+  });
+});
+
+/* Privacy-first CV analytics
+   - Wire to Plausible or GA4 by replacing trackEvent body.
+   - Fallback: localStorage counters (never sent off-device). */
+function trackEvent(name, props){
+  try {
+    // Plausible:
+    if (window.plausible) window.plausible(name, { props });
+    // GA4:
+    if (window.gtag) window.gtag('event', name, props || {});
+    // local mirror
+    const k = 'kw_ev_' + name;
+    const arr = JSON.parse(localStorage.getItem(k) || '[]');
+    arr.unshift({ at: new Date().toISOString(), ...(props||{}) });
+    localStorage.setItem(k, JSON.stringify(arr.slice(0, 200)));
+  } catch(e) {}
+}
+function trackCV(kind, which){
+  trackEvent(kind === 'download' ? 'cv_download' : 'cv_view', { cv: which });
 }
 </script>
 </body>
