@@ -379,6 +379,16 @@ footer p{font-size:.8rem;color:var(--muted)}
   .sys-wwm-col:not(:last-child){border-bottom:1px solid #1a2235}
   .about-content{grid-template-columns:1fr}
 }
+
+/* ── Education React island: responsive collapse ── */
+#education{padding:0!important}
+#education *{box-sizing:border-box}
+@media (max-width:980px){
+  .edu-detail-grid{grid-template-columns:1fr!important;gap:28px!important}
+  .edu-cards-grid{grid-template-columns:1fr!important}
+  .edu-header-grid{grid-template-columns:1fr!important;gap:18px!important;align-items:start!important}
+  .edu-header-grid p{text-align:left!important}
+}
 </style>
 </head>
 <body>
@@ -747,245 +757,32 @@ footer p{font-size:.8rem;color:var(--muted)}
   </div>
 </section>
 
-<!-- 7. EDUCATION — Interactive Journey -->
-<section id="education" class="ej">
-  <div class="ej-inner">
+<!-- 7. EDUCATION — Interactive Journey (React island) -->
+<section id="education" style="padding:0;background:#0b1120">
+  <div id="ej-mount"></div>
 
-    <!-- Header -->
-    <div class="ej-header">
-      <div class="ej-header-left">
-        <div class="ej-kicker">03 / Education &mdash; A Journey</div>
-        <h2 class="ej-headline">Three cities.<br><i>One trajectory.</i></h2>
-      </div>
-      <div class="ej-header-right">
-        <p>Formal training across <strong>Cairo, Ottawa, and Zurich</strong> &mdash; each stop added a new research skill, a new network, and a new dimension of applied AI.</p>
-      </div>
-    </div>
+  <!-- React 18 + Babel standalone -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <!-- Legend -->
-    <div class="ej-legend" id="ejLegend">
-      <div class="ej-legend-item active" data-idx="0"><span class="ej-legend-dot"></span>01 &middot; Ottawa</div>
-      <div class="ej-legend-item" data-idx="1"><span class="ej-legend-dot"></span>02 &middot; Cairo</div>
-      <div class="ej-legend-item" data-idx="2"><span class="ej-legend-dot"></span>03 &middot; Zurich</div>
-    </div>
+  <!-- App scripts (data → worldmap → view → mount) -->
+  <script type="text/babel" src="education/data.jsx"></script>
+  <script type="text/babel" src="education/worldmap.jsx"></script>
+  <script type="text/babel" src="education/view.jsx"></script>
+  <script type="text/babel">
+    ReactDOM.createRoot(document.getElementById("ej-mount"))
+      .render(<window.EducationJourney />);
 
-    <!-- SVG World Map -->
-    <div class="ej-map-wrap" id="ejMapWrap">
-      <svg viewBox="0 0 800 290" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <!-- Dot grid background -->
-        <defs>
-          <pattern id="ejDots" width="16" height="16" patternUnits="userSpaceOnUse">
-            <circle cx="1" cy="1" r=".5" fill="rgba(148,163,184,.08)"/>
-          </pattern>
-        </defs>
-        <rect width="800" height="290" fill="url(#ejDots)"/>
-
-        <!-- Simplified continent silhouettes (equirectangular) -->
-        <!-- Europe -->
-        <path class="ej-continent" d="M370 60 L380 55 L395 52 L410 54 L420 50 L435 52 L440 58 L438 68 L430 75 L425 85 L415 88 L405 82 L395 85 L385 78 L375 72 L370 65Z"/>
-        <!-- Africa -->
-        <path class="ej-continent" d="M375 95 L390 90 L410 92 L425 98 L430 110 L432 130 L428 155 L420 175 L405 185 L390 182 L380 170 L372 150 L368 130 L365 110 L370 100Z"/>
-        <!-- Asia / Middle East -->
-        <path class="ej-continent" d="M440 45 L460 40 L490 38 L520 42 L550 50 L570 55 L590 52 L610 58 L620 68 L615 80 L600 88 L580 85 L560 90 L540 88 L520 82 L500 78 L480 72 L460 68 L445 62 L440 55Z"/>
-        <!-- North America -->
-        <path class="ej-continent" d="M100 40 L130 35 L160 38 L190 45 L210 55 L220 70 L225 90 L218 105 L200 115 L180 118 L165 125 L155 118 L140 110 L125 100 L110 85 L100 70 L95 55Z"/>
-        <!-- South America -->
-        <path class="ej-continent" d="M190 140 L200 135 L215 138 L225 150 L228 170 L222 195 L210 215 L195 225 L182 218 L178 200 L175 180 L178 160 L185 148Z"/>
-
-        <!-- Dashed connector lines -->
-        <path class="ej-dashed show" id="ejLine01" d="M 200 80 Q 300 50 395 88"/>
-        <path class="ej-dashed" id="ejLine12" d="M 395 88 Q 400 70 420 62"/>
-
-        <!-- Pin: Ottawa (01) -->
-        <g class="ej-pin active" data-idx="0" transform="translate(200,80)">
-          <circle class="ej-pin-pulse"/>
-          <circle class="outer"/>
-          <circle class="inner"/>
-          <text class="ej-pin-label" y="-18">Ottawa, Canada</text>
-        </g>
-        <!-- Pin: Cairo (02) -->
-        <g class="ej-pin" data-idx="1" transform="translate(395,88)">
-          <circle class="ej-pin-pulse"/>
-          <circle class="outer"/>
-          <circle class="inner"/>
-          <text class="ej-pin-label" y="-18">Cairo, Egypt</text>
-        </g>
-        <!-- Pin: Zurich (03) -->
-        <g class="ej-pin" data-idx="2" transform="translate(420,62)">
-          <circle class="ej-pin-pulse"/>
-          <circle class="outer"/>
-          <circle class="inner"/>
-          <text class="ej-pin-label" y="-18">Zurich, Switzerland</text>
-        </g>
-      </svg>
-    </div>
-
-    <!-- Journey cards -->
-    <div class="ej-cards" id="ejCards">
-      <div class="ej-jcard active" data-idx="0">
-        <div class="ej-jcard-idx">01 / 3</div>
-        <div class="ej-jcard-flag"><span class="flag">&#x1F1E8;&#x1F1E6;</span> Ottawa, Canada &middot; Jan 2022 &ndash; Jun 2023</div>
-        <h4>M.Eng Data Science &amp; AI</h4>
-        <div class="ej-jcard-inst">University of Ottawa</div>
-        <div class="ej-jcard-meta">
-          <span class="ej-jcard-chip">A+</span>
-          <span class="ej-jcard-chip">DEBI Scholar</span>
-          <span class="ej-jcard-view">Viewing &#x25B8;</span>
-        </div>
-      </div>
-      <div class="ej-jcard" data-idx="1">
-        <div class="ej-jcard-idx">02 / 3</div>
-        <div class="ej-jcard-flag"><span class="flag">&#x1F1EA;&#x1F1EC;</span> Cairo, Egypt &middot; 2016 &ndash; 2020</div>
-        <h4>B.Sc. Computer Science &amp; Mathematics</h4>
-        <div class="ej-jcard-inst">Helwan University</div>
-        <div class="ej-jcard-meta">
-          <span class="ej-jcard-chip">2nd in Class</span>
-          <span class="ej-jcard-chip">Double Major</span>
-          <span class="ej-jcard-view">View &#x25B8;</span>
-        </div>
-      </div>
-      <div class="ej-jcard" data-idx="2">
-        <div class="ej-jcard-idx">03 / 3</div>
-        <div class="ej-jcard-flag"><span class="flag">&#x1F1E8;&#x1F1ED;</span> Zurich, Switzerland &middot; Jul &ndash; Aug 2023</div>
-        <h4>Summer School &middot; Deep Dive into Blockchain</h4>
-        <div class="ej-jcard-inst">University of Zurich</div>
-        <div class="ej-jcard-meta">
-          <span class="ej-jcard-chip">Certificate</span>
-          <span class="ej-jcard-chip">#1 Europe</span>
-          <span class="ej-jcard-view">View &#x25B8;</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Detail panels — all visible, 1 large + 2 stacked -->
-    <div class="ej-details-grid" id="ejDetailsGrid">
-
-      <!-- Ottawa M.Eng (large, left) -->
-      <div class="ej-detail ej-detail--large" data-detail="0">
-        <div class="ej-detail-top">
-          <div class="ej-detail-top-left">
-            <div class="ej-detail-kicker">M.Eng &middot; Canada &middot; Jan 2022 &ndash; Jun 2023</div>
-            <div class="ej-detail-title">M.Eng Data Science <span class="amp">&amp;</span> AI</div>
-            <div class="ej-detail-inst">University of Ottawa &middot; Ottawa, Canada</div>
-            <div class="ej-detail-advisors">Dr. M. Safi, Dr. R. Goubran</div>
-          </div>
-          <div class="ej-detail-top-right">
-            <div class="ej-detail-stat"><div class="val">A+</div><div class="lbl">GPA / 4.0</div></div>
-          </div>
-        </div>
-        <div class="ej-detail-body ej-detail-body--2col">
-          <div class="ej-detail-col">
-            <div class="ej-cap-title">"Production Spoken Language Identification at Scale"</div>
-            <div class="ej-cap-abstract">A streaming LID system that classifies 86 languages from 3-second audio chunks at 90%+ accuracy with &lt;150ms latency. Deployed to a downstream ASR routing layer serving 50K monthly calls. Contributions: a contrastive pre-training curriculum for low-resource languages, and a confidence head that delegates uncertain audio to human review.</div>
-            <div class="ej-honor"><p><strong>Full DEBI Scholarship</strong> &mdash; Ministry of ICT + Uni. of Ottawa</p></div>
-            <div class="ej-honor"><p><strong>Top 5% cohort</strong></p></div>
-          </div>
-          <div class="ej-detail-col">
-            <div class="ej-detail-col-label">Coursework</div>
-            <div class="ej-course"><span class="ej-course-num">01</span><span class="ej-course-name">Deep Learning</span></div>
-            <div class="ej-course"><span class="ej-course-num">02</span><span class="ej-course-name">NLP &amp; Speech Processing</span></div>
-            <div class="ej-course"><span class="ej-course-num">03</span><span class="ej-course-name">Product-Grade ML</span></div>
-            <div class="ej-course"><span class="ej-course-num">04</span><span class="ej-course-name">Reinforcement Learning</span></div>
-            <div class="ej-course"><span class="ej-course-num">05</span><span class="ej-course-name">Bayesian Methods</span></div>
-            <div class="ej-course"><span class="ej-course-num">06</span><span class="ej-course-name">ML Ops &amp; Production ML</span></div>
-            <div class="ej-course"><span class="ej-course-num">07</span><span class="ej-course-name">Computer Vision</span></div>
-            <div class="ej-course"><span class="ej-course-num">08</span><span class="ej-course-name">Responsible AI</span></div>
-            <div style="margin-top:1rem">
-              <div class="ej-detail-col-label">Skills</div>
-              <div class="ej-skill"><div class="ej-skill-row"><span class="ej-skill-name">Speech / Audio ML</span><span class="ej-skill-val">92</span></div><div class="ej-skill-bar"><div class="ej-skill-fill" data-w="92"></div></div></div>
-              <div class="ej-skill"><div class="ej-skill-row"><span class="ej-skill-name">ML Ops (Docker, MLflow)</span><span class="ej-skill-val">85</span></div><div class="ej-skill-bar"><div class="ej-skill-fill" data-w="85"></div></div></div>
-              <div class="ej-skill"><div class="ej-skill-row"><span class="ej-skill-name">PyTorch / Lightning</span><span class="ej-skill-val">90</span></div><div class="ej-skill-bar"><div class="ej-skill-fill" data-w="90"></div></div></div>
-              <div class="ej-skill"><div class="ej-skill-row"><span class="ej-skill-name">Model serving &amp; monitoring</span><span class="ej-skill-val">82</span></div><div class="ej-skill-bar"><div class="ej-skill-fill" data-w="82"></div></div></div>
-              <div class="ej-skill"><div class="ej-skill-row"><span class="ej-skill-name">Hugging Face</span><span class="ej-skill-val">88</span></div><div class="ej-skill-bar"><div class="ej-skill-fill" data-w="88"></div></div></div>
-            </div>
-            <div class="ej-takeaway"><p>&mdash; Built my strongest foundation in ML, deployment, and real-world language systems.</p></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right column: BSc + Zurich stacked -->
-      <div class="ej-details-right">
-
-        <!-- Cairo B.Sc. -->
-        <div class="ej-detail ej-detail--compact" data-detail="1">
-          <div class="ej-detail-top">
-            <div class="ej-detail-top-left">
-              <div class="ej-detail-kicker">B.Sc. &middot; Egypt &middot; 2016 &ndash; 2020</div>
-              <div class="ej-detail-title">B.Sc. Computer Science <span class="amp">&amp;</span> Mathematics</div>
-              <div class="ej-detail-inst">Helwan University &middot; Cairo, Egypt</div>
-            </div>
-            <div class="ej-detail-top-right">
-              <div class="ej-detail-stat"><div class="val">2nd</div><div class="lbl">In Class</div></div>
-            </div>
-          </div>
-          <div class="ej-detail-body ej-detail-body--2col">
-            <div class="ej-detail-col">
-              <div class="ej-detail-col-label">Thesis</div>
-              <div class="ej-cap-title">"Graph Neural Networks for Drug-Drug Interaction Prediction"</div>
-              <div class="ej-cap-abstract">Multimodal biometric authentication via fused face, voice &amp; fingerprint signals for robust identity verification under noise and spoofing.</div>
-              <div class="ej-honor"><p><strong>2nd in graduating class</strong></p></div>
-              <div class="ej-honor"><p><strong>Dean's Honor List</strong> &mdash; all semesters</p></div>
-            </div>
-            <div class="ej-detail-col">
-              <div class="ej-detail-col-label">Key Courses</div>
-              <div class="ej-course"><span class="ej-course-num">01</span><span class="ej-course-name">Linear Algebra &amp; Statistics</span></div>
-              <div class="ej-course"><span class="ej-course-num">02</span><span class="ej-course-name">Probability &amp; Statistics</span></div>
-              <div class="ej-course"><span class="ej-course-num">03</span><span class="ej-course-name">Algorithms &amp; Data Structures</span></div>
-              <div class="ej-course"><span class="ej-course-num">04</span><span class="ej-course-name">Discrete Mathematics</span></div>
-              <div class="ej-course"><span class="ej-course-num">05</span><span class="ej-course-name">Software Engineering</span></div>
-              <div style="margin-top:.8rem">
-                <div class="ej-detail-col-label">Skills</div>
-                <div class="ej-skill"><div class="ej-skill-row"><span class="ej-skill-name">Algorithms &amp; Complexity</span><span class="ej-skill-val">90</span></div><div class="ej-skill-bar"><div class="ej-skill-fill" data-w="90"></div></div></div>
-                <div class="ej-skill"><div class="ej-skill-row"><span class="ej-skill-name">Mathematics</span><span class="ej-skill-val">88</span></div><div class="ej-skill-bar"><div class="ej-skill-fill" data-w="88"></div></div></div>
-                <div class="ej-skill"><div class="ej-skill-row"><span class="ej-skill-name">Python / C++ / Java</span><span class="ej-skill-val">85</span></div><div class="ej-skill-bar"><div class="ej-skill-fill" data-w="85"></div></div></div>
-              </div>
-              <div class="ej-takeaway"><p>&mdash; Mathematical and computational foundation behind my current work in ML, multimodal AI, graph learning, and system design.</p></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Zurich Summer School -->
-        <div class="ej-detail ej-detail--compact" data-detail="2">
-          <div class="ej-detail-top">
-            <div class="ej-detail-top-left">
-              <div class="ej-detail-kicker">Certificate &middot; Switzerland &middot; Jul &ndash; Aug 2023</div>
-              <div class="ej-detail-title">Summer School Deep Dive into Blockchain</div>
-              <div class="ej-detail-inst">University of Zurich &middot; Zurich, Switzerland</div>
-            </div>
-            <div class="ej-detail-top-right">
-              <div class="ej-detail-stat"><div class="val">Cert.</div><div class="lbl">Completed with Distinction</div></div>
-            </div>
-          </div>
-          <div class="ej-detail-body ej-detail-body--2col">
-            <div class="ej-detail-col">
-              <div class="ej-detail-col-label">Project</div>
-              <div class="ej-cap-title">"Verifiable ML Inference on-chain"</div>
-              <div class="ej-cap-abstract">An exploration of verifiable credentials and zero-knowledge proofs for establishing trust between AI agents operating across multiple blockchain networks.</div>
-              <div class="ej-honor"><p><strong>#1 in Europe</strong> for Blockchain education (CoinDesk)</p></div>
-              <div class="ej-honor"><p><strong>DDiB 2025 Ambassador</strong></p></div>
-            </div>
-            <div class="ej-detail-col">
-              <div class="ej-detail-col-label">Key Courses</div>
-              <div class="ej-course"><span class="ej-course-num">01</span><span class="ej-course-name">Cryptographic Primitives</span></div>
-              <div class="ej-course"><span class="ej-course-num">02</span><span class="ej-course-name">Smart Contract Security</span></div>
-              <div class="ej-course"><span class="ej-course-num">03</span><span class="ej-course-name">DeFi Architectures</span></div>
-              <div class="ej-course"><span class="ej-course-num">04</span><span class="ej-course-name">Zero-Knowledge Proofs</span></div>
-              <div class="ej-course"><span class="ej-course-num">05</span><span class="ej-course-name">Blockchain Governance</span></div>
-              <div style="margin-top:.8rem">
-                <div class="ej-detail-col-label">Skills</div>
-                <div class="ej-skill"><div class="ej-skill-row"><span class="ej-skill-name">Blockchain Architecture</span><span class="ej-skill-val">75</span></div><div class="ej-skill-bar"><div class="ej-skill-fill" data-w="75"></div></div></div>
-                <div class="ej-skill"><div class="ej-skill-row"><span class="ej-skill-name">Cryptography</span><span class="ej-skill-val">72</span></div><div class="ej-skill-bar"><div class="ej-skill-fill" data-w="72"></div></div></div>
-                <div class="ej-skill"><div class="ej-skill-row"><span class="ej-skill-name">24 peers (Zurich)</span><span class="ej-skill-val">70</span></div><div class="ej-skill-bar"><div class="ej-skill-fill" data-w="70"></div></div></div>
-              </div>
-              <div class="ej-takeaway"><p>&mdash; Interdisciplinary training in decentralized systems &mdash; expands my perspective on secure, scalable, cross-domain AI applications.</p></div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-  </div>
+    requestAnimationFrame(() => {
+      document.querySelectorAll('[style*="grid-template-columns: 1.4fr 1fr 1fr"]')
+        .forEach(n => n.classList.add("edu-detail-grid"));
+      document.querySelectorAll('[style*="grid-template-columns: repeat(3, 1fr)"]')
+        .forEach(n => n.classList.add("edu-cards-grid"));
+      document.querySelectorAll('[style*="grid-template-columns: 1fr 320px"]')
+        .forEach(n => n.classList.add("edu-header-grid"));
+    });
+  </script>
 </section>
 
 <!-- 8. CONTACT (Book-a-Call is a button here, no standalone Schedule section) -->
