@@ -1,9 +1,27 @@
 // view.jsx — main Education / Journey section.
 // Exposed as window.EducationJourney.
 
-const { useState, useMemo } = React;
+const { useState, useMemo, useEffect } = React;
 const T  = window.EduTokens;
 const ENTRIES = window.EduEntries;
+
+// Viewport breakpoints. We can't use CSS media queries because the
+// section is built with inline React styles, so we listen to window
+// resize and re-render with the right grid template.
+function useViewport() {
+  const get = () => {
+    if (typeof window === "undefined") return { mobile: false, tablet: false };
+    const w = window.innerWidth;
+    return { mobile: w < 640, tablet: w >= 640 && w < 1024 };
+  };
+  const [vp, setVp] = useState(get);
+  useEffect(() => {
+    const onResize = () => setVp(get());
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+  return vp;
+}
 
 const mono = {
   fontFamily: T.mono,
@@ -14,17 +32,24 @@ const mono = {
 };
 const monoStat = { ...mono, fontSize: 10, letterSpacing: "0.18em" };
 
-function Header() {
+function Header({ vp }) {
+  const stack = vp.mobile || vp.tablet;
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 320px", gap: 48, alignItems: "end", marginBottom: 56 }}>
+    <div style={{
+      display: "grid",
+      gridTemplateColumns: stack ? "1fr" : "1fr 320px",
+      gap: stack ? 20 : 48,
+      alignItems: stack ? "start" : "end",
+      marginBottom: vp.mobile ? 32 : 56,
+    }}>
       <div>
-        <div style={{ ...mono, color: T.textMuted, marginBottom: 24 }}>
+        <div style={{ ...mono, color: T.textMuted, marginBottom: vp.mobile ? 14 : 24 }}>
           03 / Education — A Journey
         </div>
         <h1 style={{
           fontFamily: T.serif,
           fontWeight: 500,
-          fontSize: "clamp(48px, 7vw, 88px)",
+          fontSize: vp.mobile ? "clamp(34px, 9vw, 56px)" : "clamp(48px, 7vw, 88px)",
           lineHeight: 1.02,
           letterSpacing: "-0.02em",
           color: T.text,
@@ -41,9 +66,9 @@ function Header() {
         fontSize: 14,
         lineHeight: 1.7,
         color: T.textDim,
-        textAlign: "right",
+        textAlign: stack ? "left" : "right",
         margin: 0,
-        paddingBottom: 8,
+        paddingBottom: stack ? 0 : 8,
       }}>
         Formal training across <strong style={{ color: T.text }}>Cairo, Ottawa, and Zurich</strong>
         {" "}— each stop deepening a different dimension of applied AI.
@@ -52,28 +77,31 @@ function Header() {
   );
 }
 
-function MapHero({ entries, activeId, onSelect }) {
+function MapHero({ entries, activeId, onSelect, vp }) {
   return (
     <div style={{
       border: `1px solid ${T.border}`,
       borderRadius: T.radius,
       background: `radial-gradient(ellipse at 50% 30%, rgba(96,165,250,0.06), transparent 60%), ${T.bgDeep}`,
-      padding: "20px 24px 8px",
+      padding: vp.mobile ? "14px 14px 6px" : "20px 24px 8px",
       position: "relative",
       overflow: "hidden",
     }}>
       <div style={{
         display: "flex",
+        flexWrap: "wrap",
+        rowGap: 10,
+        columnGap: 12,
         alignItems: "center",
         justifyContent: "space-between",
-        marginBottom: 18,
-        paddingBottom: 14,
+        marginBottom: vp.mobile ? 12 : 18,
+        paddingBottom: vp.mobile ? 10 : 14,
         borderBottom: `1px dashed ${T.border}`,
       }}>
         <div style={{ ...mono }}>
           Interactive · click a pin
         </div>
-        <div style={{ display: "flex", gap: 26 }}>
+        <div style={{ display: "flex", flexWrap: "wrap", rowGap: 8, columnGap: vp.mobile ? 14 : 26 }}>
           {entries.map((e) => {
             const active = e.id === activeId;
             return (
@@ -112,13 +140,14 @@ function MapHero({ entries, activeId, onSelect }) {
   );
 }
 
-function JourneyCards({ entries, activeId, onSelect }) {
+function JourneyCards({ entries, activeId, onSelect, vp }) {
+  const cols = vp.mobile ? "1fr" : vp.tablet ? "repeat(2, 1fr)" : "repeat(3, 1fr)";
   return (
     <div style={{
       display: "grid",
-      gridTemplateColumns: "repeat(3, 1fr)",
-      gap: 18,
-      marginTop: 28,
+      gridTemplateColumns: cols,
+      gap: vp.mobile ? 14 : 18,
+      marginTop: vp.mobile ? 18 : 28,
     }}>
       {entries.map((e) => {
         const active = e.id === activeId;
@@ -223,14 +252,15 @@ function JourneyCards({ entries, activeId, onSelect }) {
   );
 }
 
-function DetailPanel({ entry }) {
+function DetailPanel({ entry, vp }) {
+  const bodyCols = vp.mobile ? "1fr" : vp.tablet ? "1fr 1fr" : "1.4fr 1fr 1fr";
   return (
     <div style={{
-      marginTop: 28,
+      marginTop: vp.mobile ? 18 : 28,
       border: `1px solid ${T.border}`,
       borderRadius: T.radius,
       background: T.panel,
-      padding: "28px 32px 32px",
+      padding: vp.mobile ? "20px 18px 22px" : "28px 32px 32px",
     }}>
       <div style={{
         display: "flex",
@@ -277,8 +307,8 @@ function DetailPanel({ entry }) {
 
       <div style={{
         display: "grid",
-        gridTemplateColumns: "1.4fr 1fr 1fr",
-        gap: 36,
+        gridTemplateColumns: bodyCols,
+        gap: vp.mobile ? 24 : 36,
       }}>
         <div>
           <div style={{ ...mono, color: T.textMuted, marginBottom: 12 }}>
@@ -419,20 +449,24 @@ function EducationJourney() {
     () => ENTRIES.find((e) => e.id === activeId) || ENTRIES[0],
     [activeId]
   );
+  const vp = useViewport();
+
+  const padY = vp.mobile ? 56 : vp.tablet ? 80 : 96;
+  const padX = vp.mobile ? 16 : vp.tablet ? 32 : 56;
 
   return (
     <section style={{
       background: `radial-gradient(ellipse at 20% 0%, rgba(96,165,250,0.06), transparent 50%), ${T.bg}`,
       color: T.text,
       fontFamily: T.sans,
-      padding: "96px 56px",
-      minHeight: "100vh",
+      padding: `${padY}px ${padX}px`,
+      minHeight: vp.mobile ? "auto" : "100vh",
     }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-        <Header />
-        <MapHero entries={ENTRIES} activeId={activeId} onSelect={setActiveId} />
-        <JourneyCards entries={ENTRIES} activeId={activeId} onSelect={setActiveId} />
-        <DetailPanel entry={entry} />
+        <Header vp={vp} />
+        <MapHero entries={ENTRIES} activeId={activeId} onSelect={setActiveId} vp={vp} />
+        <JourneyCards entries={ENTRIES} activeId={activeId} onSelect={setActiveId} vp={vp} />
+        <DetailPanel entry={entry} vp={vp} />
       </div>
     </section>
   );
