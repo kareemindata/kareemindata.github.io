@@ -20,21 +20,49 @@
       a: "CC(=O)Oc1ccccc1C(=O)O",
       b: "CC(C)Cc1ccc(cc1)[C@@H](C)C(=O)O",
       na: "Aspirin", nb: "Ibuprofen",
+      hint: "NSAID + NSAID — antiplatelet blunting + GI bleeding risk",
     },
     "Warfarin × Aspirin": {
       a: "CC(=O)CC(c1ccccc1)c1c(O)c2ccccc2oc1=O",
       b: "CC(=O)Oc1ccccc1C(=O)O",
       na: "Warfarin", nb: "Aspirin",
+      hint: "Anticoagulant + antiplatelet — major bleeding risk",
     },
     "Atorvastatin × Clarithromycin": {
       a: "CC(C)c1c(C(=O)Nc2ccccc2)c(-c2ccccc2)c(-c2ccc(F)cc2)n1CC[C@@H](O)C[C@@H](O)CC(=O)O",
       b: "CC[C@@H]1OC(=O)[C@H](C)[C@@H](O[C@H]2C[C@@](C)(OC)[C@@H](O)[C@H](C)O2)[C@H](C)[C@@H](O[C@@H]2O[C@H](C)C[C@@H]([C@H]2O)N(C)C)[C@](C)(OC)C[C@@H](C)C(=O)[C@H](C)[C@@H](O)[C@]1(C)O",
       na: "Atorvastatin", nb: "Clarithromycin",
+      hint: "Statin + macrolide — classic CYP3A4 inhibition",
     },
     "Metformin × Lisinopril": {
       a: "CN(C)C(=N)NC(=N)N",
       b: "N[C@@H](CCCCN)C(=O)N1CCC[C@H]1C(=O)O",
       na: "Metformin", nb: "Lisinopril",
+      hint: "Antidiabetic + ACE inhibitor — additive hypoglycemic effect",
+    },
+    "Simvastatin × Amiodarone": {
+      a: "CCC(C)(C)C(=O)O[C@H]1C[C@@H](C)C=C2C=C[C@H](C)[C@H](CC[C@@H]3C[C@@H](O)CC(=O)O3)[C@@H]12",
+      b: "CCCCc1oc2ccccc2c1C(=O)c1cc(I)c(OCCN(CC)CC)c(I)c1",
+      na: "Simvastatin", nb: "Amiodarone",
+      hint: "Statin + antiarrhythmic — myopathy / rhabdomyolysis risk",
+    },
+    "Sertraline × Tramadol": {
+      a: "CN[C@H]1CC[C@@H](c2ccc(Cl)c(Cl)c2)c2ccccc21",
+      b: "COc1cccc([C@]2(O)CCCC[C@@H]2CN(C)C)c1",
+      na: "Sertraline", nb: "Tramadol",
+      hint: "SSRI + opioid — serotonin syndrome risk",
+    },
+    "Caffeine × Acetaminophen": {
+      a: "Cn1c(=O)c2c(ncn2C)n(C)c1=O",
+      b: "CC(=O)Nc1ccc(O)cc1",
+      na: "Caffeine", nb: "Acetaminophen",
+      hint: "Common OTC pair — generally safe; tests low-confidence regime",
+    },
+    "Phenytoin × Clarithromycin": {
+      a: "O=C1NC(=O)C(c2ccccc2)(c2ccccc2)N1",
+      b: "CC[C@@H]1OC(=O)[C@H](C)[C@@H](O[C@H]2C[C@@](C)(OC)[C@@H](O)[C@H](C)O2)[C@H](C)[C@@H](O[C@@H]2O[C@H](C)C[C@@H]([C@H]2O)N(C)C)[C@](C)(OC)C[C@@H](C)C(=O)[C@H](C)[C@@H](O)[C@]1(C)O",
+      na: "Phenytoin", nb: "Clarithromycin",
+      hint: "Anticonvulsant + macrolide — phenytoin toxicity via CYP3A4",
     },
   };
 
@@ -81,7 +109,11 @@
       renderStory(payload, { name_a, name_b });
       story.scrollIntoView({ behavior: "smooth", block: "start" });
     } catch (err) {
-      renderStoryError(err.message);
+      if (err.name === "SpaceSleepingError") {
+        renderSpaceSleeping();
+      } else {
+        renderStoryError(err.message);
+      }
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = "Tell me the story";
@@ -91,32 +123,46 @@
   // ===== Backend dispatch ================================================
   async function callStory(input) {
     if (useLocalApi) {
-      // Local FastAPI: hit /predict + /predict_side_effects in parallel
-      const [l1, l2] = await Promise.all([
-        fetch(`${apiBase}/predict`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            smiles_a: input.smiles_a, smiles_b: input.smiles_b,
-            drug_name_a: input.name_a, drug_name_b: input.name_b,
-            top_k: input.top_k_l1,
-          }),
-        }).then(r => r.json()),
-        fetch(`${apiBase}/predict_side_effects`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            smiles_a: input.smiles_a, smiles_b: input.smiles_b,
-            drug_name_a: input.name_a, drug_name_b: input.name_b,
-            top_k: input.top_k_l2,
-            decision_threshold: 0.5,
-          }),
-        }).then(r => r.json()),
-      ]);
-      return { layer1: l1, layer2: l2 };
+      // Local FastAPI first; gracefully fall back to HF Space if unreachable
+      try {
+        return await callLocalApi(input);
+      } catch (localErr) {
+        console.warn("Local API failed, falling back to HF Space:", localErr);
+        return await callHFSpace(input);
+      }
     }
+    return await callHFSpace(input);
+  }
 
-    // HF Space: single round-trip via /gradio_api/call/predict_story
+  async function callLocalApi(input) {
+    const [r1, r2] = await Promise.all([
+      fetch(`${apiBase}/predict`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          smiles_a: input.smiles_a, smiles_b: input.smiles_b,
+          drug_name_a: input.name_a, drug_name_b: input.name_b,
+          top_k: input.top_k_l1,
+        }),
+      }),
+      fetch(`${apiBase}/predict_side_effects`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          smiles_a: input.smiles_a, smiles_b: input.smiles_b,
+          drug_name_a: input.name_a, drug_name_b: input.name_b,
+          top_k: input.top_k_l2,
+          decision_threshold: 0.5,
+        }),
+      }),
+    ]);
+    if (!r1.ok || !r2.ok) {
+      throw new Error(`local API returned HTTP ${r1.status}/${r2.status}`);
+    }
+    return { layer1: await safeJson(r1, "Layer 1"), layer2: await safeJson(r2, "Layer 2") };
+  }
+
+  async function callHFSpace(input) {
     const callRes = await fetch(`${hfHost}/gradio_api/call/predict_story`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -127,17 +173,42 @@
         ],
       }),
     });
-    if (!callRes.ok) throw new Error(`HF Space call failed: HTTP ${callRes.status}`);
-    const { event_id } = await callRes.json();
-    if (!event_id) throw new Error("HF Space did not return event_id");
+    if (!callRes.ok) {
+      throw new SpaceSleepingError(`HF Space POST returned HTTP ${callRes.status}`);
+    }
+    const ct = (callRes.headers.get("content-type") || "").toLowerCase();
+    if (!ct.includes("json")) {
+      // The Space returned an HTML error page — almost always means it is paused/sleeping.
+      throw new SpaceSleepingError("Space returned HTML instead of JSON (likely sleeping)");
+    }
+    const initial = await callRes.json();
+    if (!initial.event_id) throw new Error("HF Space did not return event_id");
 
-    const streamRes = await fetch(`${hfHost}/gradio_api/call/predict_story/${event_id}`);
-    if (!streamRes.ok) throw new Error(`HF Space stream failed: HTTP ${streamRes.status}`);
+    const streamRes = await fetch(`${hfHost}/gradio_api/call/predict_story/${initial.event_id}`);
+    if (!streamRes.ok) throw new SpaceSleepingError(`HF Space stream returned HTTP ${streamRes.status}`);
     const text = await streamRes.text();
+
+    // Successful Gradio responses begin with the SSE prefix `event: complete`
+    if (text.trim().startsWith("<")) {
+      throw new SpaceSleepingError("Space stream returned HTML instead of an SSE stream");
+    }
+
     const m = text.match(/data:\s*(\[[\s\S]*?\])\n/);
-    if (!m) throw new Error("HF Space stream returned no data");
+    if (!m) throw new Error("HF Space stream returned no data block");
     const parsed = JSON.parse(m[1]);
     return Array.isArray(parsed) ? parsed[0] : parsed;
+  }
+
+  async function safeJson(response, label) {
+    const ct = (response.headers.get("content-type") || "").toLowerCase();
+    if (!ct.includes("json")) {
+      throw new Error(`${label} returned non-JSON (HTTP ${response.status}). The local FastAPI may not be running on ${apiBase}.`);
+    }
+    return await response.json();
+  }
+
+  class SpaceSleepingError extends Error {
+    constructor(msg) { super(msg); this.name = "SpaceSleepingError"; }
   }
 
   // ===== Rendering =======================================================
@@ -309,6 +380,28 @@
 
   function renderStoryError(msg) {
     story.innerHTML = `<div class="chapter"><div class="error">${escape(msg)}</div></div>`;
+    story.classList.add("show");
+  }
+
+  function renderSpaceSleeping() {
+    const spaceUrl = `https://huggingface.co/spaces/${hfSpace}`;
+    story.innerHTML = `
+      <article class="chapter" data-layer="0">
+        <div class="chapter-num">Quick fix</div>
+        <h3>The HuggingFace Space is sleeping 💤</h3>
+        <p class="lede">Free CPU Spaces auto-pause after a stretch of no traffic. The model is fine — the container just needs to be woken up. This usually takes 60-90 seconds.</p>
+        <p style="margin: 0 0 14px 0;">
+          <a class="pill" href="${spaceUrl}" target="_blank" rel="noopener" style="background: linear-gradient(135deg, var(--layer1), var(--layer2)); color: white; border: none; padding: 10px 18px; font-weight: 700;">
+            ▶ Open the Space &amp; tap Restart
+          </a>
+        </p>
+        <p style="margin: 0; font-size: 13px; color: var(--ink-dim);">
+          Once the Space header shows <strong>"Running"</strong>, come back here and click <em>Tell me the story</em> again.
+          If you keep seeing this, the latest commit may still be building — check the
+          <a href="${spaceUrl}" target="_blank" rel="noopener" style="color: var(--ink);">Build logs</a> tab.
+        </p>
+      </article>
+    `;
     story.classList.add("show");
   }
 
