@@ -512,29 +512,27 @@ footer p{font-size:.8rem;color:var(--muted)}
         <span class="sys-tier sys-tier--ieee">Flagship &middot; IEEE</span>
         <div class="sys-card-body">
           <h3>Graph Neural Networks for Drug&ndash;Drug Interaction Prediction</h3>
-          <p class="sys-hook">Two-layer GNN system with one shared molecular encoder: predicts <em>what kind</em> of interaction (DrugBank, 86 classes) <strong>and</strong> <em>which side effects</em> might co-occur (TwoSides, multi-label) &mdash; published IEEE paper, reproducible code, live demo.</p>
+          <p class="sys-hook">Two-layer GNN over a shared molecular encoder. Layer 1 predicts the DrugBank interaction type (86 classes). Layer 2 predicts TwoSides polypharmacy side effects (multi-label). Published in IEEE Xplore.</p>
           <div class="sys-wwm">
             <div class="sys-wwm-col">
               <div class="sys-wwm-label">Why It Exists</div>
-              <div class="sys-wwm-text">Adverse drug interactions are a leading cause of hospital readmissions. Most published DDI work answers only one of the two clinical questions (relation type OR side effects) and only validates on warm splits that hide novel-drug generalization.</div>
+              <div class="sys-wwm-text">Most DDI systems answer only one clinical question and validate only on warm splits that mask novel-drug generalization.</div>
             </div>
             <div class="sys-wwm-col">
               <div class="sys-wwm-label">What It Does</div>
-              <div class="sys-wwm-text">Edge-aware GINEConv encoder (4 layers, weight-tied) + bilinear co-attention head for DrugBank relation type; same encoder frozen + multi-label sigmoid head for TwoSides side effects. Sweep over frequency thresholds with an explicit deployment quality gate.</div>
+              <div class="sys-wwm-text">Edge-aware GINEConv encoder (4 layers, weight-tied) + bilinear co-attention head for relation type; same encoder frozen + multi-label sigmoid head for side effects.</div>
             </div>
             <div class="sys-wwm-col">
               <div class="sys-wwm-label">Why It Matters</div>
-              <div class="sys-wwm-text">Honest reporting on both warm and cold-drug splits (most DDI papers skip cold). Two complementary clinical questions served by one model. Reproducible pipeline + Docker + FastAPI + HF Space + open weights for follow-up research.</div>
+              <div class="sys-wwm-text">Two complementary clinical questions answered by one model. Honest warm + cold-drug evaluation. Reproducible pipeline with open weights and a live demo.</div>
             </div>
           </div>
-          <div class="sys-metrics"><span>96.39 % top-1 (warm)</span><span>99.69 % top-3</span><span>64.14 % top-1 (cold-drug)</span><span>IEEE Xplore</span></div>
+          <div class="sys-metrics"><span>96.39 % top-1 warm</span><span>99.69 % top-3</span><span>64.14 % top-1 cold-drug</span><span>0.786 macro-AUROC</span></div>
           <div class="sys-stack"><span>PyTorch Geometric</span><span>GINEConv</span><span>RDKit</span><span>DrugBank</span><span>TwoSides</span><span>FastAPI</span><span>Docker</span></div>
           <div class="sys-actions">
-            <a href="https://ieeexplore.ieee.org/abstract/document/11428029" target="_blank">&#x1F4C4; IEEE Paper</a>
+            <a href="https://ieeexplore.ieee.org/abstract/document/11428029" target="_blank">&#x1F4C4; Paper</a>
             <a href="projects/ddi-risk-explorer/Demo.html">&#x2197; Live Demo</a>
-            <a href="https://huggingface.co/spaces/kareem-khaled/ddi-risk-explorer" target="_blank">&#x1F917; HF Space</a>
-            <a href="https://github.com/kareemindata/ddi-risk-explorer" target="_blank">&lt;/&gt; Code (v1.1)</a>
-            <a href="https://huggingface.co/kareem-khaled/ddi-risk-explorer-gnn" target="_blank">&#x1F9E0; Weights</a>
+            <a href="https://github.com/kareemindata/ddi-risk-explorer" target="_blank">&lt;/&gt; Code</a>
           </div>
         </div>
       </div>
@@ -620,8 +618,8 @@ footer p{font-size:.8rem;color:var(--muted)}
           <div class="sys-metrics"><span>+18% MAP</span><span>2M log lines</span><span>Qwen2.5-7B</span></div>
           <div class="sys-stack"><span>BM25</span><span>BGE</span><span>SBERT</span><span>Qwen2.5</span></div>
           <div class="sys-actions">
-            <a href="https://github.com/kareemindata" target="_blank">&#x2197; Architecture</a>
-            <a href="https://github.com/kareemindata" target="_blank">&lt;/&gt; Code</a>
+            <a href="https://huggingface.co/spaces/kareem-khaled/hybrid-rag-log-forensics?logs=container" target="_blank" rel="noopener">&#x2197; Live Demo</a>
+            <a href="https://github.com/kareemindata/hybrid-rag-log-forensics" target="_blank" rel="noopener">&lt;/&gt; Code</a>
           </div>
         </div>
       </div>
