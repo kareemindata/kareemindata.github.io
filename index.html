@@ -133,6 +133,9 @@ section{position:relative;z-index:1;padding:5rem 2rem}
 .pub-card .authors{font-size:.85rem;color:var(--text2);margin-bottom:.3rem}
 .pub-card .authors strong{color:var(--accent2)}
 .pub-card .venue{font-size:.8rem;color:var(--muted);font-style:italic;margin-bottom:.8rem}
+.pub-badges{display:flex;gap:.5rem;flex-wrap:wrap;margin:.4rem 0 1rem}
+.pub-badge{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .7rem;border-radius:999px;font-size:.72rem;font-weight:600;letter-spacing:.02em;background:linear-gradient(90deg,rgba(96,165,250,.16),rgba(167,139,250,.16));border:1px solid rgba(96,165,250,.35);color:var(--accent2)}
+.pub-badge i{font-size:.78rem}
 .pub-card .pub-contrib{font-size:.82rem;color:var(--text2);margin-bottom:.6rem}
 .pub-links{display:flex;gap:.8rem;flex-wrap:wrap}
 .pub-links a{font-size:.78rem;font-weight:600}
@@ -686,7 +689,11 @@ footer p{font-size:.8rem;color:var(--muted)}
     <div class="pub-card">
       <h3>Predicting Drug-Drug Interactions Using Graph Neural Networks: Towards Safer and Intelligent Prescriptions</h3>
       <p class="authors">Elsersy M., <strong>Waly K.</strong>, Sherif A.</p>
-      <p class="venue">Proceedings of the 7th HCT ASET Conference · Abu Dhabi, UAE · 2025 · IEEE Xplore</p>
+      <p class="venue">Proceedings of the 7th HCT ASET Conference · Abu Dhabi, UAE · 15&ndash;18 September 2025 · IEEE Xplore</p>
+      <div class="pub-badges">
+        <span class="pub-badge" title="Recognized by the HCT Faculty of Engineering Technology and Science (Dr. Walid Zgallai, Executive Dean)"><i class="fas fa-award"></i> Published Author &amp; Presenter &middot; ASET 2025</span>
+        <span class="pub-badge"><i class="fas fa-microphone"></i> Applications in Electrical Engineering Track</span>
+      </div>
       <p class="pub-contrib"><strong>My contribution:</strong> GNN architecture design, DrugBank data pipeline, benchmarking vs. baselines, co-authored writing.</p>
       <div class="pub-links">
         <a href="https://scholar.google.com/citations?user=3dlL87IAAAAJ" target="_blank"><i class="fas fa-graduation-cap"></i> Google Scholar</a>
