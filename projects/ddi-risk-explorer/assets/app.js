@@ -1,12 +1,15 @@
-// DDI Risk Explorer — story-mode demo client
+// DDI Risk Explorer — story-mode demo client (v2)
 //
-// One submit -> both layers fire in parallel against the deployed HF Space's
-// `/gradio_api/call/predict_story` endpoint. The result unfolds as four
-// chapters: meet the molecules, what kind of interaction, which side
-// effects, how the model arrived at it.
+// One submit -> both layers fire in parallel via the deployed HF Space's
+// /gradio_api/call/predict_story endpoint, then the result unfolds as
+// three chapters:
+//   1. Meet the molecules (PubChem-rendered structures + atom/bond stats)
+//   2. Layer 1 - DrugBank relation type (top-K with severity badge)
+//   3. Layer 2 - TwoSides co-occurring conditions (with real SE names)
 //
-// Molecule rendering uses smiles-drawer (loaded from CDN in Demo.html) so
-// no build step is required.
+// Molecule images come from PubChem REST (no client-side parser needed).
+// Side-effect names come from assets/se_labels.json (1317 entries, lifted
+// from the underlying TwoSides CSV).
 
 (() => {
   const body = document.body;
@@ -14,6 +17,11 @@
   const hfSpace = body.dataset.hfSpace || "kareem-khaled/ddi-risk-explorer";
   const hfHost = `https://${hfSpace.replace("/", "-")}.hf.space`;
   const useLocalApi = !!apiBase;
+
+  // PubChem REST PNG endpoint — drop a SMILES in, get back a clean structure image.
+  function pubchemImage(smiles, size = "large") {
+    return `https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/smiles/${encodeURIComponent(smiles)}/PNG?image_size=${size}`;
+  }
 
   const PRESETS = {
     "Aspirin × Ibuprofen": {
@@ -72,6 +80,19 @@
   const presetButtons = document.querySelectorAll(".preset button");
   const submitBtn = form.querySelector("button.run");
 
+  // SE id -> condition name (loaded once on page init)
+  let SE_NAMES = {};
+  fetch("assets/se_labels.json")
+    .then((r) => (r.ok ? r.json() : {}))
+    .then((m) => { SE_NAMES = m || {}; })
+    .catch(() => { SE_NAMES = {}; });
+
+  function seName(id) {
+    const k = String(id);
+    if (k in SE_NAMES) return SE_NAMES[k];
+    return `polypharmacy side effect SE #${k}`;
+  }
+
   // ===== Presets =========================================================
   presetButtons.forEach((b) => {
     b.addEventListener("click", () => {
@@ -92,7 +113,7 @@
     const name_a = form.elements.name_a.value.trim() || "Drug A";
     const name_b = form.elements.name_b.value.trim() || "Drug B";
     const top_k_l1 = parseInt(form.elements.top_k_l1.value, 10) || 3;
-    const top_k_l2 = parseInt(form.elements.top_k_l2.value, 10) || 10;
+    const top_k_l2 = parseInt(form.elements.top_k_l2.value, 10) || 8;
 
     if (!smiles_a || !smiles_b) {
       renderStoryError("Both SMILES strings are required.");
@@ -106,7 +127,7 @@
 
     try {
       const payload = await callStory({ smiles_a, smiles_b, name_a, name_b, top_k_l1, top_k_l2 });
-      renderStory(payload, { name_a, name_b });
+      renderStory(payload, { name_a, name_b, smiles_a, smiles_b });
       story.scrollIntoView({ behavior: "smooth", block: "start" });
     } catch (err) {
       if (err.name === "SpaceSleepingError") {
@@ -123,13 +144,8 @@
   // ===== Backend dispatch ================================================
   async function callStory(input) {
     if (useLocalApi) {
-      // Local FastAPI first; gracefully fall back to HF Space if unreachable
-      try {
-        return await callLocalApi(input);
-      } catch (localErr) {
-        console.warn("Local API failed, falling back to HF Space:", localErr);
-        return await callHFSpace(input);
-      }
+      try { return await callLocalApi(input); }
+      catch (e) { console.warn("Local API failed, falling back to HF Space:", e); return await callHFSpace(input); }
     }
     return await callHFSpace(input);
   }
@@ -156,9 +172,7 @@
         }),
       }),
     ]);
-    if (!r1.ok || !r2.ok) {
-      throw new Error(`local API returned HTTP ${r1.status}/${r2.status}`);
-    }
+    if (!r1.ok || !r2.ok) throw new Error(`local API returned HTTP ${r1.status}/${r2.status}`);
     return { layer1: await safeJson(r1, "Layer 1"), layer2: await safeJson(r2, "Layer 2") };
   }
 
@@ -173,26 +187,16 @@
         ],
       }),
     });
-    if (!callRes.ok) {
-      throw new SpaceSleepingError(`HF Space POST returned HTTP ${callRes.status}`);
-    }
+    if (!callRes.ok) throw new SpaceSleepingError(`HF Space POST returned HTTP ${callRes.status}`);
     const ct = (callRes.headers.get("content-type") || "").toLowerCase();
-    if (!ct.includes("json")) {
-      // The Space returned an HTML error page — almost always means it is paused/sleeping.
-      throw new SpaceSleepingError("Space returned HTML instead of JSON (likely sleeping)");
-    }
+    if (!ct.includes("json")) throw new SpaceSleepingError("Space returned HTML instead of JSON (likely sleeping)");
     const initial = await callRes.json();
     if (!initial.event_id) throw new Error("HF Space did not return event_id");
 
     const streamRes = await fetch(`${hfHost}/gradio_api/call/predict_story/${initial.event_id}`);
-    if (!streamRes.ok) throw new SpaceSleepingError(`HF Space stream returned HTTP ${streamRes.status}`);
+    if (!streamRes.ok) throw new SpaceSleepingError(`HF Space stream HTTP ${streamRes.status}`);
     const text = await streamRes.text();
-
-    // Successful Gradio responses begin with the SSE prefix `event: complete`
-    if (text.trim().startsWith("<")) {
-      throw new SpaceSleepingError("Space stream returned HTML instead of an SSE stream");
-    }
-
+    if (text.trim().startsWith("<")) throw new SpaceSleepingError("Space stream returned HTML instead of SSE");
     const m = text.match(/data:\s*(\[[\s\S]*?\])\n/);
     if (!m) throw new Error("HF Space stream returned no data block");
     const parsed = JSON.parse(m[1]);
@@ -221,17 +225,14 @@
       ${chapterMolecules(l1, ctx)}
       ${chapterRelationType(l1)}
       ${chapterSideEffects(l2)}
-      ${chapterHowItWorks()}
     `;
 
-    // Trigger probability bar animations after the DOM is in place
     requestAnimationFrame(() => {
       story.querySelectorAll(".prob-fill[data-target]").forEach((el) => {
         el.style.width = el.dataset.target + "%";
       });
     });
 
-    // Wire up SMILES copy-to-clipboard
     story.querySelectorAll(".mol-smiles").forEach((el) => {
       el.addEventListener("click", () => {
         navigator.clipboard.writeText(el.dataset.smiles).then(() => {
@@ -245,37 +246,49 @@
         });
       });
     });
-
-    // Render molecules with smiles-drawer
-    drawMolecule("mol-svg-a", l1.drug_a_smiles);
-    drawMolecule("mol-svg-b", l1.drug_b_smiles);
   }
 
   function chapterMolecules(l1, ctx) {
-    const a_smiles = l1.drug_a_smiles || "";
-    const b_smiles = l1.drug_b_smiles || "";
+    const a_smiles = l1.drug_a_smiles || ctx.smiles_a || "";
+    const b_smiles = l1.drug_b_smiles || ctx.smiles_b || "";
     const a_name = l1.drug_a || ctx.name_a;
     const b_name = l1.drug_b || ctx.name_b;
     const a_atoms = l1.drug_a_atom_count != null ? l1.drug_a_atom_count : "?";
     const a_bonds = l1.drug_a_bond_count != null ? l1.drug_a_bond_count : "?";
     const b_atoms = l1.drug_b_atom_count != null ? l1.drug_b_atom_count : "?";
     const b_bonds = l1.drug_b_bond_count != null ? l1.drug_b_bond_count : "?";
+    const a_pubchem_link = `https://pubchem.ncbi.nlm.nih.gov/#query=${encodeURIComponent(a_smiles)}`;
+    const b_pubchem_link = `https://pubchem.ncbi.nlm.nih.gov/#query=${encodeURIComponent(b_smiles)}`;
 
     return `
       <article class="chapter" data-layer="0">
         <div class="chapter-num">Chapter 1 · Meet the molecules</div>
         <h3>Two drugs, two graphs</h3>
-        <p class="lede">Each drug becomes a graph: <span data-tip="One node per atom, encoded with a 77-dimensional feature vector covering atom type, degree, hydrogens, charge, hybridization, chirality, aromaticity, and ring membership.">atoms are nodes</span>, <span data-tip="One edge per bond, encoded with a 14-dimensional vector for bond type, conjugation, ring membership, and stereochemistry.">bonds are edges</span>. The same shared encoder will see both molecules.</p>
+        <p class="lede">Each drug becomes a graph the model can see: <span data-tip="One node per atom, encoded as a 77-dimensional feature vector covering atom type, degree, hydrogens, charge, hybridization, chirality, aromaticity, and ring membership.">atoms are nodes</span>, <span data-tip="One edge per bond, encoded with a 14-dimensional vector for bond type, conjugation, ring membership, and stereochemistry.">bonds are edges</span>. The structure images below come from <a href="https://pubchem.ncbi.nlm.nih.gov" target="_blank" rel="noopener" style="color: var(--ink);">PubChem</a>; the atom and bond counts come straight from RDKit's parse of the SMILES the model just received.</p>
         <div class="molecules">
           <div class="molecule-card">
-            <div class="mol-name"><h4>${escape(a_name)}</h4><span class="mol-side">Drug A</span></div>
-            <div id="mol-svg-a" class="mol-svg"><span class="loading">drawing…</span></div>
+            <div class="mol-name">
+              <h4>${escape(a_name)}</h4>
+              <span class="mol-side">Drug A</span>
+            </div>
+            <div class="mol-svg">
+              <a href="${a_pubchem_link}" target="_blank" rel="noopener" title="View on PubChem">
+                <img src="${pubchemImage(a_smiles)}" alt="${escape(a_name)} structure" loading="lazy" onerror="this.parentElement.innerHTML='<span class=\\'mol-fallback\\'>structure unavailable</span>';" />
+              </a>
+            </div>
             <div class="mol-stats"><span><strong>${a_atoms}</strong> atoms</span><span><strong>${a_bonds}</strong> bonds</span></div>
             <div class="mol-smiles" data-smiles="${escape(a_smiles)}" title="Click to copy SMILES">${escape(a_smiles)}</div>
           </div>
           <div class="molecule-card">
-            <div class="mol-name"><h4>${escape(b_name)}</h4><span class="mol-side">Drug B</span></div>
-            <div id="mol-svg-b" class="mol-svg"><span class="loading">drawing…</span></div>
+            <div class="mol-name">
+              <h4>${escape(b_name)}</h4>
+              <span class="mol-side">Drug B</span>
+            </div>
+            <div class="mol-svg">
+              <a href="${b_pubchem_link}" target="_blank" rel="noopener" title="View on PubChem">
+                <img src="${pubchemImage(b_smiles)}" alt="${escape(b_name)} structure" loading="lazy" onerror="this.parentElement.innerHTML='<span class=\\'mol-fallback\\'>structure unavailable</span>';" />
+              </a>
+            </div>
             <div class="mol-stats"><span><strong>${b_atoms}</strong> atoms</span><span><strong>${b_bonds}</strong> bonds</span></div>
             <div class="mol-smiles" data-smiles="${escape(b_smiles)}" title="Click to copy SMILES">${escape(b_smiles)}</div>
           </div>
@@ -294,7 +307,7 @@
         <h3>What kind of interaction is at risk?
           <span class="severity ${sev.cls}" title="${sev.tip}">${sev.label}</span>
         </h3>
-        <p class="lede">Top-${l1.top_predictions.length} of <strong>86 DrugBank relation types</strong>. Higher bar = the model thinks this kind of interaction is more likely between this pair. <span data-tip="Class 49 — 'risk or severity of adverse effects can be increased' — is the most common DrugBank relation type and the majority-class baseline (31.7%).">Why these labels?</span></p>
+        <p class="lede">Top-${l1.top_predictions.length} of <strong>86 DrugBank relation types</strong>. Each label is a templated sentence describing a clinically-curated kind of interaction (e.g. "the metabolism of #Drug2 can be decreased when combined with #Drug1"). Layer 1 picks the most likely class as a single-best answer.</p>
         <ol class="predictions">
           ${l1.top_predictions.map(p => `
             <li>
@@ -317,63 +330,45 @@
       return `
         <article class="chapter" data-layer="2">
           <div class="chapter-num">Chapter 3 · Layer 2 · TwoSides</div>
-          <h3>Which side effects might co-occur?</h3>
+          <h3>Which adverse events co-occur in patient records?</h3>
           <div class="error">${escape(l2.error)}</div>
         </article>
       `;
     }
-    const ranks = (l2.top_predictions || []).map(p => `
-      <li>
-        <span class="rank">${p.rank}</span>
-        <div class="pred-text">
-          <span class="label-text">Polypharmacy side effect <code style="font-family:ui-monospace,monospace;background:rgba(0,0,0,0.3);padding:1px 6px;border-radius:4px;">SE #${escape(p.side_effect_id)}</code>${p.above_threshold ? '<span class="above-dot" title="above the decision threshold"></span>' : ""}</span>
-          <div class="prob-track"><div class="prob-fill" data-target="${(p.probability * 100).toFixed(1)}"></div></div>
-        </div>
-        <span class="prob-text">${(p.probability * 100).toFixed(1)}%</span>
-      </li>
-    `).join("");
+    const ranks = (l2.top_predictions || []).map(p => {
+      const name = seName(p.side_effect_id);
+      return `
+        <li>
+          <span class="rank">${p.rank}</span>
+          <div class="pred-text">
+            <span class="label-text">${escape(name)}${p.above_threshold ? '<span class="above-dot" title="above the decision threshold"></span>' : ""}</span>
+            <div class="prob-track"><div class="prob-fill" data-target="${(p.probability * 100).toFixed(1)}"></div></div>
+          </div>
+          <span class="prob-text">${(p.probability * 100).toFixed(1)}%</span>
+        </li>
+      `;
+    }).join("");
+
+    const macroLine = l2.macro_auroc_test != null
+      ? `Test macro-AUROC <strong>${l2.macro_auroc_test.toFixed(3)}</strong>.`
+      : "";
+    const aboveLine = l2.n_above_threshold != null
+      ? `<strong>${l2.n_above_threshold}</strong> of ${l2.label_vocab_size || 1134} conditions above the ${(l2.decision_threshold ?? 0.5).toFixed(2)} threshold.`
+      : "";
 
     return `
       <article class="chapter" data-layer="2">
         <div class="chapter-num">Chapter 3 · Layer 2 · TwoSides</div>
-        <h3>Which side effects might co-occur?</h3>
+        <h3>Which adverse events co-occur in patient records?</h3>
         <p class="lede">
-          Top-${(l2.top_predictions || []).length} of <strong>${l2.label_vocab_size || 1134} polypharmacy side effects</strong>
-          (filtered to SEs occurring in ≥${l2.training_threshold || 200} drug pairs).
-          ${l2.macro_auroc_test != null ? `Test macro-AUROC <strong>${l2.macro_auroc_test.toFixed(3)}</strong>.` : ""}
-          ${l2.n_above_threshold != null ? ` <strong>${l2.n_above_threshold}</strong> SEs above the ${(l2.decision_threshold ?? 0.5).toFixed(2)} decision threshold.` : ""}
+          Top-${(l2.top_predictions || []).length} of <strong>${l2.label_vocab_size || 1134}</strong> polypharmacy side effects from the
+          <a href="https://www.science.org/doi/10.1126/scitranslmed.3003377" target="_blank" rel="noopener" style="color: var(--ink);">TwoSides</a> dataset. ${macroLine} ${aboveLine}
+        </p>
+        <p class="lede" style="background: rgba(124,92,255,0.06); border-left: 3px solid var(--layer2); padding: 10px 14px; border-radius: 0 8px 8px 0;">
+          <strong>How to read this:</strong> these are the medical conditions most commonly <em>also flagged</em> in records of patients on this drug pair, ranked by the model's confidence. The ranking reflects training-data bias — patients on multiple medications are typically older with chronic comorbidities, so common conditions (cardiovascular, metabolic, oncologic) bubble up.
         </p>
         <ol class="predictions">${ranks}</ol>
         ${l2.disclaimer ? `<p class="disclaimer">${escape(l2.disclaimer)}</p>` : ""}
-      </article>
-    `;
-  }
-
-  function chapterHowItWorks() {
-    return `
-      <article class="chapter" data-layer="0">
-        <div class="chapter-num">Chapter 4 · Behind the scenes</div>
-        <h3>How did the model arrive at this story?</h3>
-        <p class="lede">A single shared molecular encoder feeds both layers. <strong>Layer 1 is trained first; the encoder weights are then frozen for Layer 2.</strong> That keeps the 96.39% DrugBank top-1 untouched and makes Layer 2 cheap to retrain.</p>
-        <div class="how-grid">
-          <div class="how-step">
-            <h4><span class="step-num">1</span> Featurize</h4>
-            <p>Each drug → PyG molecular graph. Atom features <code>77-d</code>, bond features <code>14-d</code>.</p>
-          </div>
-          <div class="how-step">
-            <h4><span class="step-num">2</span> Encode</h4>
-            <p><strong>4 GINEConv layers</strong> shared between Drug A and B. Per-atom embeddings pooled mean+max+sum → 128-d drug vector.</p>
-          </div>
-          <div class="how-step">
-            <h4><span class="step-num">3</span> Predict</h4>
-            <p><strong>L1</strong>: bilinear co-attention between A and B's atoms → 86-class softmax. <strong>L2</strong>: <code>[a; b; |a−b|; a*b]</code> → multi-label sigmoid over 1 134 SEs.</p>
-          </div>
-        </div>
-        <p style="margin: 0; font-size: 13px; color: var(--ink-dim);">
-          Read the <a href="https://github.com/kareemindata/ddi-risk-explorer" target="_blank" rel="noopener" style="color: var(--ink);">code</a>,
-          the <a href="https://ieeexplore.ieee.org/abstract/document/11428029" target="_blank" rel="noopener" style="color: var(--ink);">IEEE paper</a>,
-          or the <a href="https://huggingface.co/kareem-khaled/ddi-risk-explorer-gnn" target="_blank" rel="noopener" style="color: var(--ink);">trained weights</a>.
-        </p>
       </article>
     `;
   }
@@ -397,8 +392,6 @@
         </p>
         <p style="margin: 0; font-size: 13px; color: var(--ink-dim);">
           Once the Space header shows <strong>"Running"</strong>, come back here and click <em>Tell me the story</em> again.
-          If you keep seeing this, the latest commit may still be building — check the
-          <a href="${spaceUrl}" target="_blank" rel="noopener" style="color: var(--ink);">Build logs</a> tab.
         </p>
       </article>
     `;
@@ -407,42 +400,14 @@
 
   // ===== Helpers =========================================================
   function severityFor(p) {
-    if (p >= 0.6) return { cls: "high", label: "high confidence", tip: "Top-1 probability is ≥ 60%" };
-    if (p >= 0.3) return { cls: "medium", label: "moderate confidence", tip: "Top-1 probability is between 30% and 60%" };
-    return { cls: "low", label: "low confidence", tip: "Top-1 probability is below 30% — many candidate types share the mass" };
+    if (p >= 0.6) return { cls: "high", label: "high confidence", tip: "Top-1 probability ≥ 60%" };
+    if (p >= 0.3) return { cls: "medium", label: "moderate confidence", tip: "Top-1 probability 30–60%" };
+    return { cls: "low", label: "low confidence", tip: "Top-1 probability below 30% — the model spreads its mass" };
   }
 
   function escape(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, (ch) =>
       ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch])
     );
-  }
-
-  // SmilesDrawer is a global pulled in by Demo.html via CDN; render on demand.
-  function drawMolecule(elementId, smiles) {
-    const el = document.getElementById(elementId);
-    if (!el) return;
-    if (!smiles) { el.innerHTML = '<span class="error">no SMILES</span>'; return; }
-    if (typeof SmilesDrawer === "undefined") {
-      // Fallback: just show SMILES string if the library failed to load
-      el.innerHTML = `<span style="color:#0f172a;font-family:ui-monospace,monospace;font-size:11px;padding:8px;">${escape(smiles)}</span>`;
-      return;
-    }
-    try {
-      const drawer = new SmilesDrawer.SvgDrawer({ width: 320, height: 200, padding: 8 });
-      SmilesDrawer.parse(smiles, (tree) => {
-        el.innerHTML = "";
-        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        svg.setAttribute("width", "100%");
-        svg.setAttribute("height", "200");
-        svg.setAttribute("viewBox", "0 0 320 200");
-        el.appendChild(svg);
-        drawer.draw(tree, svg, "light");
-      }, () => {
-        el.innerHTML = `<span style="color:#0f172a;font-family:ui-monospace,monospace;font-size:11px;padding:8px;">${escape(smiles)}</span>`;
-      });
-    } catch (e) {
-      el.innerHTML = `<span style="color:#0f172a;font-family:ui-monospace,monospace;font-size:11px;padding:8px;">${escape(smiles)}</span>`;
-    }
   }
 })();
