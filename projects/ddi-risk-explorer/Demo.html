@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Drug Interaction Risk Explorer · Two-Layer Demo</title>
+<meta name="description" content="GNN-based two-layer drug-drug interaction predictor: DrugBank relation type + TwoSides polypharmacy side effects, served by one shared molecular encoder." />
+<link rel="preconnect" href="https://huggingface.co" />
+<link rel="preconnect" href="https://kareem-khaled-ddi-risk-explorer.hf.space" crossorigin />
+<link rel="stylesheet" href="assets/style.css" />
+</head>
+<body
+  data-active-layer="1"
+  data-hf-space="kareem-khaled/ddi-risk-explorer"
+>
+  <div class="shell">
+    <header class="top">
+      <div>
+        <h1>Drug Interaction Risk Explorer</h1>
+        <span class="subtitle">Two-layer GNN · DrugBank relation type + TwoSides side effects · single shared molecular encoder</span>
+      </div>
+      <nav class="links">
+        <a class="pill" href="https://ieeexplore.ieee.org/abstract/document/11428029" target="_blank" rel="noopener">📄 IEEE paper</a>
+        <a class="pill" href="https://github.com/kareemindata/ddi-risk-explorer" target="_blank" rel="noopener">⚙ GitHub</a>
+        <a class="pill" href="https://huggingface.co/spaces/kareem-khaled/ddi-risk-explorer" target="_blank" rel="noopener">🤗 HF Space</a>
+        <span class="pill warning">⚠ research use only</span>
+      </nav>
+    </header>
+
+    <div class="tab-bar" role="tablist" aria-label="Prediction layer">
+      <button class="tab" data-layer="1" role="tab" aria-selected="true">
+        Layer 1 — Interaction type <span class="badge">86 classes</span>
+      </button>
+      <button class="tab" data-layer="2" role="tab" aria-selected="false">
+        Layer 2 — Side effects <span class="badge">multi-label</span>
+      </button>
+    </div>
+
+    <!-- ============= LAYER 1 ============= -->
+    <section id="layer1-panel" class="panel" aria-labelledby="layer1-head">
+      <h2 class="panel-head" id="layer1-head">
+        <span class="layer-tag l1">L1</span>
+        DrugBank — what kind of interaction?
+      </h2>
+      <p class="panel-sub">
+        86-class softmax over the DrugBank DDI relation types (e.g. metabolism slowdown, increased serum concentration,
+        QTc prolongation). Trained on 191 808 drug pairs · warm-split top-1 = 96.39 %, top-3 = 99.69 %, macro-F1 = 93.20 %.
+      </p>
+
+      <form>
+        <div class="row">
+          <label class="field">
+            <span>Drug A — SMILES</span>
+            <input type="text" name="smiles_a" placeholder="CC(=O)Oc1ccccc1C(=O)O" required spellcheck="false" />
+          </label>
+          <label class="field">
+            <span>Drug B — SMILES</span>
+            <input type="text" name="smiles_b" placeholder="CC(C)Cc1ccc(cc1)[C@@H](C)C(=O)O" required spellcheck="false" />
+          </label>
+        </div>
+
+        <div class="row" style="margin-top: 12px;">
+          <label class="field">
+            <span>Drug A — display name</span>
+            <input type="text" name="name_a" placeholder="Aspirin" />
+          </label>
+          <label class="field">
+            <span>Drug B — display name</span>
+            <input type="text" name="name_b" placeholder="Ibuprofen" />
+          </label>
+        </div>
+
+        <div class="controls">
+          <label class="field">
+            <span>Top K</span>
+            <input type="number" name="top_k" min="1" max="86" value="3" />
+          </label>
+          <span style="color: var(--ink-dim); font-size: 12px; align-self: end;">→ top-K most likely relation types</span>
+          <button class="run" type="submit">Predict interaction type</button>
+        </div>
+
+        <div class="preset" aria-label="Common pairs">
+          <button type="button" data-preset="Aspirin × Ibuprofen">Aspirin × Ibuprofen</button>
+          <button type="button" data-preset="Warfarin × Aspirin">Warfarin × Aspirin</button>
+          <button type="button" data-preset="Atorvastatin × Clarithromycin">Atorvastatin × Clarithromycin</button>
+          <button type="button" data-preset="Metformin × Lisinopril">Metformin × Lisinopril</button>
+        </div>
+      </form>
+
+      <div class="result"></div>
+    </section>
+
+    <!-- ============= LAYER 2 ============= -->
+    <section id="layer2-panel" class="panel" aria-labelledby="layer2-head" style="display: none;">
+      <h2 class="panel-head" id="layer2-head">
+        <span class="layer-tag l2">L2</span>
+        TwoSides — which polypharmacy side effects might co-occur?
+      </h2>
+      <p class="panel-sub">
+        Multi-label sigmoid over the filtered polypharmacy side-effect vocabulary. Built on the
+        <em>frozen</em> Layer 1 encoder so DrugBank top-1 is unaffected. Sweep over frequency thresholds
+        (200 / 500 / 1000 / 2000) — see <a href="https://github.com/kareemindata/ddi-risk-explorer/blob/main/artifacts/metrics/twosides_sweep.json" target="_blank" rel="noopener">sweep report</a> for per-threshold AUROC / AP.
+      </p>
+
+      <form>
+        <div class="row">
+          <label class="field">
+            <span>Drug A — SMILES</span>
+            <input type="text" name="smiles_a" placeholder="CC(=O)Oc1ccccc1C(=O)O" required spellcheck="false" />
+          </label>
+          <label class="field">
+            <span>Drug B — SMILES</span>
+            <input type="text" name="smiles_b" placeholder="CC(C)Cc1ccc(cc1)[C@@H](C)C(=O)O" required spellcheck="false" />
+          </label>
+        </div>
+
+        <div class="row" style="margin-top: 12px;">
+          <label class="field">
+            <span>Drug A — display name</span>
+            <input type="text" name="name_a" placeholder="Aspirin" />
+          </label>
+          <label class="field">
+            <span>Drug B — display name</span>
+            <input type="text" name="name_b" placeholder="Ibuprofen" />
+          </label>
+        </div>
+
+        <div class="controls">
+          <label class="field">
+            <span>Top K side effects</span>
+            <input type="number" name="top_k" min="1" max="2000" value="10" />
+          </label>
+          <label class="field">
+            <span>Decision threshold</span>
+            <input type="number" name="decision_threshold" min="0" max="1" step="0.05" value="0.5" />
+          </label>
+          <button class="run" type="submit">Predict side effects</button>
+        </div>
+
+        <div class="preset" aria-label="Common pairs">
+          <button type="button" data-preset="Aspirin × Ibuprofen">Aspirin × Ibuprofen</button>
+          <button type="button" data-preset="Warfarin × Aspirin">Warfarin × Aspirin</button>
+          <button type="button" data-preset="Atorvastatin × Clarithromycin">Atorvastatin × Clarithromycin</button>
+          <button type="button" data-preset="Metformin × Lisinopril">Metformin × Lisinopril</button>
+        </div>
+      </form>
+
+      <div class="result"></div>
+    </section>
+
+    <footer>
+      Companion to <a href="https://ieeexplore.ieee.org/abstract/document/11428029" target="_blank" rel="noopener">IEEE Xplore document 11428029</a>.
+      Code: <a href="https://github.com/kareemindata/ddi-risk-explorer" target="_blank" rel="noopener">github.com/kareemindata/ddi-risk-explorer</a>.
+      Demo: <a href="https://huggingface.co/spaces/kareem-khaled/ddi-risk-explorer" target="_blank" rel="noopener">huggingface.co/spaces/kareem-khaled/ddi-risk-explorer</a>.
+    </footer>
+  </div>
+  <script src="assets/app.js"></script>
+</body>
+</html>
