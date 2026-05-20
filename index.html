@@ -176,7 +176,7 @@ section{position:relative;z-index:1;padding:5rem 2rem}
 .applied-tags{display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:.6rem;margin-top:auto}
 .applied-tags span{font-size:.68rem;color:var(--muted);border:1px solid #1a2235;padding:.15rem .5rem;border-radius:4px}
 .applied-status{font-size:.72rem;color:var(--muted);font-style:italic;margin-top:.4rem}
-.pub-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem;position:relative}
+.pub-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem;position:relative;max-width:900px;margin:0 auto;text-align:left}
 .pub-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);border-radius:3px 0 0 3px}
 .pub-card h3{font-size:1rem;font-weight:600;margin-bottom:.4rem;line-height:1.5}
 .pub-card .authors{font-size:.85rem;color:var(--text2);margin-bottom:.3rem}
@@ -197,8 +197,8 @@ section{position:relative;z-index:1;padding:5rem 2rem}
 .timeline-item p{color:var(--text2);font-size:.88rem;line-height:1.7}
 .timeline-item ul{margin-left:1rem;color:var(--text2);font-size:.85rem;margin-top:.3rem}
 .timeline-item ul li{margin-bottom:.25rem}
-.topics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
-.topic-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.3rem;transition:var(--transition);display:flex;align-items:flex-start;gap:.8rem}
+.topics-grid{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center}
+.topic-card{flex:1 1 300px;max-width:420px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.3rem;transition:var(--transition);display:flex;align-items:flex-start;gap:.8rem}
 .topic-card:hover{border-color:var(--accent)}
 .topic-card i{color:var(--accent);font-size:1rem;margin-top:.2rem;flex-shrink:0}
 .topic-card h4{font-size:.9rem;font-weight:600;margin-bottom:.15rem}
@@ -299,6 +299,30 @@ section{position:relative;z-index:1;padding:5rem 2rem}
 }
 #contact .section-inner{text-align:center}
 #contact .section-title,#contact .section-sub{text-align:center}
+
+/* Centered section headers — My Story, Research Interests, Publications, Skills, Ways I Collaborate, Community */
+#about .section-title,#about .section-sub,
+#research-topics .section-title,#research-topics .section-sub,
+#publications .section-title,#publications .section-sub,
+#skills .section-title,#skills .section-sub,
+#ways .section-title,#ways .section-sub,
+#community .section-title,#community .section-sub{text-align:center}
+
+/* Center the body content of Ways I Collaborate and Community sections */
+#ways .ways-intro{text-align:center;margin-left:auto;margin-right:auto}
+#ways .ways-track{text-align:center}
+#ways .ways-track h3{text-align:center}
+#ways .ways-track .track-sub{text-align:center}
+#ways .ways-grid{justify-content:center}
+#ways .way-card{text-align:center}
+#ways .way-card .svc-icon{margin-left:auto;margin-right:auto}
+#ways .ways-cta{justify-content:center;text-align:center}
+#ways .ways-cta .cta-text{text-align:center;margin-left:auto;margin-right:auto}
+
+#community .community-grid{justify-content:center}
+#community .community-card{text-align:center}
+#community .community-card .icon{margin-left:auto;margin-right:auto}
+#community .community-card a{justify-content:center}
 .contact-intro{max-width:720px;margin:0 auto 2rem;color:var(--text2);font-size:.95rem;text-align:center}
 .contact-actions{display:flex;gap:.7rem;flex-wrap:wrap;margin:0 auto 2rem;justify-content:center}
 .contact-actions a,.contact-actions button{padding:.7rem 1.25rem;border-radius:8px;font-size:.85rem;font-weight:600;display:inline-flex;align-items:center;gap:.5rem;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--text2);transition:var(--transition)}
@@ -309,8 +333,8 @@ section{position:relative;z-index:1;padding:5rem 2rem}
 .chip-intent{padding:.4rem .9rem;border-radius:20px;font-size:.78rem;background:rgba(30,111,255,.08);border:1px solid var(--border);color:var(--text2);cursor:pointer;transition:var(--transition)}
 .chip-intent:hover{border-color:var(--accent);color:var(--text)}
 .chip-intent.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-.contact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;max-width:900px;margin:0 auto}
-.contact-link{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem;display:flex;align-items:center;gap:.7rem;transition:var(--transition);min-width:0;text-align:left}
+.contact-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;max-width:900px;margin:0 auto}
+.contact-link{flex:0 1 220px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem;display:flex;align-items:center;gap:.7rem;transition:var(--transition);min-width:0;text-align:left}
 .contact-link>div{min-width:0;flex:1;overflow:hidden}
 .contact-link:hover{border-color:var(--accent);transform:translateY(-2px)}
 .contact-link i{font-size:1.15rem;color:var(--accent);flex-shrink:0}
@@ -331,8 +355,8 @@ section{position:relative;z-index:1;padding:5rem 2rem}
 .ways-track{margin-bottom:2rem}
 .ways-track h3{font-size:1.1rem;font-weight:600;margin-bottom:.3rem;color:var(--accent2)}
 .ways-track .track-sub{font-size:.82rem;color:var(--muted);margin-bottom:1.2rem;text-transform:uppercase;letter-spacing:1px;font-family:var(--font-mono)}
-.ways-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
-.way-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.3rem;transition:var(--transition)}
+.ways-grid{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center}
+.way-card{flex:1 1 300px;max-width:420px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.3rem;transition:var(--transition)}
 .way-card:hover{border-color:var(--accent);transform:translateY(-2px)}
 .way-card .svc-icon{width:44px;height:44px;border-radius:10px;background:var(--accent-glow);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:1rem;margin-bottom:.8rem}
 .way-card h4{font-size:.95rem;font-weight:600;margin-bottom:.3rem}
@@ -342,15 +366,16 @@ section{position:relative;z-index:1;padding:5rem 2rem}
 .ways-cta h4{font-size:1rem;font-weight:600;margin-bottom:.2rem}
 .ways-cta p{font-size:.85rem;color:var(--text2)}
 .ways-cta .btn-primary{white-space:nowrap}
-.community-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem}
-.community-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;text-align:center;transition:var(--transition)}
+.community-grid{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center}
+.community-card{flex:1 1 230px;max-width:300px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;text-align:center;transition:var(--transition)}
 .community-card:hover{border-color:var(--accent);transform:translateY(-2px)}
 .community-card .icon{font-size:1.5rem;color:var(--accent);margin-bottom:.5rem}
 .community-card h3{font-size:.9rem;font-weight:600;margin-bottom:.2rem}
 .community-card p{font-size:.78rem;color:var(--text2)}
 .community-card a{font-size:.74rem;display:inline-block;margin-top:.3rem}
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
-.skill-group{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem}
+.skills-grid{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center}
+.skill-group{flex:1 1 280px;max-width:380px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;text-align:center}
+.skill-group .skill-tags{justify-content:center}
 .skill-group h3{font-size:.78rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:.6rem;font-family:var(--font-mono)}
 .skill-tags{display:flex;flex-wrap:wrap;gap:.35rem}
 .skill-tags span{font-size:.78rem;color:var(--text2);background:rgba(30,111,255,.06);border:1px solid var(--border);padding:.25rem .6rem;border-radius:6px}
@@ -889,6 +914,7 @@ footer p{font-size:.8rem;color:var(--muted)}
         <div class="icon"><i class="fas fa-award"></i></div>
         <h3>IEEE ASET 2025</h3>
         <p>Published Author &amp; Presenter</p>
+        <a href="files/ieee-aset-2025-certificate.png" target="_blank" rel="noopener" style="margin-top:.5rem;display:inline-block"><i class="fas fa-certificate"></i> Certificate</a>
       </div>
       <div class="community-card">
         <div class="icon"><i class="fas fa-link"></i></div>
