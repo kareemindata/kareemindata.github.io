@@ -46,20 +46,6 @@ function Header({ vp }) {
         <div style={{ ...mono, color: T.textMuted, marginBottom: vp.mobile ? 14 : 24 }}>
           03 / Education — A Journey
         </div>
-        <h1 style={{
-          fontFamily: T.serif,
-          fontWeight: 500,
-          fontSize: vp.mobile ? "clamp(34px, 9vw, 56px)" : "clamp(48px, 7vw, 88px)",
-          lineHeight: 1.02,
-          letterSpacing: "-0.02em",
-          color: T.text,
-          margin: 0,
-        }}>
-          Three cities.<br/>
-          <span style={{ color: T.accent, fontStyle: "italic", fontWeight: 400 }}>
-            One trajectory.
-          </span>
-        </h1>
       </div>
       <p style={{
         fontFamily: T.sans,
@@ -464,7 +450,6 @@ function EducationJourney() {
     }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <Header vp={vp} />
-        <MapHero entries={ENTRIES} activeId={activeId} onSelect={setActiveId} vp={vp} />
         <JourneyCards entries={ENTRIES} activeId={activeId} onSelect={setActiveId} vp={vp} />
         <DetailPanel entry={entry} vp={vp} />
       </div>
