@@ -974,22 +974,46 @@ footer p{font-size:.8rem;color:var(--muted)}
 </div>
 
 <script>
-/* particles */
+/* particles — interactive: react to cursor, brighten on activity, fade on scroll */
 (function(){
   const c=document.getElementById('particles'),ctx=c.getContext('2d');
   let w,h,dots=[];
+  const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function resize(){w=c.width=innerWidth;h=c.height=innerHeight}
   resize();window.addEventListener('resize',resize);
   for(let i=0;i<60;i++)dots.push({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*2+1});
+  let mx=-9999,my=-9999,focus=0;          // focus = activity level, 0..1
+  if(!reduce){
+    window.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;focus=1;},{passive:true});
+    window.addEventListener('mouseout',()=>{mx=-9999;my=-9999;},{passive:true});
+  }
+  const R=190;                            // cursor influence radius
   function draw(){
     ctx.clearRect(0,0,w,h);
+    /* fade the whole constellation out gradually as the page scrolls down */
+    c.style.opacity=Math.max(0,1-scrollY/(innerHeight*1.6)).toFixed(3);
+    if(!reduce)focus*=0.97;               // activity decays back to rest when idle
+    const lift=1+focus*0.9;               // brightness boost while the cursor is active
     dots.forEach((d,i)=>{
       d.x+=d.vx;d.y+=d.vy;
+      let cd=9999,cdx=0,cdy=0;
+      if(!reduce&&mx>-9999){
+        cdx=mx-d.x;cdy=my-d.y;cd=Math.sqrt(cdx*cdx+cdy*cdy);
+        if(cd<R&&cd>0){                   // dots drift toward the cursor
+          const pull=(1-cd/R)*0.5*focus;
+          d.x+=cdx/cd*pull;d.y+=cdy/cd*pull;
+        }
+      }
       if(d.x<0||d.x>w)d.vx*=-1;if(d.y<0||d.y>h)d.vy*=-1;
-      ctx.beginPath();ctx.arc(d.x,d.y,d.r,0,Math.PI*2);ctx.fillStyle='rgba(30,111,255,.4)';ctx.fill();
+      ctx.beginPath();ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(30,111,255,'+Math.min(.85,.4*lift)+')';ctx.fill();
       for(let j=i+1;j<dots.length;j++){
         const dx=d.x-dots[j].x,dy=d.y-dots[j].y,dist=Math.sqrt(dx*dx+dy*dy);
-        if(dist<150){ctx.beginPath();ctx.moveTo(d.x,d.y);ctx.lineTo(dots[j].x,dots[j].y);ctx.strokeStyle=`rgba(30,111,255,${.12*(1-dist/150)})`;ctx.stroke()}
+        if(dist<150){ctx.beginPath();ctx.moveTo(d.x,d.y);ctx.lineTo(dots[j].x,dots[j].y);ctx.strokeStyle='rgba(30,111,255,'+(.12*lift*(1-dist/150))+')';ctx.stroke()}
+      }
+      if(cd<R){                           // bright line linking the dot to the cursor
+        ctx.beginPath();ctx.moveTo(d.x,d.y);ctx.lineTo(mx,my);
+        ctx.strokeStyle='rgba(96,165,250,'+(.4*focus*(1-cd/R))+')';ctx.stroke();
       }
     });
     requestAnimationFrame(draw);
