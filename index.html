@@ -974,7 +974,7 @@ footer p{font-size:.8rem;color:var(--muted)}
 </div>
 
 <script>
-/* particles — interactive: react to cursor, brighten on activity, fade on scroll */
+/* particles — interactive: react to cursor, brighten on activity (visible everywhere) */
 (function(){
   const c=document.getElementById('particles'),ctx=c.getContext('2d');
   let w,h,dots=[];
@@ -990,8 +990,6 @@ footer p{font-size:.8rem;color:var(--muted)}
   const R=190;                            // cursor influence radius
   function draw(){
     ctx.clearRect(0,0,w,h);
-    /* fade the whole constellation out gradually as the page scrolls down */
-    c.style.opacity=Math.max(0,1-scrollY/(innerHeight*1.6)).toFixed(3);
     if(!reduce)focus*=0.97;               // activity decays back to rest when idle
     const lift=1+focus*0.9;               // brightness boost while the cursor is active
     dots.forEach((d,i)=>{
