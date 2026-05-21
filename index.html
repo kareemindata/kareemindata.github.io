@@ -977,6 +977,7 @@ footer p{font-size:.8rem;color:var(--muted)}
 /* particles — interactive: react to cursor, brighten on activity (visible everywhere) */
 (function(){
   const c=document.getElementById('particles'),ctx=c.getContext('2d');
+  c.style.opacity='1';                    // always fully visible across every section
   let w,h,dots=[];
   const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function resize(){w=c.width=innerWidth;h=c.height=innerHeight}
