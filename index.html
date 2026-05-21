@@ -102,7 +102,8 @@ a:hover{color:#60a5fa}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1001}
 .hamburger span{width:24px;height:2px;background:var(--text);transition:var(--transition)}
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:8rem 2rem 4rem;z-index:1}
-.hero-bg{position:absolute;inset:0;background:url('background.jfif') center/cover no-repeat;opacity:.12;z-index:-1}
+.hero-bg{position:absolute;inset:-60px;background:url('background.jfif') center/cover no-repeat;opacity:.12;z-index:-1;transform:scale(1.06);transition:opacity .55s ease,transform .4s cubic-bezier(.4,0,.2,1);will-change:transform,opacity}
+@media(prefers-reduced-motion:reduce){.hero-bg{transition:none!important;transform:none!important}}
 .hero-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:4rem;width:100%}
 .hero-text{flex:1}
 .hero-photo{flex-shrink:0}
@@ -1211,5 +1212,46 @@ function trackCV(kind,which){
   <p>He is currently seeking a fully funded PhD position in machine learning, multimodal speech, low-resource NLP, or multilingual language models — open to research assistant and applied AI research collaborations worldwide.</p>
   <p>Technical stack: PyTorch, PyTorch Geometric, DeBERTa, AraBERT, Whisper, RDKit, FastAPI, Docker, Gradio. Locations: Cairo Egypt, Ottawa Canada, Zurich Switzerland.</p>
 </div>
+
+<!-- Hero background: parallax with cursor, brighten on activity, fade out on scroll -->
+<script>
+(function(){
+  var bg = document.querySelector('.hero-bg');
+  if(!bg) return;
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var BASE = 0.12;          // resting opacity
+  var FOCUS = 0.30;         // opacity while the cursor is active over the hero
+  var SHIFT = 26;           // max parallax travel in px
+  var px = 0, py = 0;       // current cursor offset (-1..1)
+  var focus = BASE;         // current activity-driven opacity target
+  var idleTimer = null;
+
+  function render(){
+    var scrollFade = Math.max(0, 1 - window.scrollY / (window.innerHeight * 0.85));
+    var opacity = focus * scrollFade;
+    bg.style.opacity = opacity.toFixed(3);
+    bg.style.transform =
+      'scale(' + (1.06 + 0.04 * (focus - BASE) / (FOCUS - BASE)) + ') ' +
+      'translate(' + (px * SHIFT).toFixed(1) + 'px,' + (py * SHIFT).toFixed(1) + 'px)';
+  }
+
+  document.addEventListener('mousemove', function(e){
+    px = (e.clientX / window.innerWidth) - 0.5;
+    py = (e.clientY / window.innerHeight) - 0.5;
+    focus = FOCUS;                       // brighten when the cursor moves (focus)
+    render();
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(function(){   // gently settle back when idle
+      focus = BASE;
+      render();
+    }, 1400);
+  }, { passive: true });
+
+  window.addEventListener('scroll', render, { passive: true });
+  window.addEventListener('resize', render, { passive: true });
+  render();
+})();
+</script>
 </body>
 </html>
