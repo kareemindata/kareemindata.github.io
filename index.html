@@ -334,12 +334,12 @@ section{position:relative;z-index:1;padding:5rem 2rem}
 .chip-intent:hover{border-color:var(--accent);color:var(--text)}
 .chip-intent.active{background:var(--accent);color:#fff;border-color:var(--accent)}
 .contact-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;max-width:900px;margin:0 auto}
-.contact-link{flex:0 1 250px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem;display:flex;align-items:center;justify-content:center;gap:.7rem;transition:var(--transition);min-width:0;text-align:center}
-.contact-link>div{min-width:0;max-width:100%;overflow:hidden}
+.contact-link{flex:0 1 230px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem 1rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.55rem;transition:var(--transition);min-width:0;text-align:center}
+.contact-link>div{min-width:0;max-width:100%;width:100%;overflow:hidden}
 .contact-link:hover{border-color:var(--accent);transform:translateY(-2px)}
-.contact-link i{font-size:1.15rem;color:var(--accent);flex-shrink:0}
-.contact-link .label{font-size:.72rem;color:var(--muted);display:block;text-align:center}
-.contact-link .value{font-size:.78rem;color:var(--text);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.35;text-align:center}
+.contact-link i{font-size:1.5rem;color:var(--accent);flex-shrink:0}
+.contact-link .label{font-size:.68rem;color:var(--muted);display:block;text-align:center;text-transform:uppercase;letter-spacing:1.4px;margin-bottom:.3rem}
+.contact-link .value{font-size:.82rem;color:var(--text);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.35;text-align:center;font-weight:500}
 .modal-back{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);z-index:2000;display:none;align-items:center;justify-content:center;padding:2rem}
 .modal-back.open{display:flex}
 .modal-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);width:100%;max-width:760px;max-height:90vh;overflow:auto;padding:1.6rem;position:relative}
