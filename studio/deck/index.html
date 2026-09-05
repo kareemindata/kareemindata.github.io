@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Waly AI - Capabilities Briefing">
+<meta property="og:description" content="An eight-slide briefing on production AI systems, from published research to live deployments.">
+<meta property="og:url" content="https://kareemindata.github.io/studio/deck/">
+<meta name="twitter:card" content="summary">
+<title>Waly AI Capabilities Briefing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Manrope:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#F6F4EF; --surface:#FFFFFF; --surface-2:#F0ECE4; --line:#E4DED2; --line-2:#D6CFBF;
+    --ink:#1B1D22; --muted:#5C5E66; --faint:#8C8B84;
+    --accent:#AC6427; --accent-soft:#F2E6D6; --on-accent:#FFFFFF;
+    --display:"Sora",-apple-system,BlinkMacSystemFont,sans-serif;
+    --body:"Manrope",-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+    --bg:#131519; --surface:#1B1E24; --surface-2:#23272F; --line:#2C313A; --line-2:#3A404A;
+    --ink:#ECEDEF; --muted:#A3A7AF; --faint:#70747C;
+    --accent:#D48D46; --accent-soft:#241B12; --on-accent:#161309;
+  }}
+  :root[data-theme="dark"]{
+    --bg:#131519; --surface:#1B1E24; --surface-2:#23272F; --line:#2C313A; --line-2:#3A404A;
+    --ink:#ECEDEF; --muted:#A3A7AF; --faint:#70747C;
+    --accent:#D48D46; --accent-soft:#241B12; --on-accent:#161309;
+  }
+  :root[data-theme="light"]{
+    --bg:#F6F4EF; --surface:#FFFFFF; --surface-2:#F0ECE4; --line:#E4DED2; --line-2:#D6CFBF;
+    --ink:#1B1D22; --muted:#5C5E66; --faint:#8C8B84;
+    --accent:#AC6427; --accent-soft:#F2E6D6; --on-accent:#FFFFFF;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);
+    -webkit-font-smoothing:antialiased;overflow:hidden;}
+  .stage{height:100vh;display:flex;flex-direction:column;}
+  .slide{flex:1;display:flex;flex-direction:column;justify-content:center;
+    padding:clamp(2rem,6vw,5rem) clamp(1.5rem,7vw,6rem) clamp(4rem,8vw,6rem);
+    max-width:1200px;margin:0 auto;width:100%;overflow-y:auto;}
+  .slide[hidden]{display:none!important}
+  .eyebrow{font-family:var(--mono);font-size:clamp(.7rem,1.1vw,.82rem);letter-spacing:.18em;
+    text-transform:uppercase;color:var(--accent);margin:0 0 1.4rem;}
+  h1{font-family:var(--display);font-weight:700;font-size:clamp(2.4rem,7vw,5.2rem);line-height:1.02;
+    letter-spacing:-.025em;margin:0 0 1.2rem;text-wrap:balance;}
+  h2{font-family:var(--display);font-weight:600;font-size:clamp(1.8rem,4.4vw,3.2rem);line-height:1.08;
+    letter-spacing:-.02em;margin:0 0 1.4rem;text-wrap:balance;max-width:20ch;}
+  h3{font-family:var(--display);font-weight:600;font-size:clamp(1.05rem,1.8vw,1.35rem);
+    letter-spacing:-.01em;margin:0 0 .35rem;}
+  p{color:var(--muted);font-size:clamp(1rem,1.6vw,1.25rem);line-height:1.55;max-width:58ch;margin:0 0 1rem;}
+  .sub{font-size:clamp(1.05rem,2vw,1.45rem);}
+  .accent{color:var(--accent);}
+  .ink{color:var(--ink);}
+
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.5rem,4vw,3.5rem);align-items:start;}
+  .quad{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.9rem,2vw,1.4rem);}
+  .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.9rem,2vw,1.4rem);}
+  @media (max-width:820px){ .cols,.quad,.trio{grid-template-columns:1fr;} }
+
+  .box{background:var(--surface);border:1px solid var(--line);border-radius:12px;
+    padding:clamp(1rem,2vw,1.5rem);}
+  .box p{font-size:clamp(.9rem,1.35vw,1.02rem);margin:0;max-width:none;}
+  .box .tagline{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--accent);
+    display:block;margin-bottom:.5rem;text-transform:uppercase;}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(1rem,3vw,2.4rem);margin-top:.5rem;}
+  @media (max-width:820px){ .stats{grid-template-columns:1fr 1fr;} }
+  .stat{border-top:2px solid var(--accent);padding-top:.8rem;}
+  .stat .v{font-family:var(--display);font-weight:700;font-size:clamp(1.4rem,2.6vw,2.1rem);
+    line-height:1.05;letter-spacing:-.02em;}
+  .stat .l{color:var(--muted);font-size:clamp(.82rem,1.2vw,.95rem);margin-top:.3rem;line-height:1.4;}
+
+  .list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.9rem;}
+  .list li{display:flex;gap:.9rem;align-items:baseline;color:var(--muted);
+    font-size:clamp(.95rem,1.5vw,1.15rem);line-height:1.5;}
+  .list .k{font-family:var(--mono);color:var(--accent);font-size:.85em;flex:none;min-width:1.4em;}
+  .list b{color:var(--ink);font-weight:600;}
+
+  .chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem;}
+  .chip{font-family:var(--mono);font-size:clamp(.72rem,1.1vw,.84rem);color:var(--muted);
+    background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:.35rem .65rem;}
+
+  /* chrome */
+  .bar{position:fixed;left:0;right:0;bottom:0;height:3px;background:var(--line);}
+  .bar i{display:block;height:100%;background:var(--accent);transition:width .3s ease;}
+  .nav{position:fixed;bottom:1.1rem;right:clamp(1rem,4vw,2.4rem);display:flex;align-items:center;
+    gap:.7rem;font-family:var(--mono);font-size:.8rem;color:var(--faint);}
+  .nav button{font-family:var(--mono);font-size:.85rem;background:var(--surface);color:var(--ink);
+    border:1px solid var(--line-2);border-radius:6px;width:2rem;height:2rem;cursor:pointer;line-height:1;}
+  .nav button:hover{border-color:var(--accent);color:var(--accent);}
+  .nav button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .brand{position:fixed;bottom:1.1rem;left:clamp(1rem,4vw,2.4rem);font-family:var(--mono);
+    font-size:.78rem;color:var(--faint);letter-spacing:.04em;}
+  @media (max-width:600px){ .brand{display:none} }
+  @media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+</style>
+<style>img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+
+<div class="stage">
+
+  <!-- 1 -->
+  <section class="slide">
+    <p class="eyebrow">Capabilities briefing</p>
+    <h1>AI that <span class="accent">ships</span>.</h1>
+    <p class="sub">Kareem Waly. I build AI systems that reach production, from a peer-reviewed model to a live assistant handling real customers.</p>
+    <div class="chips">
+      <span class="chip">IEEE-published</span>
+      <span class="chip">Presented at ASET 2025, Abu Dhabi</span>
+      <span class="chip">M.Eng, University of Ottawa</span>
+      <span class="chip">IndabaX Egypt, Technical Program Chair</span>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide" hidden>
+    <p class="eyebrow">The difference</p>
+    <h2>Most vendors integrate an API. I build the model and the product.</h2>
+    <div class="cols" style="margin-top:1rem">
+      <div class="box">
+        <span class="tagline">The research half</span>
+        <h3>Published, peer-reviewed</h3>
+        <p>Graph neural networks, multimodal systems, retrieval, healthcare AI. When your problem has no off-the-shelf answer, I can build one and defend it.</p>
+      </div>
+      <div class="box">
+        <span class="tagline">The delivery half</span>
+        <h3>Deployed, monitored, running</h3>
+        <p>Production systems in industry and live commerce, from data pipeline through deployment. Research that stays in a notebook is worth nothing to you.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide" hidden>
+    <p class="eyebrow">Track record</p>
+    <h2>Where the credibility comes from</h2>
+    <div class="stats">
+      <div class="stat"><div class="v">IEEE</div><div class="l">Peer-reviewed publication, presented at ASET 2025 in Abu Dhabi</div></div>
+      <div class="stat"><div class="v">90%+</div><div class="l">Accuracy on a production language-ID system shipped in industry</div></div>
+      <div class="stat"><div class="v">2M</div><div class="l">Records handled by a hybrid retrieval pipeline I designed</div></div>
+      <div class="stat"><div class="v">33</div><div class="l">Students mentored through the AI education venture I co-founded</div></div>
+    </div>
+    <p style="margin-top:2rem">Technical Program Chair for IndabaX Egypt 2026. M.Eng from the University of Ottawa on a full scholarship. B.Sc. Computer Science, second in class.</p>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide" hidden>
+    <p class="eyebrow">What I can deploy</p>
+    <h2>Four solutions, already built</h2>
+    <div class="quad">
+      <div class="box">
+        <span class="tagline">Commerce automation</span>
+        <h3>Store &amp; DM Automation</h3>
+        <p>A Messenger and Instagram assistant that answers, recommends, and takes orders around the clock, in Arabic and English.</p>
+      </div>
+      <div class="box">
+        <span class="tagline">Customer intelligence</span>
+        <h3>Segmentation &amp; Insight</h3>
+        <p>Automatic classification from VIP to at-risk, with insight mined from the conversations you already have.</p>
+      </div>
+      <div class="box">
+        <span class="tagline">Support that scales</span>
+        <h3>Help Chat with Human Takeover</h3>
+        <p>Knows your catalogue and the customer's cart, answers accurately, and hands sensitive cases to a person.</p>
+      </div>
+      <div class="box">
+        <span class="tagline">Vision &amp; imaging</span>
+        <h3>Computer Vision</h3>
+        <p>Custom models with explainability built in, clinical and industrial, so a specialist can see why the model decided.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide" hidden>
+    <p class="eyebrow">Case study</p>
+    <h2>Hamel El-Mesk</h2>
+    <div class="cols">
+      <div>
+        <p>A growing perfume brand needed customer operations that could keep pace with demand. I built the AI layer that runs underneath the store.</p>
+        <ul class="list" style="margin-top:1.4rem">
+          <li><span class="k">01</span><span>Every customer <b>classified automatically</b>, so the team knows who to keep and who to win back</span></li>
+          <li><span class="k">02</span><span>A <b>cart-aware assistant</b> that answers using the real catalogue and the customer's actual basket</span></li>
+          <li><span class="k">03</span><span><b>Moderator takeover</b> the moment a case turns sensitive</span></li>
+          <li><span class="k">04</span><span>An <b>encryption vault</b> whose keys stay with the owner, never on the server</span></li>
+        </ul>
+      </div>
+      <div class="box" style="align-self:center">
+        <span class="tagline">Outcome</span>
+        <p style="font-size:clamp(1rem,1.6vw,1.2rem);color:var(--ink);font-weight:500">A store that understands its customers at scale, without giving up control or privacy.</p>
+        <div class="chips">
+          <span class="chip">Arabic-first</span>
+          <span class="chip">live in production</span>
+          <span class="chip">privacy by design</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide" hidden>
+    <p class="eyebrow">Proof of depth</p>
+    <h2>When the problem needs real research</h2>
+    <div class="quad">
+      <div class="box">
+        <span class="tagline">IEEE · Abu Dhabi</span>
+        <h3>Drug-Interaction Prediction</h3>
+        <p>A graph neural network predicting polypharmacy interactions, 96.4% top-1 on known drugs, with a live demo.</p>
+      </div>
+      <div class="box">
+        <span class="tagline">Multimodal · EN + AR</span>
+        <h3>Emotion &amp; Sentiment</h3>
+        <p>Text, audio, and video fused for cross-lingual analysis, 80% across seven emotions, real-time.</p>
+      </div>
+      <div class="box">
+        <span class="tagline">Retrieval</span>
+        <h3>Hybrid RAG for Forensics</h3>
+        <p>Dense and sparse retrieval with re-ranking over two million logs, an 18% retrieval gain.</p>
+      </div>
+      <div class="box">
+        <span class="tagline">Clinical vision</span>
+        <h3>Brain Tumour MRI Classifier</h3>
+        <p>Transfer-learned CNN with Grad-CAM, so a radiologist can see the evidence behind each call.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide" hidden>
+    <p class="eyebrow">Engagement</p>
+    <h2>Three ways this works</h2>
+    <div class="trio">
+      <div class="box">
+        <span class="tagline">Fastest to value</span>
+        <h3>Managed product</h3>
+        <p>You run the automation as a subscription. I host, maintain, and improve it.</p>
+      </div>
+      <div class="box">
+        <span class="tagline">Built for you</span>
+        <h3>Custom build</h3>
+        <p>A bespoke system end to end, for a problem that is specific to your business.</p>
+      </div>
+      <div class="box">
+        <span class="tagline">Guidance</span>
+        <h3>Advisory</h3>
+        <p>Strategy and technical review for a team already building, from someone who has shipped.</p>
+      </div>
+    </div>
+    <p style="margin-top:1.8rem">Scope, timeline, and price follow the problem. I would rather understand it first.</p>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide" hidden>
+    <p class="eyebrow">Over to you</p>
+    <h2>Three questions I would like to ask</h2>
+    <ul class="list" style="margin-top:.5rem">
+      <li><span class="k">01</span><span>What is the <b>most repetitive thing</b> your team does with customers every day?</span></li>
+      <li><span class="k">02</span><span>Where do you <b>lose customers</b>, and do you know why?</span></li>
+      <li><span class="k">03</span><span>What <b>data do you already have</b> that nobody is reading?</span></li>
+    </ul>
+    <p style="margin-top:2rem;color:var(--ink);font-weight:500">Tell me the problem. I will tell you honestly whether AI is the answer, or whether it is not.</p>
+    <p class="mono" style="font-family:var(--mono);font-size:.9rem;color:var(--faint);margin-top:1rem">
+      kareemindata.github.io &nbsp;·&nbsp; linkedin.com/in/kareemindata
+    </p>
+  </section>
+
+</div>
+
+<div class="brand">Kareem Waly · AI Studio</div>
+<div class="nav">
+  <button id="prev" aria-label="Previous slide">&#8592;</button>
+  <span id="counter">1 / 8</span>
+  <button id="next" aria-label="Next slide">&#8594;</button>
+</div>
+<div class="bar"><i id="prog" style="width:12.5%"></i></div>
+
+<script>
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var i = 0;
+  var counter = document.getElementById('counter');
+  var prog = document.getElementById('prog');
+
+  function show(n){
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach(function(s, k){ s.hidden = (k !== i); });
+    counter.textContent = (i + 1) + ' / ' + slides.length;
+    prog.style.width = ((i + 1) / slides.length * 100) + '%';
+    slides[i].scrollTop = 0;
+  }
+  document.getElementById('next').addEventListener('click', function(){ show(i + 1); });
+  document.getElementById('prev').addEventListener('click', function(){ show(i - 1); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); show(i + 1); }
+    if (e.key === 'ArrowLeft'  || e.key === 'PageUp')  { e.preventDefault(); show(i - 1); }
+    if (e.key === 'Home') { show(0); }
+    if (e.key === 'End')  { show(slides.length - 1); }
+  });
+  show(0);
+</script>
+
+</body>
+</html>
