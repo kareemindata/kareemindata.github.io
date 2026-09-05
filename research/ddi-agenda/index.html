@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PrecisionDDI Research Agenda">
+<meta property="og:description" content="Project status and the three separable tasks for the next phase of the DDI tail-transfer work.">
+<meta property="og:url" content="https://kareemindata.github.io/research/ddi-agenda/">
+<title>PrecisionDDI Research Agenda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#F4F5F3; --surface:#FFFFFF; --surface-2:#EAECE9; --line:#DCDFDB; --line-2:#C6CAC4;
+    --ink:#171A19; --muted:#565B58; --faint:#878C88;
+    --accent:#1D6B6A; --accent-soft:#E2EFEE;
+    --ok:#3D7A4E; --ok-soft:#E4F0E7;
+    --warn:#8A6220; --warn-soft:#F5EDDF;
+    --stop:#9B3B33; --stop-soft:#F6E6E4;
+    --display:"Newsreader",Georgia,serif;
+    --body:"Public Sans",-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+    --bg:#131614; --surface:#1B1F1D; --surface-2:#232825; --line:#2E3431; --line-2:#3C433F;
+    --ink:#E9ECEA; --muted:#A0A6A2; --faint:#6E7470;
+    --accent:#4FB3B0; --accent-soft:#122A29;
+    --ok:#6FBE84; --ok-soft:#152318;
+    --warn:#D3A055; --warn-soft:#26200F;
+    --stop:#D97970; --stop-soft:#2A1614;
+  }}
+  :root[data-theme="dark"]{
+    --bg:#131614; --surface:#1B1F1D; --surface-2:#232825; --line:#2E3431; --line-2:#3C433F;
+    --ink:#E9ECEA; --muted:#A0A6A2; --faint:#6E7470;
+    --accent:#4FB3B0; --accent-soft:#122A29;
+    --ok:#6FBE84; --ok-soft:#152318;
+    --warn:#D3A055; --warn-soft:#26200F;
+    --stop:#D97970; --stop-soft:#2A1614;
+  }
+  :root[data-theme="light"]{
+    --bg:#F4F5F3; --surface:#FFFFFF; --surface-2:#EAECE9; --line:#DCDFDB; --line-2:#C6CAC4;
+    --ink:#171A19; --muted:#565B58; --faint:#878C88;
+    --accent:#1D6B6A; --accent-soft:#E2EFEE;
+    --ok:#3D7A4E; --ok-soft:#E4F0E7;
+    --warn:#8A6220; --warn-soft:#F5EDDF;
+    --stop:#9B3B33; --stop-soft:#F6E6E4;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);
+    line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:920px;margin:0 auto;padding:clamp(1.6rem,4vw,3.2rem) clamp(1.1rem,4vw,2rem) 4rem;}
+  a{color:var(--accent)}
+  h1{font-family:var(--display);font-weight:600;font-size:clamp(2rem,5vw,3rem);line-height:1.08;
+    letter-spacing:-.015em;margin:0 0 .5rem;text-wrap:balance;}
+  h2{font-family:var(--display);font-weight:600;font-size:clamp(1.35rem,2.8vw,1.8rem);
+    line-height:1.15;margin:0 0 .4rem;letter-spacing:-.01em;text-wrap:balance;}
+  h3{font-family:var(--body);font-weight:600;font-size:.78rem;text-transform:uppercase;
+    letter-spacing:.09em;color:var(--accent);margin:1.2rem 0 .4rem;}
+  p{margin:0 0 .85rem;color:var(--muted);}
+  .sub{font-family:var(--display);font-style:italic;font-size:clamp(1rem,2vw,1.2rem);
+    color:var(--muted);max-width:62ch;margin:0 0 1.6rem;}
+  .ink{color:var(--ink)}
+  ul{margin:0 0 .9rem;padding-left:1.1rem;color:var(--muted)}
+  li{margin:.25rem 0}
+  li b,p b{color:var(--ink);font-weight:600}
+  code,.mono{font-family:var(--mono);font-size:.86em;}
+  code{background:var(--surface-2);padding:.1em .35em;border-radius:3px;color:var(--ink);}
+
+  .status{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin:1.4rem 0 2.4rem;}
+  @media (max-width:720px){.status{grid-template-columns:1fr}}
+  .st{background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:.9rem 1rem;
+    border-left:3px solid var(--line-2);}
+  .st.good{border-left-color:var(--ok)}
+  .st.hard{border-left-color:var(--stop)}
+  .st .lab{font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--faint);display:block;margin-bottom:.25rem;}
+  .st .v{font-family:var(--display);font-size:1.5rem;font-weight:600;line-height:1.1;
+    font-variant-numeric:tabular-nums;}
+  .st.good .v{color:var(--ok)} .st.hard .v{color:var(--stop)}
+  .st .d{font-size:.85rem;color:var(--muted);margin-top:.2rem;line-height:1.4;}
+
+  .task{background:var(--surface);border:1px solid var(--line);border-radius:12px;
+    padding:clamp(1.1rem,3vw,1.8rem);margin:0 0 1.4rem;}
+  .task .head{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap;margin-bottom:.2rem;}
+  .tnum{font-family:var(--mono);font-size:.78rem;color:var(--accent);border:1px solid var(--accent);
+    border-radius:4px;padding:.15rem .45rem;flex:none;}
+  .pill{font-family:var(--mono);font-size:.7rem;letter-spacing:.04em;padding:.2rem .5rem;
+    border-radius:4px;text-transform:uppercase;}
+  .pill.p1{background:var(--stop-soft);color:var(--stop)}
+  .pill.p2{background:var(--warn-soft);color:var(--warn)}
+  .pill.p3{background:var(--accent-soft);color:var(--accent)}
+  .why{font-family:var(--display);font-size:1.02rem;color:var(--ink);margin:.5rem 0 .2rem;}
+  table{border-collapse:collapse;width:100%;font-size:.88rem;margin:.5rem 0 .2rem;}
+  th,td{border-bottom:1px solid var(--line);padding:.45rem .6rem;text-align:left;vertical-align:top;color:var(--muted)}
+  th{font-family:var(--mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;
+    color:var(--faint);border-bottom:1px solid var(--line-2);}
+  td b{color:var(--ink)}
+  .risk{background:var(--warn-soft);border:1px solid var(--warn);border-radius:7px;
+    padding:.7rem .9rem;font-size:.88rem;color:var(--ink);margin:.7rem 0 0;}
+  .risk b{color:var(--warn)}
+  .win{background:var(--ok-soft);border:1px solid var(--ok);border-radius:7px;
+    padding:.7rem .9rem;font-size:.88rem;color:var(--ink);margin:.7rem 0 0;}
+  .win b{color:var(--ok)}
+  .fixes{background:var(--surface);border:1px solid var(--line);border-radius:12px;
+    padding:clamp(1.1rem,3vw,1.6rem);}
+  .fixes table td:first-child{white-space:nowrap}
+  hr{border:none;border-top:1px solid var(--line);margin:2.6rem 0;}
+  .foot{color:var(--faint);font-size:.82rem;margin-top:2rem;}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<style>img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+
+<div class="wrap">
+
+  <h1>PrecisionDDI: the next three</h1>
+  <p class="sub">Where the project stands, and the three separable pieces of work that decide how strong the paper gets. Prepared for the working session with Ayyat.</p>
+
+  <div class="status">
+    <div class="st good">
+      <span class="lab">Settled result</span>
+      <div class="v">0.75 to 0.83</div>
+      <div class="d">Macro-AUROC on the serious-rare tail, warm split. Transfer vs isolation, 9 seeds, paired Wilcoxon p = 0.002.</div>
+    </div>
+    <div class="st good">
+      <span class="lab">Mechanism isolated</span>
+      <div class="v">Trunk reuse</div>
+      <div class="d">The lift is the common head's trunk (p = 0.0098). Bias reset alone: not significant. Shared-representation co-training: not significant.</div>
+    </div>
+    <div class="st hard">
+      <span class="lab">Documented boundary</span>
+      <div class="v">~0.52</div>
+      <div class="d">Novel-drug tail, four independent methods including target and mechanism features. A real limit, not a bug.</div>
+    </div>
+  </div>
+
+  <p>The positive claim is in good shape and the negative boundary is unusually well established. What decides whether this lands in a strong venue is no longer the model. It is whether the headline number survives the honest metric, whether "serious" means anything clinically, and whether we open the one direction that is genuinely new. That is the three tasks below, and they are independent enough to run in parallel.</p>
+
+  <hr>
+
+  <!-- TASK 1 -->
+  <div class="task">
+    <div class="head">
+      <span class="tnum">Task 1</span>
+      <h2>Make the headline survive AP and full coverage</h2>
+      <span class="pill p1">Highest risk to the claim</span>
+    </div>
+    <p class="why">The transfer lift is currently reported as macro-AUROC over 29% of the rare labels. Both halves of that sentence are attackable, and a reviewer will attack them together.</p>
+
+    <h3>The two objections</h3>
+    <ul>
+      <li><b>AUROC is optimistic under extreme imbalance.</b> With a handful of positives against tens of thousands of negatives, AUROC can look strong while precision is near zero. Average precision is the metric that reflects what a pharmacovigilance user actually experiences.</li>
+      <li><b>29% coverage.</b> The rare-band mean is taken over the minority of rare labels that had enough test positives to score. If the evaluable 29% are systematically the easier, more frequent end of the rare band, the reported lift is measured on the friendliest slice of the tail.</li>
+    </ul>
+
+    <h3>What to run</h3>
+    <table>
+      <tr><th>Step</th><th>Detail</th></tr>
+      <tr><td><b>Re-report</b></td><td>Same 9-seed paired transfer vs isolation comparison, now reporting macro-AP next to macro-AUROC, using the corrected bootstrap (label set fixed before resampling).</td></tr>
+      <tr><td><b>Coverage sweep</b></td><td>Recompute the lift as a function of the minimum-test-positives rule that defines "evaluable". Plot delta against coverage from the current 29% outward.</td></tr>
+      <tr><td><b>Position check</b></td><td>Within the rare band, correlate per-label lift with the label's train frequency. If the lift concentrates at the frequent edge, say so explicitly.</td></tr>
+    </table>
+
+    <div class="win"><b>If it holds:</b> the claim becomes "transfer lifts the tail on the honest metric across coverage levels", which is a materially stronger sentence than the one we have now.</div>
+    <div class="risk"><b>If it does not hold:</b> that is the finding, and it must be reported. A transfer effect that exists on AUROC but vanishes on AP is a real and publishable negative about how tail DDI work is evaluated. Either way we end up with something defensible, which is the point of running it first.</div>
+  </div>
+
+  <!-- TASK 2 -->
+  <div class="task">
+    <div class="head">
+      <span class="tnum">Task 2</span>
+      <h2>Ground "serious" in clinician severity, not keywords</h2>
+      <span class="pill p2">Weakest link in the clinical claim</span>
+    </div>
+    <p class="why">Right now a side effect counts as serious because <code>severity.py</code> matched a keyword in its MedDRA term. Every clinical claim in the paper rests on that heuristic. DDInter, which carries clinician-assigned severity, is already sitting in the repo at <code>data/external/ddinter/</code>.</p>
+
+    <h3>What to run</h3>
+    <table>
+      <tr><th>Step</th><th>Detail</th></tr>
+      <tr><td><b>Map</b></td><td>Resolve DDInter drug pairs onto the TWOSIDES pair universe through the existing <code>drug_resolver</code>, and record the match rate honestly.</td></tr>
+      <tr><td><b>Agree</b></td><td>Quantify agreement between the keyword heuristic and the clinical severity: confusion matrix and Cohen's kappa. This number goes in the paper whatever it is.</td></tr>
+      <tr><td><b>Re-state</b></td><td>Re-run the serious-rare transfer result with the serious set defined clinically instead of by keyword, and compare the two versions of the claim side by side.</td></tr>
+    </table>
+
+    <div class="risk"><b>The real difficulty, worth the first ten minutes of the meeting:</b> DDInter severity is assigned to a drug <i>pair</i> (this combination is major or moderate), while our severity label is attached to a side <i>effect</i> (rhabdomyolysis is serious). These are not the same object and cannot be joined naively. Options are to define a pair-level serious outcome and reframe the claim at pair level, or to keep the effect-level claim and use DDInter only as external validation on the pairs where both exist. This choice changes what the paper claims, so it is a decision for the two of you, not something to settle in code.</div>
+    <div class="win"><b>Payoff:</b> it converts "serious by our keyword rule" into "serious by clinician assignment", which is the difference between a methods paper and a clinically credible one.</div>
+  </div>
+
+  <!-- TASK 3 -->
+  <div class="task">
+    <div class="head">
+      <span class="tnum">Task 3</span>
+      <h2>Population localization of interaction risk</h2>
+      <span class="pill p3">The genuinely new direction</span>
+    </div>
+    <p class="why">The one direction that is new rather than corrective, and it lives in the warm setting where the model demonstrably works. Question: for a known drug pair and a known adverse event, does the strength of the signal differ across populations by more than reporting volume explains?</p>
+
+    <h3>Why it fits this project</h3>
+    <ul>
+      <li>It does not fight the cold-start boundary. It is a different problem: subgroup variation among <b>known</b> drugs, which is exactly where the model has signal.</li>
+      <li>The disproportionality machinery is already built. <code>research/disproportionality.py</code> has PRR, ROR and the Bayesian IC with standard cutoffs, so the statistics exist and only the stratification is new.</li>
+      <li>If it works it is a separate paper and a distinct research identity, not an increment on the current one.</li>
+    </ul>
+
+    <h3>What to run</h3>
+    <table>
+      <tr><th>Step</th><th>Detail</th></tr>
+      <tr><td><b>Acquire</b></td><td>Raw FAERS quarterly files, which carry age, sex and reporting country. This is the actual work of the task.</td></tr>
+      <tr><td><b>Stratify</b></td><td>Recompute the disproportionality statistics within subgroups for pairs that already show a signal overall.</td></tr>
+      <tr><td><b>Control</b></td><td>Negative controls before any claim: pairs with no plausible subgroup mechanism must show no subgroup difference. Without this the whole result is reporting bias.</td></tr>
+    </table>
+
+    <div class="risk"><b>State the limits up front.</b> TWOSIDES as distributed is aggregated and carries no demographics, so this needs the raw FAERS files and is the only one of the three tasks with a data-acquisition dependency. Confounding is severe: country, age and sex all drive who reports what, not only who reacts to what. Any subgroup difference we find is a difference in <i>reporting</i> until the negative controls say otherwise. Ancestry is not in FAERS at all, so reporting country is a crude and contestable proxy and should be described as one.</div>
+  </div>
+
+  <hr>
+
+  <h2>Code corrections already made</h2>
+  <p>Five defects in the evaluation and loss layer, each of which was quietly moving a reported number. All 140 existing tests still pass, and 13 new tests pin these behaviours.</p>
+  <div class="fixes">
+    <table>
+      <tr><th>Where</th><th>What was wrong</th><th>Why it matters</th></tr>
+      <tr>
+        <td><b>metrics.py</b><br><span class="mono">severity</span></td>
+        <td>The serious set was recomputed from a 0.6 quantile of the weight vector, overwriting the intended rule on the line above it. The quantile included zero-weight unmapped labels.</td>
+        <td>The safety metric did not use the same definition of serious as the training code. Numbers from before the fix are not comparable.</td>
+      </tr>
+      <tr>
+        <td><b>metrics.py</b><br><span class="mono">coverage</span></td>
+        <td>Macro scores were returned without the denominator they were averaged over.</td>
+        <td>Coverage now travels with every macro score and every band. This is what Task 1 measures against.</td>
+      </tr>
+      <tr>
+        <td><b>metrics.py</b><br><span class="mono">bootstrap</span></td>
+        <td>Row resampling silently changed which labels were scorable, so each replicate averaged a different label set.</td>
+        <td>Confidence intervals were systematically narrow, because the labels dropping out were the unstable ones. The label set is now fixed first and residual drift is reported.</td>
+      </tr>
+      <tr>
+        <td><b>losses.py</b><br><span class="mono">DB loss</span></td>
+        <td>The negative-tolerant term omitted the 1/lambda factor from Wu et al., so at the default lambda = 5 every negative carried five times its intended weight.</td>
+        <td>Backwards for a loss whose purpose is stopping rare-class negatives from swamping the gradient. Old behaviour is still reachable via <code>faithful_ntr=False</code>.</td>
+      </tr>
+      <tr>
+        <td><b>losses.py</b><br><span class="mono">ASL</span></td>
+        <td>Gradient flowed through the focusing weight, which the reference implementation detaches by default.</td>
+        <td>Known instability source on heavily imbalanced label sets. Loss value is unchanged, gradient is not.</td>
+      </tr>
+      <tr>
+        <td><b>models.py</b><br><span class="mono">band heads</span></td>
+        <td>Labels claimed by no frequency band were emitted as -inf, giving a constant score that scored as AUROC 0.5.</td>
+        <td>The model was credited with guessing on labels it was never allowed to predict. Now finite, flagged through <code>covered_mask</code>, and warned about at construction.</td>
+      </tr>
+    </table>
+  </div>
+
+  <h3>Decisions to come out of the meeting</h3>
+  <ul>
+    <li>Task 2: pair-level claim or effect-level claim with DDInter as external validation. This one blocks the others conceptually and should be settled first.</li>
+    <li>Who owns which task, and whether Task 3 starts now or after Task 1 reports.</li>
+    <li>Whether a negative outcome on Task 1 becomes its own contribution about tail evaluation, or a correction folded into the current paper.</li>
+  </ul>
+
+  <p class="foot">Numbers quoted from <span class="mono">artifacts/research/reports/core_transfer_result.json</span>. Nothing in this document is an estimate or a projection.</p>
+</div>
+
+</body>
+</html>
