@@ -258,6 +258,16 @@
     </table>
   </div>
 
+  <div class="risk" style="margin-top:1.2rem">
+    <b>What this means for the numbers we already have.</b> Being exact about which results move, because it changes what Task 1 has to re-run:
+    <ul style="margin-top:.5rem;margin-bottom:0">
+      <li><b>The ASL correction does affect the headline.</b> <code>configs/layered_ddi.yaml</code> sets <code>type: asl</code> on all four layers, so every layered transfer run trained through the loss whose focusing weight was carrying gradient. The loss value was right, the gradient was not, so the trained weights differ. Task 1 should re-run on the corrected loss rather than reusing the old checkpoints, and we should confirm the transfer effect reproduces before anything else is built on it.</li>
+      <li><b>The DB correction does not affect the headline.</b> No arm in the tuned config selects <code>db</code>, so that fix only matters for anyone who switches to it.</li>
+      <li><b>The metrics corrections change reported numbers, not trained models.</b> The safety metric now uses the project's own serious definition, and the confidence intervals will be wider and honest. Both can be recomputed from stored predictions without retraining.</li>
+      <li><b>The band-head correction affects nothing current.</b> <code>research/models.py</code> is not on the active path; the fix matters when we do use it.</li>
+    </ul>
+  </div>
+
   <h3>Decisions to come out of the meeting</h3>
   <ul>
     <li>Task 2: pair-level claim or effect-level claim with DDInter as external validation. This one blocks the others conceptually and should be settled first.</li>
